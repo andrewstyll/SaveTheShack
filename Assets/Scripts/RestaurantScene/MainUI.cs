@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainZoneUI : MonoBehaviour {
+public class MainUI : MonoBehaviour {
 
     private enum MainState {
         NoFood,
@@ -12,26 +12,25 @@ public class MainZoneUI : MonoBehaviour {
         OverDone
     };
 
-    [SerializeField] private Slider timer;
+    [SerializeField] private GameObject timerObject;
 
-    private Color burgerColor;
+    [SerializeField] private Sprite burntSprite;
+    [SerializeField] private Sprite baseSprite; // this needs to be set from it's parent, can't be a variable
+    private Color baseColor = Color.white;
     private const float ALPHA_NO_FOOD = 0.5f;
+    private const float ALPHA_FOOD = 1.0f;
 
-    // replace with images later
-    private Color baseColor = new Color(139/255.0f, 69/255.0f, 19/255.0f);
-    private Color burntColor = new Color(68/255.0f, 34/255.0f, 10/255.0f);
-
-    private Color currentColor;
     private Button burgerButton;
+
     private MainState state;
 
     void Awake() {
         state = MainState.NoFood;
-        timer.enabled = false;
+        timerObject.SetActive(false);
 
-        currentColor = baseColor;
-        currentColor.a = ALPHA_NO_FOOD;
-        this.GetComponent<Image>().color = currentColor;
+        // sprite will not be set yet here
+        baseColor.a = ALPHA_NO_FOOD;
+        this.GetComponent<Image>().color = baseColor;
 
         burgerButton = this.GetComponent<Button>();
         burgerButton.onClick.AddListener(PerformBurgerAction);
@@ -50,19 +49,21 @@ public class MainZoneUI : MonoBehaviour {
     void PerformBurgerAction() {
         if (state == MainState.NoFood) {
             // set up burger to count down cooking timer
-            timer.enabled = true;
-            currentColor.a = 1.0f;
-            this.GetComponent<Image>().color = currentColor;
+            timerObject.SetActive(true);
+
+            baseColor.a = ALPHA_FOOD;
+            this.GetComponent<Image>().color = baseColor;
             state = MainState.Cooked;
 
         } else if(state == MainState.Cooked || state == MainState.OverDone) {
             // if the burger is cooked or burnt, we have to remove it
-            timer.enabled = false;
-             currentColor = baseColor;
-            currentColor.a = ALPHA_NO_FOOD;
-            this.GetComponent<Image>().color = currentColor;
+            timerObject.SetActive(false);
+            
+            baseColor.a = ALPHA_NO_FOOD;
+            this.GetComponent<Image>().color = baseColor;
+            this.GetComponent<Image>().sprite = baseSprite;
 
-            if(state == MainState.Cooked) {
+            if (state == MainState.Cooked) {
                 // call listener to add it to the serve tray?
             }
             state = MainState.NoFood;
@@ -70,11 +71,11 @@ public class MainZoneUI : MonoBehaviour {
     }
 
     /**** Public API ****/
-    public void SetImage(Sprite sprite) {
-        this.GetComponent<Image>().sprite = sprite;
+    public void SetBaseImage(Sprite sprite) {
+        baseSprite = sprite;
     }
 
     public void setTimer(float time) {
-        this.timer.value = time;
+        this.timerObject.GetComponent<Slider>().value = time;
     }
 }

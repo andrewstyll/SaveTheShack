@@ -5,6 +5,8 @@ using UnityEngine;
 public class MainsAreaUI : MonoBehaviour {
 
     [SerializeField] private GameObject mainPrefab;
+    [SerializeField] private Sprite burgerSprite;
+    [SerializeField] private Sprite tacoSprite;
 
     void Awake() {
         // determine what type of mains to spawn based on restaurant type

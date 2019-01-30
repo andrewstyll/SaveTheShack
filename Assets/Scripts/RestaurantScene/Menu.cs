@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Menu {
+public struct MenuItem<T> {
+    public T name;
+    public Sprite sprite;
+}
 
-    // use dictionary to map objects or something??? 
-    // menu is enum, map food to properties?? should not hold actual objects
-    private FoodStub main;
-    private List<FoodStub> toppings;
-    private List<FoodStub> drinks;
+public struct Menu {
+    public List<MenuItem<Food.Drinks>> drinks;
+    public List<MenuItem<Food.Toppings>> toppings;
+    public MenuItem<Food.Mains> main;
+}
 
-    public FoodStub GetMain() {
-        return main;
-    }
+public class MenuBuilder : ScriptableObject {
 
-    public List<FoodStub> GetToppings() {
-        return toppings;
-    }
+    Menu menu;
 
-    public List<FoodStub> GetDrinks() {
-        return drinks;
+    public List<MenuItem> fillMenu() {
+        menu = new List<MenuItem>();
+
+        return menu;
     }
 }

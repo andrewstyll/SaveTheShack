@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2545004736362627946}
   - component: {fileID: 7774158789287499700}
   m_Layer: 5
-  m_Name: BurgerZone
+  m_Name: MainZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,14 +171,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7169812, g: 0.37629956, b: 0.1318975, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b92b953fc5b8f42c58fe5312ac3867a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -199,7 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65eeb279dfcf5440297d709acd4f3890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 6622820390722785454}
+  timerObject: {fileID: 6622820390722785454}
+  burntSprite: {fileID: 21300000, guid: cfdc5604b8f794e6ea6b2aa1d116df3c, type: 3}
+  baseSprite: {fileID: 21300000, guid: b92b953fc5b8f42c58fe5312ac3867a8, type: 3}
 --- !u!114 &7774158789287499700
 MonoBehaviour:
   m_ObjectHideFlags: 0
