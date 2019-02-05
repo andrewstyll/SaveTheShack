@@ -10,8 +10,8 @@ public static class FoodType {
     };
 
     public static readonly string[] Mains = {
-        "burger",
-        "taco"
+        "Burger",
+        "Taco"
     };
 
     public static readonly string[] Toppings = {
