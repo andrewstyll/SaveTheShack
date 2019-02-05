@@ -75,7 +75,7 @@ public class MainUI : MonoBehaviour {
         baseSprite = sprite;
     }
 
-    public void setTimer(float time) {
+    public void SetTimer(float time) {
         this.timerObject.GetComponent<Slider>().value = time;
     }
 }

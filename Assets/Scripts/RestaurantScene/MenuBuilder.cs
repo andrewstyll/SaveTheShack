@@ -8,7 +8,7 @@ public struct Menu {
     Food[] drinks;
 };
 
-// create an instance of this scriptable object
+[CreateAssetMenu(fileName = "MenuBuilder", menuName = "Data/MenuBuilder", order = 1)]
 public sealed class MenuBuilder : ScriptableObject {
     
     private static MenuBuilder instance = new MenuBuilder();

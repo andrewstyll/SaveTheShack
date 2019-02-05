@@ -9,7 +9,8 @@ public class MainsAreaUI : MonoBehaviour {
     [SerializeField] private Sprite tacoSprite;
 
     void Awake() {
-        // determine what type of mains to spawn based on restaurant type
+    // determine what type of mains to spawn based on restaurant type
+        
     }
 
     // Start is called before the first frame update

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class RestaurantMenus : ScriptableObject {
 
-    public string[] Drinks = {
+    public static readonly string[] Drinks = {
         "Coffee",
         "RootBeer",
         "GreenSoda",
         "IceTea"
     };
 
-    public string[] Burger = {
+    public static readonly string[] Burger = {
         "Burger",
         "Lettuce",
         "Tomato",
@@ -19,7 +19,7 @@ public class RestaurantMenus : ScriptableObject {
         "Onion"
     };
 
-    public string[] Taco = {
+    public static readonly string[] Taco = {
         "Taco",
         "Lettuce",
         "Tomato",
