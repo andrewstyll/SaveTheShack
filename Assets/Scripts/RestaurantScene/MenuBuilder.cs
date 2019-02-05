@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Menu {
-    Food main;
-    Food[] toppings;
-    Food[] drinks;
-};
+/* I had this idea for using a PQueue to store different master menus with 
+ * random values determining priority, and then using each master menu to create
+ * smaller menus that will change every day. Runs faster than linked list
+ * removal at index strategy i'm using below but implementing a pqueue isn't what
+ * this is about and I don't want to think about my own datastructure performance
+ * at all so I'm doing this....
+ */
+public sealed class MenuBuilder {
 
-[CreateAssetMenu(fileName = "MenuBuilder", menuName = "Data/MenuBuilder", order = 1)]
-public sealed class MenuBuilder : ScriptableObject {
-    
-    private static MenuBuilder instance = new MenuBuilder();
+    Random random = new Random();
+    private static readonly MenuBuilder instance = new MenuBuilder();
 
     private Dictionary<string, Food> dictionary;
     private Menu currentMenu;
@@ -52,8 +53,7 @@ public sealed class MenuBuilder : ScriptableObject {
                     dictionary.Add(main, new Food(main, FoodType.Type.main, Taco));
                     break;
                 default:
-                    Debug.LogError("invalid main " + main);
-                    break;
+                    throw new System.Exception("invalid main " + main);
             }
         }
     }
@@ -81,8 +81,7 @@ public sealed class MenuBuilder : ScriptableObject {
                     dictionary.Add(topping, new Food(topping, FoodType.Type.topping, SourCream));
                     break;
                 default:
-                    Debug.LogError("invalid topping " + topping);
-                    break;
+                    throw new System.Exception("invalid topping " + topping);
             }
         }
     }
@@ -104,19 +103,86 @@ public sealed class MenuBuilder : ScriptableObject {
                     dictionary.Add(drink, new Food(drink, FoodType.Type.drink, IceTea));
                     break;
                 default:
-                    Debug.LogError("invalid drink " + drink);
-                    break;
+                    throw new System.Exception("invalid drink " + drink);
             }
         }
     }
 
-    /**** PUBLIC API ****/
+    // This method is inefficient due to poor convention in seperating menu items
+    private void BuildFullMenu(string[] food, string[] drinks) {
 
+        foreach (string item in food) {
+            // check to see if it exists in dictionary
+            if (dictionary.ContainsKey(item)) {
+                Food foodItem = dictionary[item];
+                switch (foodItem.GetFoodType()) {
+                    case FoodType.Type.main:
+                        currentMenu.SetMain(foodItem);
+                        break;
+                    case FoodType.Type.topping:
+                        currentMenu.AddTopping(foodItem);
+                        break;
+                    default:
+                        throw new System.Exception("invalid food type " + foodItem.GetFoodType());
+                }
+            } else {
+                throw new System.Exception("invalid menu item " + item);
+            }
+        }
+
+        foreach (string item in drinks) {
+            // check to see if it exists in dictionary
+            if (dictionary.ContainsKey(item)) {
+                Food foodItem = dictionary[item];
+                switch (foodItem.GetFoodType()) {
+                    case FoodType.Type.drink:
+                        currentMenu.AddDrink(foodItem);
+                        break;
+                    default:
+                        throw new System.Exception("invalid food type " + foodItem.GetFoodType());
+                }
+            } else {
+                throw new System.Exception("invalid menu item " + item);
+            }
+        }
+    }
+
+    private void BuildMenu(string[] food, string[] drinks, int numToppings, int numDrinks) {
+
+        if (!RestaurantInfo.Menus.IsValidAmount(food, numToppings) ||
+                !RestaurantInfo.Menus.IsValidAmount(drinks, numDrinks)) {
+            throw new System.Exception("invalid number of toppings or drinks");
+        }
+
+        this.currentMenu = new Menu();
+
+        BuildFullMenu(food, drinks);
+
+        // Now need to reduce list by removing elements
+    }
+
+    /**** PUBLIC API ****/
     public static MenuBuilder GetInstance() {
         return instance;
     }
 
+    public void BuildMenu(RestaurantInfo.Types type, int numToppings, int numDrinks) {
+    
+        switch (type) {
+            case (RestaurantInfo.Types.Burger):
+                BuildMenu(RestaurantInfo.Menus.Burger, RestaurantInfo.Menus.Drinks, 
+                            numToppings, numDrinks);
+                break;
+            case (RestaurantInfo.Types.Taco):
+                BuildMenu(RestaurantInfo.Menus.Taco, RestaurantInfo.Menus.Drinks, 
+                            numToppings, numDrinks);
+                break;
+            default:
+                throw new System.Exception("invalid menu type " + type);
+        }
+    }
+
     public Menu GetMenu() {
-        return currentMenu;
+        return this.currentMenu;
     }
 }

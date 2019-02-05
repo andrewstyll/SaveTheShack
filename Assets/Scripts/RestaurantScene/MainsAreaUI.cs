@@ -5,17 +5,25 @@ using UnityEngine;
 public class MainsAreaUI : MonoBehaviour {
 
     [SerializeField] private GameObject mainPrefab;
-    [SerializeField] private Sprite burgerSprite;
-    [SerializeField] private Sprite tacoSprite;
+    private MenuBuilder menuBuilder = MenuBuilder.GetInstance();
+    Menu currentMenu;
 
     void Awake() {
-    // determine what type of mains to spawn based on restaurant type
-        
+
     }
 
     // Start is called before the first frame update
     void Start() {
-        
+        menuBuilder.BuildMenu(RestaurantInfo.Types.Taco, 4, 4);
+        currentMenu = menuBuilder.GetMenu();
+
+        Debug.Log(currentMenu.GetMain().GetName());
+        foreach(Food topping in currentMenu.GetToppings()) {
+            Debug.Log(topping.GetName());
+        }
+        foreach (Food drink in currentMenu.GetDrinks()) {
+            Debug.Log(drink.GetName());
+        }
     }
 
     // Update is called once per frame

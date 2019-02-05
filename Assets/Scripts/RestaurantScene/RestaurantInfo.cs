@@ -14,6 +14,9 @@ public static class RestaurantInfo {
 
     public static class Menus {
 
+        /* need better way of differentiating between drinks food and mains and
+         * drinks. Right now feels inefficient      
+         */
         public static readonly string[] Drinks = {
             "Coffee",
             "RootBeer",
@@ -36,11 +39,13 @@ public static class RestaurantInfo {
             "Tomato",
             "Cheese",
             "Guacamole",
-            "SourCream"
+            "SourCream",
         };
 
+        // Doesn't account for main being stored in the array with the toppings
+        // need to seperate main from the toppings or come up with something else
         public static bool IsValidAmount(string[] array, int val) {
-            return (array.Length - 1 <= val && val >= 0);
+            return (val <= array.Length && val >= 0);
         }
     }
 }
