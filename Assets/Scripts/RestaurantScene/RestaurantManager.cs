@@ -5,7 +5,7 @@ using UnityEngine;
 public class RestaurantManager : MonoBehaviour {
 
     private MenuBuilder menuBuilder;
-    private RestaurantInfo.Types currentType = RestaurantInfo.Types.Burger;
+    private RestaurantInfo.Types currentType = RestaurantInfo.Types.Taco;
 
     // access singleton in awake
     private void Awake() {
@@ -16,7 +16,7 @@ public class RestaurantManager : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        
+
     }
 
     // Update is called once per frame
