@@ -212,8 +212,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 4ffe1260ddee648eb8c44955eccaee16, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -433,12 +433,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7c643bdc3fc4a0c89da5f6e2c56a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Burger: {fileID: 21300000, guid: b92b953fc5b8f42c58fe5312ac3867a8, type: 3}
+  Burger: {fileID: 21300000, guid: cc0d3e6e8b8ae4e92bc0fea3558f9dc2, type: 3}
   Taco: {fileID: 21300000, guid: dac42a8e312994d0a8a2b472a4d0b203, type: 3}
   Lettuce: {fileID: 21300000, guid: 4df7627460cfb475b922e7201fef0640, type: 3}
   Tomato: {fileID: 21300000, guid: e17c7b034410d4383a282ace1b69c0e0, type: 3}
-  Cheese: {fileID: 0}
-  Onion: {fileID: 0}
+  Cheese: {fileID: 21300000, guid: 1e696f7dc0719459c8d3733d54eaa9b3, type: 3}
+  Onion: {fileID: 21300000, guid: 84969138d6be7466da98a01f5c623814, type: 3}
   Guacamole: {fileID: 0}
   SourCream: {fileID: 0}
   Coffee: {fileID: 0}

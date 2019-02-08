@@ -27,7 +27,7 @@ public class ToppingUI : MonoBehaviour {
     private void Update() { }
 
     private void SetSprite(Sprite newSprite) {
-        if(this.sprite != null) {
+        if(newSprite != null) {
             this.sprite = newSprite;
             this.GetComponent<Image>().sprite = this.sprite;
             this.disabled = false;

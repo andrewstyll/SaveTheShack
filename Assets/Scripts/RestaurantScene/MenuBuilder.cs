@@ -163,7 +163,6 @@ public sealed class MenuBuilder : MonoBehaviour {
         this.currentMenu = new Menu();
 
         BuildFullMenu(food, drinks);
-
         // Now need to reduce list by removing elements
     }
 

@@ -20,7 +20,7 @@ public class ToppingAreaUI : MonoBehaviour {
         this.toppings = this.menuBuilder.GetMenu().GetToppings();
         for(int i = 0; i < MAX_TOPPINGS; i++) {
             ToppingUI UIScript = Instantiate(this.toppingPrefab, gameObject.transform, false).GetComponent<ToppingUI>();
-            if(i <= this.toppings.Count) {
+            if(i < this.toppings.Count) {
                 UIScript.SetTopping(this.toppings[i]);
             }
         }
