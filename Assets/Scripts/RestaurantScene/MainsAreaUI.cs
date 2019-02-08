@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class MainsAreaUI : MonoBehaviour {
 
+    private MenuBuilder menuBuilder;
     [SerializeField] private GameObject mainPrefab;
-    private MenuBuilder menuBuilder = MenuBuilder.GetInstance();
+
     Menu currentMenu;
 
     void Awake() {
-
+        menuBuilder = MenuBuilder.GetInstance();
     }
 
     // Start is called before the first frame update
     void Start() {
-        menuBuilder.BuildMenu(RestaurantInfo.Types.Taco, 4, 4);
+       
         currentMenu = menuBuilder.GetMenu();
 
         Debug.Log(currentMenu.GetMain().GetName());

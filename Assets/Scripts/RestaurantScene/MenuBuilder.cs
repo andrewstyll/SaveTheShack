@@ -9,10 +9,10 @@ using UnityEngine;
  * this is about and I don't want to think about my own datastructure performance
  * at all so I'm doing this....
  */
-public sealed class MenuBuilder {
+public sealed class MenuBuilder : MonoBehaviour {
 
     Random random = new Random();
-    private static readonly MenuBuilder instance = new MenuBuilder();
+    private static MenuBuilder instance;
 
     private Dictionary<string, Food> dictionary;
     private Menu currentMenu;
@@ -31,9 +31,15 @@ public sealed class MenuBuilder {
     [SerializeField] private Sprite GreenSoda;
     [SerializeField] private Sprite IceTea;
 
-    private MenuBuilder() {
-        dictionary = new Dictionary<string, Food>();
-        BuildDictionary();
+    private void Awake() {
+        if(instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            dictionary = new Dictionary<string, Food>();
+            BuildDictionary();
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     private void BuildDictionary() {
@@ -166,8 +172,12 @@ public sealed class MenuBuilder {
         return instance;
     }
 
-    public void BuildMenu(RestaurantInfo.Types type, int numToppings, int numDrinks) {
-    
+    public void BuildMenu(RestaurantInfo.Types type) {
+        // On API update I will implement using these values, removed atm to 
+        // avoid confusing API
+        int numToppings = 0;
+        int numDrinks = 0;
+
         switch (type) {
             case (RestaurantInfo.Types.Burger):
                 BuildMenu(RestaurantInfo.Menus.Burger, RestaurantInfo.Menus.Drinks, 
