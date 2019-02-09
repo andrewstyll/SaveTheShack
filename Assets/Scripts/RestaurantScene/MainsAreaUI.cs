@@ -18,7 +18,6 @@ public class MainsAreaUI : MonoBehaviour {
         this.menuBuilder = MenuBuilder.GetInstance();
 
         this.main = this.menuBuilder.GetMenu().GetMain();
-        Debug.Log("Got Main");
         for(int i = 0; i < MAX_MAINS; i++) {
             MainUI UIScript = Instantiate(this.mainPrefab, gameObject.transform, false).GetComponent<MainUI>();
             UIScript.SetMain(this.main);

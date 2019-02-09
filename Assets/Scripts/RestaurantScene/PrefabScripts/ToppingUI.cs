@@ -14,6 +14,9 @@ public class ToppingUI : MonoBehaviour {
     private Sprite sprite;
     private Button toppingButton;
 
+    public delegate void EventHandler(Food food);
+    public static event EventHandler FoodSelected;
+
     private void Awake() {
         this.GetComponent<Image>().sprite = this.disabledSprite;
         this.toppingButton = this.GetComponent<Button>();
@@ -39,7 +42,7 @@ public class ToppingUI : MonoBehaviour {
     private void AddTopping() {
         // add an event that will be picked up by the serving area
         if (!this.disabled) {
-            Debug.Log("Topping Added");
+            FoodSelected(this.topping);
         }
     }
 

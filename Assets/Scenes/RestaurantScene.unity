@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 380397085}
   - component: {fileID: 380397084}
   - component: {fileID: 380397083}
+  - component: {fileID: 380397086}
   m_Layer: 5
   m_Name: Trash
   m_TagString: Untagged
@@ -229,6 +230,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380397081}
   m_CullTransparentMesh: 0
+--- !u!114 &380397086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380397081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a9a36c8aa6504b7caa5f854b0b5350e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,8 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Burger: {fileID: 21300000, guid: cc0d3e6e8b8ae4e92bc0fea3558f9dc2, type: 3}
   Taco: {fileID: 21300000, guid: dac42a8e312994d0a8a2b472a4d0b203, type: 3}
-  Lettuce: {fileID: 21300000, guid: 4df7627460cfb475b922e7201fef0640, type: 3}
-  Tomato: {fileID: 21300000, guid: e17c7b034410d4383a282ace1b69c0e0, type: 3}
+  Lettuce: {fileID: 21300000, guid: 9237b9558149a4d1a9e2b9fe0574e71a, type: 3}
+  Tomato: {fileID: 21300000, guid: f07c354aed3424ac9a697e30be8707b0, type: 3}
   Cheese: {fileID: 21300000, guid: 1e696f7dc0719459c8d3733d54eaa9b3, type: 3}
   Onion: {fileID: 21300000, guid: 84969138d6be7466da98a01f5c623814, type: 3}
   Guacamole: {fileID: 0}
@@ -722,6 +735,7 @@ GameObject:
   - component: {fileID: 1534793530}
   - component: {fileID: 1534793532}
   - component: {fileID: 1534793531}
+  - component: {fileID: 1534793533}
   m_Layer: 5
   m_Name: PreppedOrder
   m_TagString: Untagged
@@ -785,6 +799,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534793529}
   m_CullTransparentMesh: 0
+--- !u!114 &1534793533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534793529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cfe81d09c1c149d5a1a1ac986a8285f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1919691362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1094,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 90, y: 50}
+  m_CellSize: {x: 70, y: 50}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 3

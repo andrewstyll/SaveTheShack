@@ -42,6 +42,10 @@ public class MainUI : MonoBehaviour {
 
     private MainState state;
 
+    // Event to add food to serving plate
+    public delegate void EventHandler(Food food);
+    public static event EventHandler FoodSelected;
+
     private void Awake() {
         this.state = MainState.NoFood;
         this.timerObject.SetActive(false);
@@ -131,6 +135,7 @@ public class MainUI : MonoBehaviour {
 
             if (this.state == MainState.Cooked) {
                 // add an event that will be picked up by the serving area
+                FoodSelected(this.main);
             }
             this.state = MainState.NoFood;
         }
@@ -162,7 +167,6 @@ public class MainUI : MonoBehaviour {
     public void SetMain(Food main) {
         this.main = main;
         this.SetRawSprite(this.main.GetSprite());
-        // call this.SetTimer when implemented
     }
 
     public string GetName() {
