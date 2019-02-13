@@ -27,7 +27,7 @@ public class DrinksAreaUI : MonoBehaviour {
         for (int i = 0; i < MAX_DRINKS; i++) {
             DrinkUI UIScript = Instantiate(this.drinkPrefab, gameObject.transform, false).GetComponent<DrinkUI>();
             if (i < this.drinks.Count) {
-                //UIScript.SetTopping(this.toppings[i]);
+                UIScript.SetDrink(this.drinks[i]);
             }
         }
     }

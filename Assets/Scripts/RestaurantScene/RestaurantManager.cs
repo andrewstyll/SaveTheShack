@@ -13,7 +13,6 @@ public class RestaurantManager : MonoBehaviour {
     // access singleton in awake?
     private void Awake() {
         this.menuBuilder = MenuBuilder.GetInstance();
-
     }
 
     // Start is called before the first frame update

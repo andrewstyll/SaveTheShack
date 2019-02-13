@@ -13,6 +13,7 @@ public class PreppedOrderUI : MonoBehaviour {
     private void Start() {
         MainUI.FoodSelected += AddFoodToOrderEvent;
         ToppingUI.FoodSelected += AddFoodToOrderEvent;
+        DrinkUI.FoodSelected += AddFoodToOrderEvent;
         TrashUI.TrashClicked += ClearOrderEvent;
     }
 
@@ -41,7 +42,6 @@ public class PreppedOrderUI : MonoBehaviour {
 
     /**** Events ****/
     private void AddFoodToOrderEvent(Food food) {
-        Debug.Log("Adding " + food.GetName() + " to order");
         if(food.GetFoodType() == FoodType.Type.drink && drink == null) {
             DisplayDrink(food);
             this.drink = food;

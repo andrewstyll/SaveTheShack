@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour {
 
-    private enum MainState {
+    private enum State {
         NoFood,
         Cooking,
         Cooked,
@@ -35,14 +35,14 @@ public class MainUI : MonoBehaviour {
 
     private Button mainButton;
 
-    private MainState state;
+    private State state;
 
     // Event to add food to serving plate
     public delegate void PreppedOrderEvent(Food food);
     public static event PreppedOrderEvent FoodSelected;
 
     private void Awake() {
-        this.state = MainState.NoFood;
+        this.state = State.NoFood;
         this.timerObject.SetActive(false);
 
         this.alphaControl.a = ALPHA_HIDDEN;
@@ -65,23 +65,23 @@ public class MainUI : MonoBehaviour {
     }
 
     private void HandleCookingTimes() {
-        if (this.state == MainState.Cooking) {
+        if (this.state == State.Cooking) {
             if (this.timeRemaining < 0) {
                 this.timeRemaining = BURN_TIME;
                 this.timerObject.SetActive(false);
 
                 this.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
-                this.state = MainState.Cooked;
+                this.state = State.Cooked;
             } else {
                 this.timeRemaining -= Time.deltaTime;
                 this.timerObject.GetComponent<Slider>().value = (COOK_TIME - this.timeRemaining) / COOK_TIME;
             }
-        } else if (this.state == MainState.Cooked) {
+        } else if (this.state == State.Cooked) {
             if (this.timeRemaining < 0) {
                 TurnOffWarning();
 
                 this.GetComponent<Image>().sprite = this.main.GetBurntSprite();
-                this.state = MainState.Burnt;
+                this.state = State.Burnt;
             } else {
                 // put if statement to show burn indicator
                 if(!this.burnLightOn && this.timeRemaining <= BURN_TIME/2) {
@@ -106,17 +106,18 @@ public class MainUI : MonoBehaviour {
         StopCoroutine(FlickerWarning());
     }
 
+    /**** OnClick ****/
     private void PerformCookingAction() {
-        if (this.state == MainState.NoFood) {
+        if (this.state == State.NoFood) {
             // set up burger to count down cooking timer
             this.SetTimerObject();
 
             this.alphaControl.a = ALPHA_FULL;
             this.GetComponent<Image>().color = this.alphaControl;
             this.GetComponent<Image>().sprite = this.main.GetUnPreppedSprite();
-            this.state = MainState.Cooking;
+            this.state = State.Cooking;
 
-        } else if(this.state == MainState.Cooked || this.state == MainState.Burnt) {
+        } else if(this.state == State.Cooked || this.state == State.Burnt) {
             // if the burger is cooked or burnt, we have to remove it
             if(this.burnLightOn) {
                 TurnOffWarning();
@@ -126,11 +127,11 @@ public class MainUI : MonoBehaviour {
             this.GetComponent<Image>().color = this.alphaControl;
             this.GetComponent<Image>().sprite =this.main.GetPreppedSprite();
 
-            if (this.state == MainState.Cooked) {
+            if (this.state == State.Cooked) {
                 // add an event that will be picked up by the serving area
                 FoodSelected(this.main);
             }
-            this.state = MainState.NoFood;
+            this.state = State.NoFood;
         }
     }
 
@@ -138,14 +139,14 @@ public class MainUI : MonoBehaviour {
     IEnumerator FlickerWarning() {
         burnLightOn = true;
         float flickerTime = FADE_IN + FADE_OUT;
-        while (this.state == MainState.Cooked) {
-            while(this.state == MainState.Cooked && flickerTime >= FADE_OUT) {
+        while (this.state == State.Cooked) {
+            while(this.state == State.Cooked && flickerTime >= FADE_OUT) {
                 flickerTime -= Time.deltaTime;
                 this.alphaControl.a = Mathf.Min(((FADE_IN + FADE_OUT) - flickerTime) / FADE_OUT, 1.0f);
                 this.warningSpriteObject.GetComponent<Image>().color = this.alphaControl;
                 yield return null;
             }
-            while(this.state == MainState.Cooked && flickerTime >= 0) {
+            while(this.state == State.Cooked && flickerTime >= 0) {
                 flickerTime -= Time.deltaTime;
                 this.alphaControl.a = Mathf.Max(flickerTime / FADE_IN, 0.0f);
                 this.warningSpriteObject.GetComponent<Image>().color = this.alphaControl;
