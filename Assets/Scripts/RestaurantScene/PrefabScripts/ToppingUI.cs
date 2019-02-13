@@ -49,7 +49,7 @@ public class ToppingUI : MonoBehaviour {
     /*** PUBLIC API ***/
     public void SetTopping(Food topping) {
         this.topping = topping;
-        SetSprite(this.topping.GetSprite());
+        SetSprite(this.topping.GetPreppedSprite());
     }
 
     public string GetName() {

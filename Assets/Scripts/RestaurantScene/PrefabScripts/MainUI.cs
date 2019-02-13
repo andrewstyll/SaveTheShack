@@ -15,12 +15,11 @@ public class MainUI : MonoBehaviour {
     [SerializeField] private GameObject timerObject;
     [SerializeField] private GameObject warningSpriteObject;
 
-    // will need to pass this in too as it's different for each main
-    [SerializeField] private Sprite burntSprite; 
-
     private Food main;
 
     private Sprite rawSprite;
+    private Sprite cookedSprite;
+    private Sprite burntSprite;
 
     // control alpha for all sprites
     private Color alphaControl = Color.white;
@@ -71,7 +70,7 @@ public class MainUI : MonoBehaviour {
 
     private void SetRawSprite(Sprite sprite) {
         this.rawSprite = sprite;
-        this.GetComponent<Image>().sprite = this.rawSprite;
+
     }
 
     private void HandleCookingTimes() {
@@ -88,7 +87,7 @@ public class MainUI : MonoBehaviour {
             if (this.timeRemaining < 0) {
                 TurnOffWarning();
 
-                this.GetComponent<Image>().sprite = this.burntSprite;
+                this.GetComponent<Image>().sprite = this.main.GetBurntSprite();
                 this.state = MainState.Burnt;
             } else {
                 // put if statement to show burn indicator
@@ -121,6 +120,7 @@ public class MainUI : MonoBehaviour {
 
             this.alphaControl.a = ALPHA_FULL;
             this.GetComponent<Image>().color = this.alphaControl;
+            this.GetComponent<Image>().sprite = this.main.GetUnPreppedSprite();
             this.state = MainState.Cooking;
 
         } else if(this.state == MainState.Cooked || this.state == MainState.Burnt) {
@@ -131,7 +131,7 @@ public class MainUI : MonoBehaviour {
 
             this.alphaControl.a = ALPHA_HALF;
             this.GetComponent<Image>().color = this.alphaControl;
-            this.GetComponent<Image>().sprite =this.rawSprite;
+            this.GetComponent<Image>().sprite =this.main.GetPreppedSprite();
 
             if (this.state == MainState.Cooked) {
                 // add an event that will be picked up by the serving area
@@ -166,7 +166,7 @@ public class MainUI : MonoBehaviour {
     /**** Public API ****/
     public void SetMain(Food main) {
         this.main = main;
-        this.SetRawSprite(this.main.GetSprite());
+        this.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
     }
 
     public string GetName() {

@@ -21,7 +21,9 @@ public class PreppedOrderUI : MonoBehaviour {
 
     private void DisplayDrink(Food food) { }
 
-    private void DisplayFood(Food food) { }
+    private void DisplayFood(Food food) { 
+        
+    }
 
     private void AddFood(Food food) {
         // add on to topmost food entry

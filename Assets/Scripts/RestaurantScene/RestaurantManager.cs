@@ -7,9 +7,9 @@ public class RestaurantManager : MonoBehaviour {
     private MenuBuilder menuBuilder;
     private RestaurantInfo.Types currentType = RestaurantInfo.Types.Burger;
 
-    // access singleton in awake
+    // access singleton in awake?
     private void Awake() {
-        // assume we have recieved a type from somewhere, set manu with it
+        // assume we have recieved a type from somewhere, set menu with it
     }
 
     // Start is called before the first frame update

@@ -13,6 +13,7 @@ public sealed class MenuBuilder : MonoBehaviour {
 
     Random random = new Random();
     private static MenuBuilder instance;
+    private DictionaryBuilder thingy;// = DictionaryBuilder.GetInstance();
 
     private Dictionary<string, Food> dictionary;
     private Menu currentMenu;
