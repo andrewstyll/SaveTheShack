@@ -1,0 +1,24 @@
+﻿{
+  "List": [
+    {
+      "name": "GreenSoda",
+      "unPreppedSpriteName": "Green_Empty_RD",
+      "preppedSpriteName": "Green_Empty_RD"
+    },
+    {
+      "name": "BlueSoda",
+      "unPreppedSpriteName": "Blue_Empty_RD",
+      "preppedSpriteName": "Blue_Full_RD"
+    },
+    {
+      "name": "BrownSoda",
+      "unPreppedSpriteName": "Brown_Empty_RD",
+      "preppedSpriteName": "Brown_Full_RD"
+    },
+    {
+      "name": "OrangeSoda",
+      "unPreppedSpriteName": "Orange_Empty_RD",
+      "preppedSpriteName": "Orange_Full_RD"
+    }
+  ]
+}

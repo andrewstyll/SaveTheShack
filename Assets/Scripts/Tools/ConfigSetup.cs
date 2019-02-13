@@ -12,15 +12,14 @@ public sealed class ConfigSetup {
     private JsonFoodContainer toppingsList;
     private JsonFoodContainer drinksList;
 
-    private string spritePath = "Sprites/";
-    private string mainsInfoFilePath = "Assets/Config/Mains.json";
-    private string toppingsInfoFilePath = "Assets/Config/Toppings.json";
-    private string drinksInfoFilePath = "Assets/Config/Drinks.json";
+    private readonly string mainsInfoFilePath = "Assets/Resources/Config/Mains.json";
+    private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
+    private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
 
     private ConfigSetup() {
         this.mainsList = GetConfig(mainsInfoFilePath);
         this.toppingsList = GetConfig(toppingsInfoFilePath);
-        //GetConfig(drinksInfoFilePath, this.drinksList);
+        this.drinksList = GetConfig(drinksInfoFilePath);
     }
 
     private JsonFoodContainer GetConfig(string jsonString) {

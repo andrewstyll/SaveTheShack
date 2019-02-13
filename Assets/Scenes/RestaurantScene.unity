@@ -446,18 +446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7c643bdc3fc4a0c89da5f6e2c56a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Burger: {fileID: 21300000, guid: cc0d3e6e8b8ae4e92bc0fea3558f9dc2, type: 3}
-  Taco: {fileID: 21300000, guid: dac42a8e312994d0a8a2b472a4d0b203, type: 3}
-  Lettuce: {fileID: 21300000, guid: 9237b9558149a4d1a9e2b9fe0574e71a, type: 3}
-  Tomato: {fileID: 21300000, guid: f07c354aed3424ac9a697e30be8707b0, type: 3}
-  Cheese: {fileID: 21300000, guid: 1e696f7dc0719459c8d3733d54eaa9b3, type: 3}
-  Onion: {fileID: 21300000, guid: 84969138d6be7466da98a01f5c623814, type: 3}
-  Guacamole: {fileID: 0}
-  SourCream: {fileID: 0}
-  Coffee: {fileID: 0}
-  RootBeer: {fileID: 0}
-  GreenSoda: {fileID: 0}
-  IceTea: {fileID: 0}
 --- !u!1 &817511792
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,6 +570,8 @@ GameObject:
   - component: {fileID: 1208732015}
   - component: {fileID: 1208732017}
   - component: {fileID: 1208732016}
+  - component: {fileID: 1208732018}
+  - component: {fileID: 1208732019}
   m_Layer: 5
   m_Name: DrinksArea
   m_TagString: Untagged
@@ -645,6 +635,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208732014}
   m_CullTransparentMesh: 0
+--- !u!114 &1208732018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208732014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 40
+  m_ChildAlignment: 7
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+--- !u!114 &1208732019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208732014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f93fb3453be4f0eae24e2cec840c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drinkPrefab: {fileID: 8850326160234377628, guid: a3a2dee510d9b45b2ade9850951653b3,
+    type: 3}
 --- !u!1 &1400058320
 GameObject:
   m_ObjectHideFlags: 0

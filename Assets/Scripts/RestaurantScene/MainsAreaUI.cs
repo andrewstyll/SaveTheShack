@@ -7,14 +7,13 @@ public class MainsAreaUI : MonoBehaviour {
     private const int MAX_MAINS = 3;
 
     private MenuBuilder menuBuilder;
-
     private Food main;
     [SerializeField] private GameObject mainPrefab;
 
-    void Awake() { }
+    private void Awake() { }
 
     // Start is called before the first frame update
-    void Start() {
+    private void Start() {
         this.menuBuilder = MenuBuilder.GetInstance();
 
         this.main = this.menuBuilder.GetMenu().GetMain();

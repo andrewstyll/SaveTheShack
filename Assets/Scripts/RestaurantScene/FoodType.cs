@@ -9,6 +9,7 @@ public static class FoodType {
         drink
     };
 
+    /*
     public static readonly string[] Mains = {
         "Burger",
         "Taco"
@@ -29,4 +30,5 @@ public static class FoodType {
         "GreenSoda",
         "IceTea"
     };
+    */
 }

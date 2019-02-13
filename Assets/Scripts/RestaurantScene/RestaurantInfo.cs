@@ -14,23 +14,16 @@ public static class RestaurantInfo {
 
     public static class Menus {
 
-        /* need better way of differentiating between drinks food and mains and
-         * drinks. Right now feels inefficient      
-         */
-        public static readonly string[] Drinks = {
-            "Coffee",
-            "RootBeer",
-            "GreenSoda",
-            "IceTea"
-        };
-
         // assume only 1 main per menu for now.
         public static readonly string[] Burger = {
             "Burger",
             "Lettuce",
             "Tomato",
             "Cheese",
-            "Onion"
+            "Onion",
+            "GreenSoda",
+            "BlueSoda",
+            "BrownSoda"
         };
 
         public static readonly string[] Taco = {
@@ -40,12 +33,9 @@ public static class RestaurantInfo {
             "Cheese",
             "Guacamole",
             "SourCream",
+            "GreenSoda",
+            "BrownSoda",
+            "OrangeSoda"
         };
-
-        // Doesn't account for main being stored in the array with the toppings
-        // need to seperate main from the toppings or come up with something else
-        public static bool IsValidAmount(string[] array, int val) {
-            return (val <= array.Length && val >= 0);
-        }
     }
 }
