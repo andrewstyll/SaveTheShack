@@ -38,8 +38,8 @@ public class MainUI : MonoBehaviour {
     private MainState state;
 
     // Event to add food to serving plate
-    public delegate void EventHandler(Food food);
-    public static event EventHandler FoodSelected;
+    public delegate void PreppedOrderEvent(Food food);
+    public static event PreppedOrderEvent FoodSelected;
 
     private void Awake() {
         this.state = MainState.NoFood;

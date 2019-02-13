@@ -3,32 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random; 
 
-/* I had this idea for using a PQueue to store different master menus with 
- * random values determining priority, and then using each master menu to create
- * smaller menus that will change every day. Runs faster than linked list
- * removal at index strategy i'm using below but implementing a pqueue isn't what
- * this is about and I don't want to think about my own datastructure performance
- * at all so I'm doing this....
- */
-public sealed class MenuBuilder : MonoBehaviour {
+public sealed class MenuBuilder {
 
-    private static MenuBuilder instance;
+    private static readonly MenuBuilder instance = new MenuBuilder();
 
-    private readonly ConfigSetup configData = ConfigSetup.GetInstance();
+    private ConfigSetup configData;
     private readonly string foodSpriteUrl = "Sprites/Food/";
 
     private Dictionary<string, Food> dictionary;
     private Menu currentMenu;
+    private bool setupComplete = false;
 
-    private void Awake() {
-        if(instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            this.dictionary = new Dictionary<string, Food>();
-            FillDictionary();
-        } else {
-            Destroy(gameObject);
-        }
+    private MenuBuilder() {
+        this.configData = ConfigSetup.GetInstance();
+        this.configData.RunConfigSetup();
+        this.InitMenuBuilder();
+        this.setupComplete = true;
+    }
+
+    private void InitMenuBuilder() {
+        this.dictionary = new Dictionary<string, Food>();
+        this.FillDictionary();
     }
 
     private void FillDictionary() {
@@ -84,6 +79,10 @@ public sealed class MenuBuilder : MonoBehaviour {
     /**** PUBLIC API ****/
     public static MenuBuilder GetInstance() {
         return instance;
+    }
+
+    public bool MenuSetupComplete() {
+        return this.setupComplete;
     }
 
     public void BuildMenu(RestaurantInfo.Types type) {

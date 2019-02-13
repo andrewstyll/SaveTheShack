@@ -10,10 +10,19 @@ public class DrinksAreaUI : MonoBehaviour {
     private List<Food> drinks;
     [SerializeField] private GameObject drinkPrefab;
 
-    // Start is called before the first frame update
-    private void Start() {
+    private void Awake() {
         this.menuBuilder = MenuBuilder.GetInstance();
+        RestaurantManager.MenuCreated += SpawnDrinksEvent;
+    }
 
+    // Start is called before the first frame update
+    private void Start() { }
+
+    // Update is called once per frame
+    private void Update() { }
+
+    /**** Events ****/
+    private void SpawnDrinksEvent() {
         this.drinks = this.menuBuilder.GetMenu().GetDrinks();
         for (int i = 0; i < MAX_DRINKS; i++) {
             DrinkUI UIScript = Instantiate(this.drinkPrefab, gameObject.transform, false).GetComponent<DrinkUI>();
@@ -22,7 +31,4 @@ public class DrinksAreaUI : MonoBehaviour {
             }
         }
     }
-
-    // Update is called once per frame
-    private void Update() { }
 }

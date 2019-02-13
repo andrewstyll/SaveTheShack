@@ -40,7 +40,7 @@ public class PreppedOrderUI : MonoBehaviour {
     }
 
     /**** Events ****/
-    public void AddFoodToOrderEvent(Food food) {
+    private void AddFoodToOrderEvent(Food food) {
         Debug.Log("Adding " + food.GetName() + " to order");
         if(food.GetFoodType() == FoodType.Type.drink && drink == null) {
             DisplayDrink(food);

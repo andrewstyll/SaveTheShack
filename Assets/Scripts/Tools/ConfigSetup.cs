@@ -4,6 +4,10 @@ using UnityEngine;
 
 using System.IO;
 
+/* This only needs to be run once per game startup i believe? I will put this
+ * with the title screen later. I think it's better for this to be a mono behaviour
+ * so that everything runs at the same time
+ */
 public sealed class ConfigSetup {
 
     private static readonly ConfigSetup instance = new ConfigSetup();
@@ -16,10 +20,15 @@ public sealed class ConfigSetup {
     private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
     private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
 
-    private ConfigSetup() {
+    private bool setupComplete = false;
+
+    private ConfigSetup() {}
+
+    public void RunConfigSetup() {
         this.mainsList = GetConfig(mainsInfoFilePath);
         this.toppingsList = GetConfig(toppingsInfoFilePath);
         this.drinksList = GetConfig(drinksInfoFilePath);
+        setupComplete = true;
     }
 
     private JsonFoodContainer GetConfig(string jsonString) {
@@ -49,5 +58,9 @@ public sealed class ConfigSetup {
                 break;
         }
         return null;
+    }
+
+    public bool ConfigSetupComplete() {
+        return setupComplete;
     }
 }
