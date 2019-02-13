@@ -4,33 +4,13 @@ using UnityEngine;
 
 public class Food {
 
-    private string name;
-    private FoodType.Type type;
+    private readonly string name;
+    private readonly FoodType.Type type;
 
-    private Sprite unPreppedSprite;
-    private Sprite preppedSprite;
-    private Sprite burntSprite;
+    private readonly Sprite unPreppedSprite;
+    private readonly Sprite preppedSprite;
+    private readonly Sprite burntSprite;
 
-    // constructor for toppings
-    public Food(string name, FoodType.Type type, Sprite preppedSprite) {
-        this.name = name;
-        this.type = type;
-        this.preppedSprite = preppedSprite;
-        this.unPreppedSprite = null;
-        this.burntSprite = null;
-    }
-
-    // constructor for drinks
-    public Food(string name, FoodType.Type type, Sprite unPreppedSprite,
-                Sprite preppedSprite) {
-        this.name = name;
-        this.type = type;
-        this.unPreppedSprite = unPreppedSprite;
-        this.preppedSprite = preppedSprite;
-        this.burntSprite = null;
-    }
-
-    // constructor for mains
     public Food(string name, FoodType.Type type, Sprite unPreppedSprite, 
                 Sprite preppedSprite, Sprite burntSprite) {
         this.name = name;

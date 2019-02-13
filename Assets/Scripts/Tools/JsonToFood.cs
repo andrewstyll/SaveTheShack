@@ -10,7 +10,7 @@ public struct JsonFoodContainer {
 [System.Serializable]
 public class JsonToFood {
     public string name;
-    public string unPreppedSpritePath;
-    public string preppedSpritePath;
-    public string burntSpritePath;
+    public string unPreppedSpriteName;
+    public string preppedSpriteName;
+    public string burntSpriteName;
 }

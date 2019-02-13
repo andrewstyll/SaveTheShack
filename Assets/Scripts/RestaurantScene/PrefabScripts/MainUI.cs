@@ -17,10 +17,6 @@ public class MainUI : MonoBehaviour {
 
     private Food main;
 
-    private Sprite rawSprite;
-    private Sprite cookedSprite;
-    private Sprite burntSprite;
-
     // control alpha for all sprites
     private Color alphaControl = Color.white;
     private const float ALPHA_HIDDEN = 0.0f;
@@ -68,16 +64,13 @@ public class MainUI : MonoBehaviour {
         HandleCookingTimes();
     }
 
-    private void SetRawSprite(Sprite sprite) {
-        this.rawSprite = sprite;
-
-    }
-
     private void HandleCookingTimes() {
         if (this.state == MainState.Cooking) {
             if (this.timeRemaining < 0) {
                 this.timeRemaining = BURN_TIME;
                 this.timerObject.SetActive(false);
+
+                this.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
                 this.state = MainState.Cooked;
             } else {
                 this.timeRemaining -= Time.deltaTime;
