@@ -12,4 +12,5 @@ public struct JsonServingSpritePath {
 public class JsonToRestaurant {
     public string[] Menu;
     public JsonServingSpritePath ServingSprites;
+    public string SpriteLocation;
 }

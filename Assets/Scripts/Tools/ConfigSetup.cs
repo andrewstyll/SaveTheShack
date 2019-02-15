@@ -75,10 +75,10 @@ public sealed class ConfigSetup {
         return null;
     }
 
-    public string[] GetRestaurantMenu(RestaurantInfo.Types restaurantType) {
-        switch(restaurantType) {
+    public JsonToRestaurant GetRestaurantData(RestaurantInfo.Types restaurantType) {
+        switch (restaurantType) {
             case RestaurantInfo.Types.Burger:
-                return burgerData.Menu;
+                return burgerData;
             default:
                 throw new System.Exception("Unsupported Restaurant Type");
         }

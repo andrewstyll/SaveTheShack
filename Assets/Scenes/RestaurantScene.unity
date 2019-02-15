@@ -148,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 131.6, y: -85.500015}
+  m_AnchoredPosition: {x: 134, y: -74.15}
   m_SizeDelta: {x: 91.8, y: 85.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &380397083
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 380397081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a9a36c8aa6504b7caa5f854b0b5350e, type: 3}
+  m_Script: {fileID: 11500000, guid: d1da0540ffb47435aa89ab16c2ca138d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028
@@ -400,7 +400,6 @@ GameObject:
   m_Component:
   - component: {fileID: 654610484}
   - component: {fileID: 654610483}
-  - component: {fileID: 654610485}
   m_Layer: 0
   m_Name: RestaurantManager
   m_TagString: Untagged
@@ -434,18 +433,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &654610485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654610482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e7c643bdc3fc4a0c89da5f6e2c56a74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &817511792
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,8 +469,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -288.4, y: 2.9}
-  m_SizeDelta: {x: 192.2, y: 227.3}
+  m_AnchoredPosition: {x: -288.4, y: -4.175}
+  m_SizeDelta: {x: 192.2, y: 213.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817511794
 MonoBehaviour:
@@ -554,7 +541,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 817511792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6009d39f89c84a98a635772d6508b69, type: 3}
+  m_Script: {fileID: 11500000, guid: ab34857739edd45859c4173c5f4d35cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainPrefab: {fileID: 6622820390262924857, guid: 0917a722ad8ae4310aa5020c7a58d46e,
@@ -595,8 +582,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 291.9, y: 2.9}
-  m_SizeDelta: {x: 192.2, y: 227.3}
+  m_AnchoredPosition: {x: 291.9, y: -4.175}
+  m_SizeDelta: {x: 192.2, y: 213.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208732016
 MonoBehaviour:
@@ -667,7 +654,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208732014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11f93fb3453be4f0eae24e2cec840c86, type: 3}
+  m_Script: {fileID: 11500000, guid: f11da89ae026d4fafb15b6acd901d3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   drinkPrefab: {fileID: 8850326160234377628, guid: a3a2dee510d9b45b2ade9850951653b3,
@@ -711,8 +698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 140.5}
-  m_SizeDelta: {x: 0, y: 280.8}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: 0, y: 249.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1400058322
 MonoBehaviour:
@@ -786,8 +773,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -44.5, y: -85.50002}
-  m_SizeDelta: {x: 217.9, y: 85.3}
+  m_AnchoredPosition: {x: -32.79997, y: -71.1}
+  m_SizeDelta: {x: 217.9, y: 79.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1534793531
 MonoBehaviour:
@@ -835,7 +822,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1534793529}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cfe81d09c1c149d5a1a1ac986a8285f, type: 3}
+  m_Script: {fileID: 11500000, guid: 369fa18f060694d4e8a127a981e7bd66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1919691362
@@ -1061,8 +1048,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000059605, y: 43.7}
-  m_SizeDelta: {x: 320, y: 145.7}
+  m_AnchoredPosition: {x: 0.0000076294, y: 42.2}
+  m_SizeDelta: {x: 283.5, y: 120.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1987769802
 MonoBehaviour:
@@ -1134,7 +1121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1987769800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24a2583c81b024a38b2f13e98bc8da9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 114273fdacc0a44cc9e9f289e8e2bdfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   toppingPrefab: {fileID: 637595679631247275, guid: c9dac4ac0722e499e9d24edbe3a6dcc0,

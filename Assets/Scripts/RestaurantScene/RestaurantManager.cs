@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class RestaurantManager : MonoBehaviour {
 
-    private MenuBuilder menuBuilder;
+    private RestaurantBuilder restaurantBuilder;
     private RestaurantInfo.Types currentType = RestaurantInfo.Types.Burger;
 
     public delegate void FoodAreaEvent();
     public static event FoodAreaEvent MenuCreated;
 
-    // access singleton in awake?
     private void Awake() {
-        this.menuBuilder = MenuBuilder.GetInstance();
+        this.restaurantBuilder = RestaurantBuilder.GetInstance();
     }
 
     // Start is called before the first frame update
     private void Start() {
-        if (this.menuBuilder.MenuSetupComplete()) {
-            this.CreateMenu(currentType);
+        if (this.restaurantBuilder.SetupComplete()) {
+            this.CreateRestaurant(currentType);
         } else {
             StartCoroutine("WaitForMenuComplete");
         }
@@ -27,15 +26,15 @@ public class RestaurantManager : MonoBehaviour {
     // Update is called once per frame
     private void Update() { }
 
-    private void CreateMenu(RestaurantInfo.Types restaurantType) {
-        this.menuBuilder.BuildMenu(currentType);
+    private void CreateRestaurant(RestaurantInfo.Types restaurantType) {
+        this.restaurantBuilder.BuildRestaurant(restaurantType);
         MenuCreated();
     }
 
     IEnumerator WaitForMenuComplete() {
-        while(!this.menuBuilder.MenuSetupComplete()) {
+        while(!this.restaurantBuilder.SetupComplete()) {
             yield return null;
         }
-        this.CreateMenu(currentType);
+        this.CreateRestaurant(currentType);
     }
 }

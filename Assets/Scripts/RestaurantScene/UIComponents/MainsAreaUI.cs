@@ -6,12 +6,12 @@ public class MainsAreaUI : MonoBehaviour {
 
     private const int MAX_MAINS = 3;
 
-    private MenuBuilder menuBuilder;
+    private RestaurantBuilder restaurantBuilder;
     private Food main;
     [SerializeField] private GameObject mainPrefab;
 
     private void Awake() {
-        this.menuBuilder = MenuBuilder.GetInstance();
+        this.restaurantBuilder = RestaurantBuilder.GetInstance();
         RestaurantManager.MenuCreated += SpawnMainsEvent;
     }
 
@@ -23,7 +23,7 @@ public class MainsAreaUI : MonoBehaviour {
 
     /**** Events ****/
     private void SpawnMainsEvent() {
-        this.main = this.menuBuilder.GetMenu().GetMain();
+        this.main = this.restaurantBuilder.GetMenu().GetMain();
         for (int i = 0; i < MAX_MAINS; i++) {
             MainUI UIScript = Instantiate(this.mainPrefab, gameObject.transform, false).GetComponent<MainUI>();
             UIScript.SetMain(this.main);

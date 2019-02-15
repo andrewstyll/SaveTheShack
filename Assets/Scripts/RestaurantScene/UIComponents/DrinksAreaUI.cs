@@ -6,12 +6,12 @@ public class DrinksAreaUI : MonoBehaviour {
 
     private const int MAX_DRINKS = 2;
 
-    private MenuBuilder menuBuilder;
+    private RestaurantBuilder restaurantBuilder;
     private List<Food> drinks;
     [SerializeField] private GameObject drinkPrefab;
 
     private void Awake() {
-        this.menuBuilder = MenuBuilder.GetInstance();
+        this.restaurantBuilder = RestaurantBuilder.GetInstance();
         RestaurantManager.MenuCreated += SpawnDrinksEvent;
     }
 
@@ -23,7 +23,7 @@ public class DrinksAreaUI : MonoBehaviour {
 
     /**** Events ****/
     private void SpawnDrinksEvent() {
-        this.drinks = this.menuBuilder.GetMenu().GetDrinks();
+        this.drinks = this.restaurantBuilder.GetMenu().GetDrinks();
         for (int i = 0; i < MAX_DRINKS; i++) {
             DrinkUI UIScript = Instantiate(this.drinkPrefab, gameObject.transform, false).GetComponent<DrinkUI>();
             if (i < this.drinks.Count) {

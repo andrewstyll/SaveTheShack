@@ -12,5 +12,6 @@
   "ServingSprites": {
     "Bottom": "Bun_Bottom",
     "Top": "Bun_Top"
-  }
+  },
+  "SpriteLocation": "Sprites/BurgerRestaurant/"
 }
