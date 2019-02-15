@@ -9,6 +9,7 @@ public sealed class MenuBuilder {
 
     private ConfigSetup configData;
     private readonly string foodSpriteUrl = "Sprites/Food/";
+    private string[] restaurantMenu;
 
     private Dictionary<string, Food> dictionary;
     private Menu currentMenu;
@@ -43,10 +44,10 @@ public sealed class MenuBuilder {
             }
         }
     }
-    
-    private void BuildFullMenu(string[] restaurantMenu) {
 
-        foreach (string item in restaurantMenu) {
+    private void BuildFullMenu() {
+
+        foreach (string item in this.restaurantMenu) {
             // check to see if it exists in dictionary
             if (dictionary.ContainsKey(item)) {
                 Food foodItem = dictionary[item];
@@ -69,10 +70,10 @@ public sealed class MenuBuilder {
         }
     }
 
-    private void BuildMenu(string[] restaurantMenu) {
+    private void BuildMenu() {
         this.currentMenu = new Menu();
 
-        BuildFullMenu(restaurantMenu);
+        BuildFullMenu();
         // Now need to reduce list by removing elements
     }
 
@@ -89,10 +90,8 @@ public sealed class MenuBuilder {
 
         switch (type) {
             case (RestaurantInfo.Types.Burger):
-                BuildMenu(RestaurantInfo.Menus.Burger);
-                break;
-            case (RestaurantInfo.Types.Taco):
-                BuildMenu(RestaurantInfo.Menus.Taco);
+                this.restaurantMenu = configData.GetRestaurantMenu(type);
+                BuildMenu();
                 break;
             default:
                 throw new System.Exception("invalid menu type " + type);

@@ -20,22 +20,37 @@ public sealed class ConfigSetup {
     private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
     private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
 
+    private JsonToRestaurant burgerData; 
+
+    private readonly string burgerRestaurantPath = "Assets/Resources/Config/BurgerRestaurant.json";
+
     private bool setupComplete = false;
 
     private ConfigSetup() {}
 
     public void RunConfigSetup() {
-        this.mainsList = GetConfig(mainsInfoFilePath);
-        this.toppingsList = GetConfig(toppingsInfoFilePath);
-        this.drinksList = GetConfig(drinksInfoFilePath);
-        setupComplete = true;
+        this.mainsList = GetFoodConfig(mainsInfoFilePath);
+        this.toppingsList = GetFoodConfig(toppingsInfoFilePath);
+        this.drinksList = GetFoodConfig(drinksInfoFilePath);
+
+        this.burgerData = GetRestaurantConfig(burgerRestaurantPath);
+        this.setupComplete = true;
     }
 
-    private JsonFoodContainer GetConfig(string jsonString) {
+    private JsonFoodContainer GetFoodConfig(string jsonString) {
 
         if (File.Exists(jsonString)) {
             string jsonFile = File.ReadAllText(jsonString);
             return JsonUtility.FromJson<JsonFoodContainer>(jsonFile);
+        } else {
+            throw new System.Exception("Config File Not Found: " + jsonString);
+        }
+    }
+
+    private JsonToRestaurant GetRestaurantConfig(string jsonString) {
+        if (File.Exists(jsonString)) {
+            string jsonFile = File.ReadAllText(jsonString);
+            return JsonUtility.FromJson<JsonToRestaurant>(jsonFile);
         } else {
             throw new System.Exception("Config File Not Found: " + jsonString);
         }
@@ -58,6 +73,15 @@ public sealed class ConfigSetup {
                 break;
         }
         return null;
+    }
+
+    public string[] GetRestaurantMenu(RestaurantInfo.Types restaurantType) {
+        switch(restaurantType) {
+            case RestaurantInfo.Types.Burger:
+                return burgerData.Menu;
+            default:
+                throw new System.Exception("Unsupported Restaurant Type");
+        }
     }
 
     public bool ConfigSetupComplete() {

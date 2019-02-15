@@ -1,0 +1,16 @@
+﻿{
+  "Menu": [
+    "Burger",
+    "Lettuce",
+    "Tomato",
+    "Cheese",
+    "Onion",
+    "GreenSoda",
+    "BlueSoda",
+    "BrownSoda"
+  ],
+  "ServingSprites": {
+    "Bottom": "Bun_Bottom",
+    "Top": "Bun_Top"
+  }
+}

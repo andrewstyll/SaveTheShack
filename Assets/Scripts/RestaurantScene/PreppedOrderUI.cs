@@ -43,7 +43,6 @@ public class PreppedOrderUI : MonoBehaviour {
     /**** Events ****/
     private void AddFoodToOrderEvent(Food food) {
         if(food.GetFoodType() == FoodType.Type.drink && drink == null) {
-            DisplayDrink(food);
             this.drink = food;
         } else {
             // food adding is more complex
