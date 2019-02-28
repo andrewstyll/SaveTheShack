@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class MealDrawer {
     public abstract void AppendSprite(Sprite sprite);
 
-    public abstract void BuildFromList(List<Sprite> list);
+    public abstract GameObject BuildFromList(List<Food> list);
 }

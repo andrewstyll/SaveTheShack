@@ -16,7 +16,7 @@ public class BurgerDrawer : MealDrawer {
         throw new System.NotImplementedException();
     }
 
-    public override void BuildFromList(List<Sprite> list) {
+    public override GameObject BuildFromList(List<Food> list) {
         throw new System.NotImplementedException();
     }
 }

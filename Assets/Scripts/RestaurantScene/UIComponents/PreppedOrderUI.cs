@@ -7,7 +7,12 @@ public class PreppedOrderUI : MonoBehaviour {
     private List<Food> currentPreppedFood = new List<Food>();
     private Food drink = null;
 
-    private void Awake() { }
+    private RestaurantBuilder restaurantBuilder;
+    private MealDrawer mealDrawer;
+
+    private void Awake() {
+        this.restaurantBuilder = RestaurantBuilder.GetInstance();
+    }
 
     // Start is called before the first frame update
     private void Start() {
@@ -15,6 +20,12 @@ public class PreppedOrderUI : MonoBehaviour {
         ToppingUI.FoodSelected += AddFoodToOrderEvent;
         DrinkUI.FoodSelected += AddFoodToOrderEvent;
         TrashUI.TrashClicked += ClearOrderEvent;
+        if(this.restaurantBuilder.MealDrawerCreated()) {
+            this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
+        } else {
+            Debug.Log("Should have been able to grab Meal Drawer here, starting wait coroutine");
+            StartCoroutine("WaitForMealDrawerCreated");
+        }
     }
 
     // Update is called once per frame
@@ -23,12 +34,12 @@ public class PreppedOrderUI : MonoBehaviour {
     private void DisplayDrink(Food food) { }
 
     private void DisplayFood(Food food) { 
-        
+        // render returned gameobject from the burgerDrawer
     }
 
     private void AddFood(Food food) {
         // add on to topmost food entry
-        this.DisplayFood(food);
+        //this.DisplayFood(food);
         this.currentPreppedFood.Add(food);
     }
 
@@ -56,5 +67,15 @@ public class PreppedOrderUI : MonoBehaviour {
         this.currentPreppedFood.Clear();
         this.drink = null;
         PrintCurrentOrder();
+    }
+
+    /**** Coroutines ****/
+    IEnumerator WaitForMealDrawerCreated() {
+        // the meal drawer should 100% be finished before people can even click an order
+        // this is just hear in case to avoid grabbing a null reference
+        while (!this.restaurantBuilder.MealDrawerCreated()) {
+            yield return null;
+        }
+        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
     }
 }

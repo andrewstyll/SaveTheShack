@@ -31,6 +31,7 @@ public class RestaurantManager : MonoBehaviour {
         MenuCreated();
     }
 
+    /**** Coroutine ****/
     IEnumerator WaitForMenuComplete() {
         while(!this.restaurantBuilder.SetupComplete()) {
             yield return null;

@@ -18,6 +18,7 @@ public sealed class RestaurantBuilder {
     private string restaurantSpritePath;
     private MealDrawer mealDrawer;
     private Menu menu;
+    private bool mealDrawerCreated = false;
 
     private RestaurantBuilder() {
         this.configData = ConfigSetup.GetInstance();
@@ -101,6 +102,10 @@ public sealed class RestaurantBuilder {
         return this.setupComplete;
     }
 
+    public bool MealDrawerCreated() {
+        return this.mealDrawerCreated;
+    }
+
     public void BuildRestaurant(RestaurantInfo.Types type) {
         if(type == RestaurantInfo.Types.NoType) {
             throw new System.Exception("Can't build restaurant of type NoType");
@@ -111,12 +116,18 @@ public sealed class RestaurantBuilder {
             this.restaurantMenu = restaurantData.Menu;
             this.restaurantSpritePath = restaurantData.SpriteLocation;
 
-            //this.BuildMealDrawer(restaurantData);
+            this.mealDrawerCreated = false;
+            this.BuildMealDrawer(restaurantData);
+            this.mealDrawerCreated = true;
         }
         this.BuildNewMenu();
     }
 
     public Menu GetMenu() {
         return this.menu;
+    }
+
+    public MealDrawer GetMealDrawer() {
+        return this.mealDrawer;
     }
 }
