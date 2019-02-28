@@ -12,7 +12,7 @@ public class Order {
         this.myDrink = drink;
     }
 
-    public bool SameFood(List<Food> food) {
+    private bool IsSameFood(List<Food> food) {
         if(this.myFood.Count != food.Count) {
             return false;
         } else {
@@ -25,7 +25,20 @@ public class Order {
         }
     }
 
-    public bool SameDrink(Food drink) {
+    private bool IsSameDrink(Food drink) {
         return (this.myDrink == drink);
+    }
+
+    /**** PUBLIC API ****/
+    public List<Food> GetFood() {
+        return this.myFood;
+    }
+
+    public Food GetDrink() {
+        return this.myDrink;
+    }
+
+    public bool IsMatchingOrder(Order order) {
+        return (this.IsSameDrink(order.GetDrink()) && this.IsSameFood(order.GetFood()));
     }
 }

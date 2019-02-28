@@ -25,7 +25,6 @@ public class CustomerUI : MonoBehaviour {
         // needs to grab list of food on serving tray
         // needs to compare the lists
         // if true, notify custmer manager to remove customer
-        List<Food> preppedOrder;
 
     }
 
