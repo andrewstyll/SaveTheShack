@@ -7,10 +7,19 @@ public class Order {
     private List<Food> myFood;
     private Food myDrink;
 
-    Order(List<Food> food, Food drink) {
+    public Order(List<Food> food, Food drink) {
         this.myFood = food;
         this.myDrink = drink;
     }
+     /**** Operator Overload ****/
+    public static bool operator == (Order a, Order b) {
+        return (a.IsSameDrink(b.GetDrink()) && a.IsSameFood(b.GetFood()));
+    }
+
+    public static bool operator != (Order a, Order b) {
+        return (!a.IsSameDrink(b.GetDrink()) && !a.IsSameFood(b.GetFood()));
+    }
+    /**** ****/
 
     private bool IsSameFood(List<Food> food) {
         if(this.myFood.Count != food.Count) {
@@ -36,9 +45,5 @@ public class Order {
 
     public Food GetDrink() {
         return this.myDrink;
-    }
-
-    public bool IsMatchingOrder(Order order) {
-        return (this.IsSameDrink(order.GetDrink()) && this.IsSameFood(order.GetFood()));
     }
 }
