@@ -16,14 +16,14 @@ public sealed class OrderBuilder {
         restaurantBuilder = RestaurantBuilder.GetInstance();
     }
 
-    private List<Food> GetFood() {
-        List<Food> foodOrder = new List<Food>();
+    private List<string> GetFood() {
+        List<string> foodOrder = new List<string>();
         Menu menu = restaurantBuilder.GetMenu();
         int foodToAdd = MAX_TOPPINGS;
 
         // determine if main used or no main, 5% chance of no main
         if (Random.Range(0,100) > ODDS_NO_MAIN) {
-            foodOrder.Add(menu.GetMain());
+            foodOrder.Add(menu.GetMain().GetName());
             foodToAdd--;
         }
 
@@ -31,9 +31,12 @@ public sealed class OrderBuilder {
         foodToAdd = Random.Range(0, foodToAdd);
 
         // add toppings, ensuring no 2 same toppings in a row
-        List<Food> toppingList = new List<Food>(menu.GetToppings());
-        Food lastFoodAdded = null;
-        Food newFoodSelected = null;
+        List<string> toppingList = new List<string>();
+        foreach(Food food in menu.GetToppings()) {
+            toppingList.Add(food.GetName());
+        }
+        string lastFoodAdded = null;
+        string newFoodSelected = null;
         for(int i = 0; i < foodToAdd; i++) {
             newFoodSelected = toppingList[Random.Range(0, toppingList.Count - 1)];
             foodOrder.Add(newFoodSelected);
@@ -48,12 +51,12 @@ public sealed class OrderBuilder {
         return foodOrder;
     }
 
-    private Food GetDrink() {
-        Food drinkOrder = null;
+    private string GetDrink() {
+        string drinkOrder = null;
         Menu menu = restaurantBuilder.GetMenu();
 
         if (Random.Range(0, 100) > ODDS_NO_DRINK) {
-            drinkOrder = menu.GetDrinks()[Random.Range(0, menu.GetDrinksLength() - 1)];
+            drinkOrder = menu.GetDrinks()[Random.Range(0, menu.GetDrinksLength() - 1)].GetName();
         }
         return drinkOrder;
     }
@@ -63,11 +66,9 @@ public sealed class OrderBuilder {
     }
 
     public Order BuildOrder() {
-        List<Food> food = GetFood();
-        Food drink = GetDrink();
+        List<string> food = GetFood();
+        string drink = GetDrink();
 
         return new Order(food, drink);
     }
-
-
 }

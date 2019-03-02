@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class MealDrawer {
-    public abstract void AppendSprite(Sprite sprite);
+    public abstract void GetBaseDrawing(GameObject parentObject);
 
-    public abstract GameObject BuildFromList(List<Food> list);
+    public abstract void AppendFood(GameObject parentObject, string foodName);
+
+    public abstract void FinishDrawing(GameObject parentObject);
 }

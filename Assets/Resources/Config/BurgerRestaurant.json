@@ -9,9 +9,31 @@
     "BlueSoda",
     "BrownSoda"
   ],
-  "ServingSprites": {
+  "RestaurantDisplaySprites": {
     "Bottom": "Bun_Bottom",
     "Top": "Bun_Top"
   },
+  "FoodDisplaySprites": [
+    {
+      "Name": "Burger",
+      "SpriteName": "Burger_Stack"
+    },
+    {
+      "Name": "Lettuce",
+      "SpriteName": "Lettuce_Stack"
+    },
+    {
+      "Name": "Onion",
+      "SpriteName": "Onion_Stack"
+    },
+    {
+      "Name": "Tomato",
+      "SpriteName": "Tomato_Stack"
+    },
+    {
+      "Name": "Cheese",
+      "SpriteName": "Cheese_Stack"
+    }
+  ],
   "SpriteLocation": "Sprites/BurgerRestaurant/"
 }

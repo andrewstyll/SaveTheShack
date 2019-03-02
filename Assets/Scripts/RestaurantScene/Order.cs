@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Order {
 
-    private List<Food> myFood;
-    private Food myDrink;
+    private List<string> myFood;
+    private string myDrink;
 
-    public Order(List<Food> food, Food drink) {
+    public Order(List<string> food, string drink) {
         this.myFood = food;
         this.myDrink = drink;
     }
@@ -21,12 +21,12 @@ public class Order {
     }
     /**** ****/
 
-    private bool IsSameFood(List<Food> food) {
+    private bool IsSameFood(List<string> food) {
         if(this.myFood.Count != food.Count) {
             return false;
         } else {
             for(int i = 0; i < this.myFood.Count; i++) {
-                if(this.myFood[i].GetName() != food[i].GetName()) {
+                if(this.myFood[i] != food[i]) {
                     return false;
                 }
             }
@@ -34,24 +34,24 @@ public class Order {
         }
     }
 
-    private bool IsSameDrink(Food drink) {
+    private bool IsSameDrink(string drink) {
         return (this.myDrink == drink);
     }
 
     public void PrintOrder() {
-        Debug.Log("Drink is: " + (this.myDrink != null ? this.myDrink.GetName() : "no drink set"));
+        Debug.Log("Drink is: " + (this.myDrink != null ? this.myDrink : "no drink set"));
         Debug.Log("Food Order is currently: " + (this.myFood.Count == 0 ? "no food set" : ""));
-        foreach (Food food in this.myFood) {
-            Debug.Log(food.GetName());
+        foreach (string food in this.myFood) {
+            Debug.Log(food);
         }
     }
 
     /**** PUBLIC API ****/
-    public List<Food> GetFood() {
+    public List<string> GetFood() {
         return this.myFood;
     }
 
-    public Food GetDrink() {
+    public string GetDrink() {
         return this.myDrink;
     }
 }

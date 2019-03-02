@@ -9,8 +9,15 @@ public struct JsonServingSpritePath {
 }
 
 [System.Serializable]
+public struct JsonFoodDisplaySprites {
+    public string Name;
+    public string SpriteName;
+}
+
+[System.Serializable]
 public class JsonToRestaurant {
     public string[] Menu;
-    public JsonServingSpritePath ServingSprites;
+    public JsonServingSpritePath RestaurantDisplaySprites;
+    public JsonFoodDisplaySprites[] FoodDisplaySprites;
     public string SpriteLocation;
 }

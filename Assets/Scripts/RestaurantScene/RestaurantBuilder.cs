@@ -9,7 +9,7 @@ public sealed class RestaurantBuilder {
 
     private ConfigSetup configData;
     private readonly string foodSpritePath = "Sprites/Food/";
-    private Dictionary<string, Food> dictionary;
+    private Dictionary<string, Food> foodDictionary;
     private bool setupComplete = false;
 
     // Current restaurant data
@@ -28,7 +28,7 @@ public sealed class RestaurantBuilder {
     }
 
     private void InitMenuBuilder() {
-        this.dictionary = new Dictionary<string, Food>();
+        this.foodDictionary = new Dictionary<string, Food>();
         this.FillDictionary();
     }
 
@@ -44,7 +44,7 @@ public sealed class RestaurantBuilder {
                                     Resources.Load<Sprite>(foodSpritePath + jsonFood.preppedSpriteName),
                                     Resources.Load<Sprite>(foodSpritePath + jsonFood.burntSpriteName));
                                    
-                    this.dictionary.Add(jsonFood.name, newFood);
+                    this.foodDictionary.Add(jsonFood.name, newFood);
                 }
             }
         }
@@ -53,9 +53,8 @@ public sealed class RestaurantBuilder {
     private void BuildMealDrawer(JsonToRestaurant restaurantData) {
         switch(this.currentRestaurantType) {
             case RestaurantInfo.Types.Burger:
-                this.mealDrawer = new BurgerDrawer(
-                                    Resources.Load<Sprite>(restaurantSpritePath + restaurantData.ServingSprites.Top),
-                                    Resources.Load<Sprite>(restaurantSpritePath + restaurantData.ServingSprites.Bottom));
+                this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantDisplaySprites.Top,
+                                                    restaurantData.RestaurantDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
                 break;
             default:
                 throw new System.Exception("Can't create meal drawer of invalid type");
@@ -66,8 +65,8 @@ public sealed class RestaurantBuilder {
 
         foreach (string item in this.restaurantMenu) {
             // check to see if it exists in dictionary
-            if (dictionary.ContainsKey(item)) {
-                Food foodItem = dictionary[item];
+            if (foodDictionary.ContainsKey(item)) {
+                Food foodItem = foodDictionary[item];
                 switch (foodItem.GetFoodType()) {
                     case FoodType.Type.main:
                         menu.SetMain(foodItem);

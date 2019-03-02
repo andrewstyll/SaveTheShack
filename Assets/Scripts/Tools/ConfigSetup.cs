@@ -56,6 +56,7 @@ public sealed class ConfigSetup {
         }
     }
 
+    /**** Public API ****/
     public static ConfigSetup GetInstance() {
         return instance;
     }
