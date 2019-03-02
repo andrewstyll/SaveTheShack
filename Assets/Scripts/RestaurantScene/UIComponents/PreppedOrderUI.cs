@@ -44,30 +44,22 @@ public class PreppedOrderUI : MonoBehaviour {
         this.preppedFood.Add(food);
     }
 
-    private void PrintCurrentOrder() {
-        Debug.Log("Drink is: " + (this.preppedDrink != null ? this.preppedDrink.GetName() : "no drink set"));
-        Debug.Log("Food Order is currently: " + (this.preppedFood.Count == 0 ? "no food set" : ""));
-        foreach(Food food in this.preppedFood) {
-            Debug.Log(food.GetName());
-        }
-    }
+
 
     /**** Events ****/
     private void AddFoodToOrderEvent(Food food) {
-        if(food.GetFoodType() == FoodType.Type.drink && preppedDrink == null) {
+        if (food.GetFoodType() == FoodType.Type.drink && preppedDrink == null) {
             this.preppedDrink = food;
         } else {
             // food adding is more complex
             this.AddFood(food);
         }
-        //PrintCurrentOrder();
     }
 
     public void ClearOrderEvent() {
         Debug.Log("Throwing out everything");
         this.preppedFood.Clear();
         this.preppedDrink = null;
-        //PrintCurrentOrder();
     }
 
     public bool CheckMatchingOrder(Order order) {

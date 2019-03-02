@@ -38,6 +38,14 @@ public class Order {
         return (this.myDrink == drink);
     }
 
+    public void PrintOrder() {
+        Debug.Log("Drink is: " + (this.myDrink != null ? this.myDrink.GetName() : "no drink set"));
+        Debug.Log("Food Order is currently: " + (this.myFood.Count == 0 ? "no food set" : ""));
+        foreach (Food food in this.myFood) {
+            Debug.Log(food.GetName());
+        }
+    }
+
     /**** PUBLIC API ****/
     public List<Food> GetFood() {
         return this.myFood;

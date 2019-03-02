@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CustomerUI : MonoBehaviour {
 
     private int id;
+    private float patience = 15.0f;
 
     private OrderBuilder orderBuilder;
     private Order myOrder;
@@ -26,12 +27,16 @@ public class CustomerUI : MonoBehaviour {
 
     private void Start() {
         this.myOrder = orderBuilder.BuildOrder();
+        this.myOrder.PrintOrder();
     }
 
     // Update is called once per frame
     private void Update() {
-        // update patience as time passes
-        // if patience hits 0, remove customer
+        if(patience > 0) {
+            patience -= Time.deltaTime;
+        } else {
+            DestroyMe(this.id);
+        }
     }
 
     private void DisplayOrder() {
