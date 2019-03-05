@@ -38,7 +38,7 @@ public class MainUI : MonoBehaviour {
     private State state;
 
     // Event to add food to serving plate
-    public delegate void PreppedOrderEvent(Food food);
+    public delegate bool PreppedOrderEvent(Food food);
     public static event PreppedOrderEvent FoodSelected;
 
     private void Awake() {
@@ -117,7 +117,7 @@ public class MainUI : MonoBehaviour {
             this.GetComponent<Image>().sprite = this.main.GetUnPreppedSprite();
             this.state = State.Cooking;
 
-        } else if(this.state == State.Cooked || this.state == State.Burnt) {
+        } else if(this.state == State.Burnt || (this.state == State.Cooked && FoodSelected(this.main))) {
             // if the burger is cooked or burnt, we have to remove it
             if(this.burnLightOn) {
                 TurnOffWarning();
@@ -127,10 +127,7 @@ public class MainUI : MonoBehaviour {
             this.GetComponent<Image>().color = this.alphaControl;
             this.GetComponent<Image>().sprite =this.main.GetPreppedSprite();
 
-            if (this.state == State.Cooked) {
-                // add an event that will be picked up by the serving area
-                FoodSelected(this.main);
-            }
+
             this.state = State.NoFood;
         }
     }

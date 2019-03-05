@@ -9,7 +9,7 @@
     "BlueSoda",
     "BrownSoda"
   ],
-  "RestaurantDisplaySprites": {
+  "RestaurantFoodDisplaySprites": {
     "Bottom": "Bun_Bottom",
     "Top": "Bun_Top"
   },
@@ -33,6 +33,12 @@
     {
       "Name": "Cheese",
       "SpriteName": "Cheese_Stack"
+    }
+  ],
+  "RestaurantThemeSprites": [
+    {
+      "Name": "TopMe",
+      "SpriteName": "Top_Me"
     }
   ],
   "SpriteLocation": "Sprites/BurgerRestaurant/"

@@ -14,7 +14,7 @@ public class ToppingUI : MonoBehaviour {
     private Sprite sprite;
     private Button toppingButton;
 
-    public delegate void EventHandler(Food food);
+    public delegate bool EventHandler(Food food);
     public static event EventHandler FoodSelected;
 
     private void Awake() {
@@ -42,6 +42,8 @@ public class ToppingUI : MonoBehaviour {
     private void AddTopping() {
         // add an event that will be picked up by the serving area
         if (!this.disabled) {
+
+            // returns boolean, but doesn't matter in this case
             FoodSelected(this.topping);
         }
     }

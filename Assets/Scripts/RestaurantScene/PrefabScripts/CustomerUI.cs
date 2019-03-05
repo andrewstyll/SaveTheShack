@@ -15,6 +15,11 @@ public class CustomerUI : MonoBehaviour {
 
     private RestaurantBuilder restaurantBuilder;
     private MealDrawer mealDrawer;
+
+    private const float ALPHA_HIDDEN = 0.0f;
+    private const float ALPHA_FULL = 1.0f;
+    Color alphaControl = Color.white;
+
     [SerializeField] private GameObject drawnFood;
     [SerializeField] private GameObject drawnDrink;
 
@@ -54,8 +59,12 @@ public class CustomerUI : MonoBehaviour {
             mealDrawer.AppendFood(drawnFood, food);
         }
         mealDrawer.FinishDrawing(drawnFood);
-
-        drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
+        if(this.myOrder.GetDrink() != null) {
+            drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
+        } else {
+            alphaControl.a = ALPHA_HIDDEN;
+            drawnDrink.GetComponent<Image>().color = alphaControl;
+        }
     }
 
     /**** EVENTS ****/

@@ -12,10 +12,15 @@ public sealed class RestaurantBuilder {
     private Dictionary<string, Food> foodDictionary;
     private bool setupComplete = false;
 
+    // Restaurant Sprite Setup
+    private Dictionary<string, Sprite> themeSpriteDictionary;
+
     // Current restaurant data
     private RestaurantInfo.Types currentRestaurantType = RestaurantInfo.Types.NoType;
     private string[] restaurantMenu;
     private string restaurantSpritePath;
+
+    // Meal Drawer
     private MealDrawer mealDrawer;
     private Menu menu;
     private bool mealDrawerCreated = false;
@@ -29,10 +34,10 @@ public sealed class RestaurantBuilder {
 
     private void InitMenuBuilder() {
         this.foodDictionary = new Dictionary<string, Food>();
-        this.FillDictionary();
+        this.FillFoodDictionary();
     }
 
-    private void FillDictionary() {
+    private void FillFoodDictionary() {
         Food newFood = null;
 
         foreach (FoodType.Type foodType in System.Enum.GetValues(typeof(FoodType.Type))) {
@@ -53,8 +58,8 @@ public sealed class RestaurantBuilder {
     private void BuildMealDrawer(JsonToRestaurant restaurantData) {
         switch(this.currentRestaurantType) {
             case RestaurantInfo.Types.Burger:
-                this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantDisplaySprites.Top,
-                                                    restaurantData.RestaurantDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
+                this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantFoodDisplaySprites.Top,
+                                                    restaurantData.RestaurantFoodDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
 
                 foreach (KeyValuePair<string, Food> entry in this.foodDictionary) {
                     // do something with entry.Value or entry.Key
@@ -68,6 +73,21 @@ public sealed class RestaurantBuilder {
                 throw new System.Exception("Can't create meal drawer of invalid type");
         }
 
+    }
+
+    private void FillThemeSpriteDictionary(JsonToRestaurant restaurantData) {
+        this.themeSpriteDictionary = new Dictionary<string, Sprite>();
+        switch (this.currentRestaurantType) {
+            case RestaurantInfo.Types.Burger:
+                foreach(JsonSpritesObject spritePair in restaurantData.RestaurantThemeSprites) {
+                    this.themeSpriteDictionary.Add(spritePair.Name, 
+                                                    Resources.Load<Sprite>(this.restaurantSpritePath + spritePair.SpriteName));
+                }
+
+                break;
+            default:
+                throw new System.Exception("Can't Fill theme sprites for invalid type");
+        }
     }
 
     private void BuildFullMenu() {
@@ -124,6 +144,8 @@ public sealed class RestaurantBuilder {
             this.restaurantMenu = restaurantData.Menu;
             this.restaurantSpritePath = restaurantData.SpriteLocation;
 
+            this.FillThemeSpriteDictionary(restaurantData);
+
             this.mealDrawerCreated = false;
             this.BuildMealDrawer(restaurantData);
             this.mealDrawerCreated = true;
@@ -137,5 +159,9 @@ public sealed class RestaurantBuilder {
 
     public MealDrawer GetMealDrawer() {
         return this.mealDrawer;
+    }
+
+    public Sprite GetThemedSprite(string name) {
+        return this.themeSpriteDictionary[name];
     }
 }

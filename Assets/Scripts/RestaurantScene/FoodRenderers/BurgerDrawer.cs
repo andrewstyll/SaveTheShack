@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class BurgerDrawer : MealDrawer {
 
-    private Sprite topBun;
-    private Sprite bottomBun;
+    private string TopBun = "TopBun";
+    private string BottomBun = "BottomBun";
     private Dictionary<string, Sprite> displaySprites;
 
-    public BurgerDrawer(string spritePath, string top, string bottom, JsonFoodDisplaySprites[] displayFood) {
-        this.topBun = Resources.Load<Sprite>(spritePath + top);
-        this.bottomBun = Resources.Load<Sprite>(spritePath + bottom);
-
+    public BurgerDrawer(string spritePath, string top, string bottom, JsonSpritesObject[] displayFood) {
         displaySprites = new Dictionary<string, Sprite>();
-        foreach(JsonFoodDisplaySprites displayObj in displayFood) {
+        displaySprites.Add(this.TopBun, Resources.Load<Sprite>(spritePath + top));
+        displaySprites.Add(this.BottomBun, Resources.Load<Sprite>(spritePath + bottom));
+
+        foreach (JsonSpritesObject displayObj in displayFood) {
             displaySprites.Add(displayObj.Name, Resources.Load<Sprite>(spritePath + displayObj.SpriteName));
         }
     }
@@ -27,33 +27,23 @@ public class BurgerDrawer : MealDrawer {
         layoutGroup.childControlWidth = true;
         layoutGroup.childForceExpandWidth = false;
         layoutGroup.childForceExpandHeight = false;
-        layoutGroup.childAlignment = TextAnchor.LowerCenter;
+        layoutGroup.childAlignment = TextAnchor.MiddleCenter;
         layoutGroup.spacing = -107;
-               
 
-        GameObject childObject = new GameObject("bottomBun");
-        childObject.AddComponent<Image>();
-        childObject.GetComponent<Image>().sprite = bottomBun;
+        StartDrawing(parentObject);
+    }
 
-        childObject.transform.parent = parentObject.transform;
+    public override void StartDrawing(GameObject parentObject) {
+        AppendFood(parentObject, BottomBun);
+    }
 
-        //childObject.transform.localPosition = objPosition;
-
-        childObject.transform.SetAsLastSibling();
+    public override void FinishDrawing(GameObject parentObject) {
+        AppendFood(parentObject, TopBun);
     }
 
     public override void AppendFood(GameObject parentObject, string foodName) {
         Sprite nextFood = displaySprites[foodName];
         GameObject childObject = new GameObject(foodName);
-        childObject.AddComponent<Image>();
-        childObject.GetComponent<Image>().sprite = nextFood;
-        childObject.transform.parent = parentObject.transform;
-        childObject.transform.SetAsLastSibling();
-    }
-
-    public override void FinishDrawing(GameObject parentObject) {
-        Sprite nextFood = topBun;
-        GameObject childObject = new GameObject();
         childObject.AddComponent<Image>();
         childObject.GetComponent<Image>().sprite = nextFood;
         childObject.transform.parent = parentObject.transform;

@@ -27,7 +27,7 @@ public class DrinkUI : MonoBehaviour {
 
     private State state;
 
-    public delegate void EventHandler(Food food);
+    public delegate bool EventHandler(Food food);
     public static event EventHandler FoodSelected;
 
     private void Awake() {
@@ -80,13 +80,12 @@ public class DrinkUI : MonoBehaviour {
             this.GetComponent<Image>().color = this.alphaControl;
             this.state = State.Pouring;
         } else if(this.state == State.Poured) {
-            this.alphaControl.a = ALPHA_HALF;
-            this.GetComponent<Image>().color = this.alphaControl;
-            this.GetComponent<Image>().sprite = this.drink.GetUnPreppedSprite();
-
-            FoodSelected(this.drink);
-
-            this.state = State.NoDrink;
+            if(FoodSelected(this.drink)) {
+                this.alphaControl.a = ALPHA_HALF;
+                this.GetComponent<Image>().color = this.alphaControl;
+                this.GetComponent<Image>().sprite = this.drink.GetUnPreppedSprite();
+                this.state = State.NoDrink;
+            }
         }
     }
 
