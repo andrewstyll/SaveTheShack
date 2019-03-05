@@ -55,10 +55,19 @@ public sealed class RestaurantBuilder {
             case RestaurantInfo.Types.Burger:
                 this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantDisplaySprites.Top,
                                                     restaurantData.RestaurantDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
+
+                foreach (KeyValuePair<string, Food> entry in this.foodDictionary) {
+                    // do something with entry.Value or entry.Key
+                    if(entry.Value.GetFoodType() == FoodType.Type.drink) {
+                        this.mealDrawer.ManuallyAddSprite(entry.Key, entry.Value.GetPreppedSprite());
+                    }
+                }
+
                 break;
             default:
                 throw new System.Exception("Can't create meal drawer of invalid type");
         }
+
     }
 
     private void BuildFullMenu() {

@@ -13,6 +13,11 @@ public class CustomerUI : MonoBehaviour {
 
     private Button customerButton;
 
+    private RestaurantBuilder restaurantBuilder;
+    private MealDrawer mealDrawer;
+    [SerializeField] private GameObject drawnFood;
+    [SerializeField] private GameObject drawnDrink;
+
     public delegate bool CustomerEvent(Order order);
     public static event CustomerEvent ServeMe;
 
@@ -20,14 +25,16 @@ public class CustomerUI : MonoBehaviour {
     public static event CustomerHandlerEvent DestroyMe;
 
     private void Awake() {
+        this.restaurantBuilder = RestaurantBuilder.GetInstance();
         orderBuilder = OrderBuilder.GetInstance();
         this.customerButton = this.GetComponent<Button>();
         this.customerButton.onClick.AddListener(ServeCustomer);
     }
 
     private void Start() {
+        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
         this.myOrder = orderBuilder.BuildOrder();
-        this.myOrder.PrintOrder();
+        this.DisplayOrder();
     }
 
     // Update is called once per frame
@@ -40,7 +47,15 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void DisplayOrder() {
+        mealDrawer.GetBaseDrawing(drawnFood);
 
+        List<string> myFood = this.myOrder.GetFood();
+        foreach(string food in myFood) {
+            mealDrawer.AppendFood(drawnFood, food);
+        }
+        mealDrawer.FinishDrawing(drawnFood);
+
+        drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
     }
 
     /**** EVENTS ****/

@@ -62,7 +62,7 @@ public class PreppedOrderUI : MonoBehaviour {
 
             alphaControl.a = ALPHA_FULL;
             drawnDrink.GetComponent<Image>().color = alphaControl;
-            drawnDrink.GetComponent<Image>().sprite = food.GetPreppedSprite();
+            drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.preppedDrink);
         } else {
             // food adding is more complex
             this.AddFood(food);

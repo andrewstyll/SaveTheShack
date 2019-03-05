@@ -8,4 +8,8 @@ public abstract class MealDrawer {
     public abstract void AppendFood(GameObject parentObject, string foodName);
 
     public abstract void FinishDrawing(GameObject parentObject);
+
+    public abstract void ManuallyAddSprite(string foodName, Sprite sprite);
+
+    public abstract Sprite ManuallyGetSprite(string foodName);
 }

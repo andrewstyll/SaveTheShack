@@ -20,6 +20,7 @@ public class BurgerDrawer : MealDrawer {
     }
 
     public override void GetBaseDrawing(GameObject parentObject) {
+
         parentObject.AddComponent<VerticalLayoutGroup>();
         VerticalLayoutGroup layoutGroup = parentObject.GetComponent<VerticalLayoutGroup>();
         layoutGroup.childControlHeight = true;
@@ -28,18 +29,22 @@ public class BurgerDrawer : MealDrawer {
         layoutGroup.childForceExpandHeight = false;
         layoutGroup.childAlignment = TextAnchor.LowerCenter;
         layoutGroup.spacing = -107;
+               
 
-        GameObject childObject = new GameObject();
+        GameObject childObject = new GameObject("bottomBun");
         childObject.AddComponent<Image>();
         childObject.GetComponent<Image>().sprite = bottomBun;
 
         childObject.transform.parent = parentObject.transform;
+
+        //childObject.transform.localPosition = objPosition;
+
         childObject.transform.SetAsLastSibling();
     }
 
     public override void AppendFood(GameObject parentObject, string foodName) {
         Sprite nextFood = displaySprites[foodName];
-        GameObject childObject = new GameObject();
+        GameObject childObject = new GameObject(foodName);
         childObject.AddComponent<Image>();
         childObject.GetComponent<Image>().sprite = nextFood;
         childObject.transform.parent = parentObject.transform;
@@ -53,5 +58,13 @@ public class BurgerDrawer : MealDrawer {
         childObject.GetComponent<Image>().sprite = nextFood;
         childObject.transform.parent = parentObject.transform;
         childObject.transform.SetAsLastSibling();
+    }
+
+    public override void ManuallyAddSprite(string foodName, Sprite sprite) {
+        displaySprites.Add(foodName, sprite);
+    }
+
+    public override Sprite ManuallyGetSprite(string foodName) {
+        return displaySprites[foodName];
     }
 }
