@@ -15,6 +15,13 @@ public class MainUI : MonoBehaviour {
     [SerializeField] private GameObject timerObject;
     [SerializeField] private GameObject warningSpriteObject;
 
+    [SerializeField] private GameObject unpreppedSpriteObject;
+    [SerializeField] private GameObject preppedSpriteObject;
+    [SerializeField] private GameObject burntSpriteObject;
+    private Image unpreppedSprite;
+    private Image preppedSprite;
+    private Image burntSprite;
+
     private Food main;
 
     // control alpha for all sprites
@@ -49,8 +56,11 @@ public class MainUI : MonoBehaviour {
         this.warningSpriteObject.GetComponent<Image>().color = this.alphaControl;
 
         // sprite will not be set yet here
-        this.alphaControl.a = ALPHA_HALF;
-        this.GetComponent<Image>().color = alphaControl;
+        this.unpreppedSprite = this.unpreppedSpriteObject.GetComponent<Image>();
+        this.preppedSprite = this.preppedSpriteObject.GetComponent<Image>();
+        this.burntSprite = this.burntSpriteObject.GetComponent<Image>();
+
+        UpdateMainSprite();
 
         this.mainButton = this.GetComponent<Button>();
         this.mainButton.onClick.AddListener(PerformCookingAction);
@@ -67,21 +77,24 @@ public class MainUI : MonoBehaviour {
     private void HandleCookingTimes() {
         if (this.state == State.Cooking) {
             if (this.timeRemaining < 0) {
+                this.state = State.Cooked;
+
                 this.timeRemaining = BURN_TIME;
                 this.timerObject.SetActive(false);
 
-                this.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
-                this.state = State.Cooked;
+                this.UpdateMainSprite();
             } else {
                 this.timeRemaining -= Time.deltaTime;
                 this.timerObject.GetComponent<Slider>().value = (COOK_TIME - this.timeRemaining) / COOK_TIME;
+                this.UpdateMainSprite();
             }
         } else if (this.state == State.Cooked) {
             if (this.timeRemaining < 0) {
+                this.state = State.Burnt;
+
                 TurnOffWarning();
 
-                this.GetComponent<Image>().sprite = this.main.GetBurntSprite();
-                this.state = State.Burnt;
+                this.UpdateMainSprite();
             } else {
                 // put if statement to show burn indicator
                 if(!this.burnLightOn && this.timeRemaining <= BURN_TIME/2) {
@@ -89,6 +102,40 @@ public class MainUI : MonoBehaviour {
                 }
                 this.timeRemaining -= Time.deltaTime;
             }
+        }
+    }
+
+    private void UpdateMainSprite() {
+        if(this.state == State.NoFood) {
+            this.alphaControl.a = ALPHA_HALF;
+            this.unpreppedSprite.color = this.alphaControl;
+
+            this.alphaControl.a = ALPHA_HIDDEN;
+            this.preppedSprite.color = this.alphaControl;
+            this.burntSprite.color = this.alphaControl;
+        } else if(this.state == State.Cooking) {
+
+            this.alphaControl.a = (float)(this.timeRemaining / COOK_TIME);
+            this.unpreppedSprite.color = this.alphaControl;
+
+            this.alphaControl.a = (float)(1.0 - (this.timeRemaining / COOK_TIME));
+            this.preppedSprite.color = this.alphaControl;
+
+        } else if(this.state == State.Cooked) {
+            this.alphaControl.a = ALPHA_FULL;
+            this.preppedSprite.color = this.alphaControl;
+
+
+            this.alphaControl.a = ALPHA_HIDDEN;
+            this.unpreppedSprite.color = this.alphaControl;
+            this.burntSprite.color = this.alphaControl;
+        } else if(this.state == State.Burnt) {
+            this.alphaControl.a = ALPHA_FULL;
+            this.burntSprite.color = this.alphaControl;
+
+            this.alphaControl.a = ALPHA_HIDDEN;
+            this.unpreppedSprite.color = this.alphaControl;
+            this.preppedSprite.color = this.alphaControl;
         }
     }
 
@@ -112,9 +159,6 @@ public class MainUI : MonoBehaviour {
             // set up burger to count down cooking timer
             this.SetTimerObject();
 
-            this.alphaControl.a = ALPHA_FULL;
-            this.GetComponent<Image>().color = this.alphaControl;
-            this.GetComponent<Image>().sprite = this.main.GetUnPreppedSprite();
             this.state = State.Cooking;
 
         } else if(this.state == State.Burnt || (this.state == State.Cooked && FoodSelected(this.main))) {
@@ -122,13 +166,9 @@ public class MainUI : MonoBehaviour {
             if(this.burnLightOn) {
                 TurnOffWarning();
             }
-
-            this.alphaControl.a = ALPHA_HALF;
-            this.GetComponent<Image>().color = this.alphaControl;
-            this.GetComponent<Image>().sprite =this.main.GetPreppedSprite();
-
-
             this.state = State.NoFood;
+
+            this.UpdateMainSprite();
         }
     }
 
@@ -157,7 +197,9 @@ public class MainUI : MonoBehaviour {
     /**** Public API ****/
     public void SetMain(Food main) {
         this.main = main;
-        this.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
+        this.unpreppedSprite.GetComponent<Image>().sprite = this.main.GetUnPreppedSprite();
+        this.preppedSprite.GetComponent<Image>().sprite = this.main.GetPreppedSprite();
+        this.burntSprite.GetComponent<Image>().sprite = this.main.GetBurntSprite();
     }
 
     public string GetName() {
