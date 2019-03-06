@@ -12,8 +12,8 @@ public class CustomerAreaUI : MonoBehaviour {
     private bool restaurantOpen = false;
     private int successfulServes;
     private float timeToNextCustomer;
-    private float customerWindowSize = 7.0f;
-    private float customerWindowMin = 10.0f;
+    private float customerWindowSize = 2.0f;
+    private float customerWindowMin = 5.0f;
 
     private RestaurantBuilder restaurantBuilder;
     private GameObject[] customerList;
