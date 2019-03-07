@@ -31,10 +31,8 @@ public class CustomerAreaUI : MonoBehaviour {
 
         freeSpawnSlots = new List<int>();
         customerList = new GameObject[MAX_CUSTOMERS];
-        Transform siblingTransform = gameObject.transform;
+
         for (int i = 0; i < MAX_CUSTOMERS; i++) {
-            siblingTransform.SetSiblingIndex(i);
-            //customerList[i] = Instantiate(this.dummyPrefab, siblingTransform, false);
             customerList[i] = Instantiate(this.dummyPrefab, gameObject.transform, false);
             customerList[i].transform.SetSiblingIndex(i);
             freeSpawnSlots.Add(i);

@@ -145,6 +145,11 @@ public class PreppedOrderUI : MonoBehaviour {
         this.isTopped = false;
 
         ClearFoodDrawing();
+
+        alphaControl.a = ALPHA_HIDDEN;
+        drawnDrink.GetComponent<Image>().color = alphaControl;
+        drawnDrink.GetComponent<Image>().sprite = null;
+
         this.mealDrawer.StartDrawing(this.drawnFood);
     }
 

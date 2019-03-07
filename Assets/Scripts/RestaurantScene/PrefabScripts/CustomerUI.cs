@@ -33,8 +33,8 @@ public class CustomerUI : MonoBehaviour {
     [SerializeField] private GameObject orderWarningObject;
 
     private MealDrawer mealDrawer;
-    [SerializeField] private GameObject drawnFood;
-    [SerializeField] private GameObject drawnDrink;
+    [SerializeField] private GameObject foodDisplay;
+    [SerializeField] private GameObject drinkDisplay;
 
     // Events
     public delegate bool CustomerEvent(Order order);
@@ -88,18 +88,18 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void DisplayOrder() {
-        mealDrawer.GetBaseDrawing(drawnFood);
+        mealDrawer.GetBaseDrawing(foodDisplay);
 
         List<string> myFood = this.myOrder.GetFood();
         foreach(string food in myFood) {
-            mealDrawer.AppendFood(drawnFood, food);
+            mealDrawer.AppendFood(foodDisplay, food);
         }
-        mealDrawer.FinishDrawing(drawnFood);
+        mealDrawer.FinishDrawing(foodDisplay);
         if(this.myOrder.GetDrink() != null) {
-            drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
+            drinkDisplay.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
         } else {
             alphaControl.a = ALPHA_HIDDEN;
-            drawnDrink.GetComponent<Image>().color = alphaControl;
+            drinkDisplay.GetComponent<Image>().color = alphaControl;
         }
     }
 
@@ -147,6 +147,4 @@ public class CustomerUI : MonoBehaviour {
     public void SetId(int id) {
         this.id = id;
     }
-
-
 }

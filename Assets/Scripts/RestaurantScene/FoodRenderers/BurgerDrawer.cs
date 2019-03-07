@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BurgerDrawer : MealDrawer {
 
+    private const float SPACING_CONST = 10.0f;
+
     private string TopBun = "TopBun";
     private string BottomBun = "BottomBun";
     private Dictionary<string, Sprite> displaySprites;
@@ -21,6 +23,7 @@ public class BurgerDrawer : MealDrawer {
 
     public override void GetBaseDrawing(GameObject parentObject) {
 
+        /*
         parentObject.AddComponent<VerticalLayoutGroup>();
         VerticalLayoutGroup layoutGroup = parentObject.GetComponent<VerticalLayoutGroup>();
         layoutGroup.childControlHeight = true;
@@ -28,7 +31,8 @@ public class BurgerDrawer : MealDrawer {
         layoutGroup.childForceExpandWidth = false;
         layoutGroup.childForceExpandHeight = false;
         layoutGroup.childAlignment = TextAnchor.MiddleCenter;
-        layoutGroup.spacing = -107;
+        layoutGroup.spacing = -110;
+        */
 
         StartDrawing(parentObject);
     }
@@ -48,6 +52,7 @@ public class BurgerDrawer : MealDrawer {
         childObject.GetComponent<Image>().sprite = nextFood;
         childObject.transform.parent = parentObject.transform;
         childObject.transform.SetAsLastSibling();
+        childObject.transform.localPosition = new Vector3(0, childObject.transform.GetSiblingIndex() * SPACING_CONST);
     }
 
     public override void ManuallyAddSprite(string foodName, Sprite sprite) {
