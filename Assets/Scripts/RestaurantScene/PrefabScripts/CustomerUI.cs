@@ -43,6 +43,9 @@ public class CustomerUI : MonoBehaviour {
     public delegate void CustomerHandlerEvent(int id);
     public static event CustomerHandlerEvent DestroyMe;
 
+    public delegate void OrderSuccessEvent();
+    public static event OrderSuccessEvent SuccessfulOrder;
+
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
         orderBuilder = OrderBuilder.GetInstance();
@@ -88,7 +91,7 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void DisplayOrder() {
-        mealDrawer.GetBaseDrawing(foodDisplay);
+        mealDrawer.StartDrawing(foodDisplay);
 
         List<string> myFood = this.myOrder.GetFood();
         foreach(string food in myFood) {
@@ -106,10 +109,8 @@ public class CustomerUI : MonoBehaviour {
     /**** EVENTS ****/
     private void ServeCustomer() {
         if(ServeMe(this.myOrder)) {
-            Debug.Log("Good Order");
+            SuccessfulOrder();
             DestroyMe(this.id);
-        } else {
-            Debug.Log("Bad Order");
         }
     }
 

@@ -10,9 +10,13 @@ public class PreppedOrderUI : MonoBehaviour {
         Hidden
     };
 
+    // builders and data
+    private RestaurantBuilder restaurantBuilder;
+    private MealDrawer mealDrawer;
     private List<string> preppedFood = new List<string>();
     private string preppedDrink = null;
 
+    // top me button effects
     private const string TOP_ME_SPRITE = "TopMe";
     private bool isTopped;
     private TopMeButtonState topMeState;
@@ -20,12 +24,11 @@ public class PreppedOrderUI : MonoBehaviour {
     private Image topMeImage;
     [SerializeField] private GameObject topMeButtonObj;
 
+    // visual effects
+    private bool signalClearOrder;
     private const float ALPHA_HIDDEN = 0.0f;
     private const float ALPHA_FULL = 1.0f;
     Color alphaControl = Color.white;
-
-    private RestaurantBuilder restaurantBuilder;
-    private MealDrawer mealDrawer;
     [SerializeField] private GameObject drawnFood;
     [SerializeField] private GameObject drawnDrink;
 
@@ -34,12 +37,14 @@ public class PreppedOrderUI : MonoBehaviour {
         MainUI.FoodSelected += AddFoodToOrderEvent;
         ToppingUI.FoodSelected += AddFoodToOrderEvent;
         DrinkUI.FoodSelected += AddFoodToOrderEvent;
-        TrashUI.TrashClicked += ClearOrderEvent;
+        TrashUI.TrashClicked += SignalClearOrderEvent;
         CustomerUI.ServeMe += CheckMatchingOrder;
 
         this.topMeButton = this.topMeButtonObj.GetComponent<Button>();
         this.topMeImage = this.topMeButtonObj.GetComponent<Image>();
         this.topMeButton.onClick.AddListener(FinishFoodOrder);
+
+        this.signalClearOrder = false;
     }
 
     // Start is called before the first frame update
@@ -56,13 +61,24 @@ public class PreppedOrderUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(this.topMeState == TopMeButtonState.Hidden && CanTop()) {
+
+        if(EmptyFoodDrawing()) {
+            this.mealDrawer.StartDrawing(this.drawnFood);
+        }
+
+        if (this.topMeState == TopMeButtonState.Hidden && CanTop()) {
             ShowTopMe();
         } else if(this.topMeState == TopMeButtonState.Full && !CanTop()) {
             HideTopMe();
         }
+
+        if(signalClearOrder) {
+            ClearOrder();
+            signalClearOrder = false;
+        }
     }
 
+  
     private void InitializeThemeSprites() {
         this.topMeImage.sprite = this.restaurantBuilder.GetThemedSprite(TOP_ME_SPRITE);
         HideTopMe();
@@ -84,8 +100,7 @@ public class PreppedOrderUI : MonoBehaviour {
         alphaControl.a = ALPHA_HIDDEN;
         drawnDrink.GetComponent<Image>().color = alphaControl;
 
-        mealDrawer.GetBaseDrawing(drawnFood);
-        this.isTopped = false;
+        mealDrawer.StartDrawing(drawnFood);
     }
 
     private bool HasDrink() {
@@ -94,6 +109,10 @@ public class PreppedOrderUI : MonoBehaviour {
 
     private bool CanTop() {
         return (!this.isTopped && this.preppedFood.Count > 0);
+    }
+
+    private bool EmptyFoodDrawing() {
+        return this.drawnFood.transform.childCount == 0;
     }
 
     private void ClearFoodDrawing() { 
@@ -106,6 +125,18 @@ public class PreppedOrderUI : MonoBehaviour {
         // add on to topmost food entry
         this.preppedFood.Add(food.GetName());
         mealDrawer.AppendFood(drawnFood, food.GetName());
+    }
+
+    public void ClearOrder() {
+        this.preppedFood.Clear();
+        this.preppedDrink = null;
+        this.isTopped = false;
+
+        ClearFoodDrawing();
+
+        alphaControl.a = ALPHA_HIDDEN;
+        drawnDrink.GetComponent<Image>().color = alphaControl;
+        drawnDrink.GetComponent<Image>().sprite = null;
     }
 
     /**** Events ****/
@@ -121,42 +152,29 @@ public class PreppedOrderUI : MonoBehaviour {
 
                 return true;
             }
-        } else {
+        } else if(!this.isTopped) {
             // food adding is more complex
-            if(!this.isTopped) {
-                this.AddFood(food);
-                return true;
-            }
+            this.AddFood(food);
+            return true;
         }
         return false;
     }
 
     private void FinishFoodOrder() {
-        if(this.CanTop()) {
+        if (this.CanTop()) {
             this.isTopped = true;
             mealDrawer.FinishDrawing(drawnFood);
         }
     }
 
-    public void ClearOrderEvent() {
-        Debug.Log("Throwing out everything");
-        this.preppedFood.Clear();
-        this.preppedDrink = null;
-        this.isTopped = false;
-
-        ClearFoodDrawing();
-
-        alphaControl.a = ALPHA_HIDDEN;
-        drawnDrink.GetComponent<Image>().color = alphaControl;
-        drawnDrink.GetComponent<Image>().sprite = null;
-
-        this.mealDrawer.StartDrawing(this.drawnFood);
+    private void SignalClearOrderEvent() {
+        this.signalClearOrder = true;
     }
 
-    public bool CheckMatchingOrder(Order order) {
+    private bool CheckMatchingOrder(Order order) {
         Order currentOrder = new Order(preppedFood, preppedDrink);
         if(this.isTopped && currentOrder == order) {
-            ClearOrderEvent();
+            this.SignalClearOrderEvent();
             return true;
         }
         return false;

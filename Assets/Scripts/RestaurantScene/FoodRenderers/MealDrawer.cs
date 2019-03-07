@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class MealDrawer {
-    public abstract void GetBaseDrawing(GameObject parentObject);
-
     public abstract void StartDrawing(GameObject parentObject);
 
     public abstract void FinishDrawing(GameObject parentObject);

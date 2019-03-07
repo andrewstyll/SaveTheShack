@@ -21,22 +21,6 @@ public class BurgerDrawer : MealDrawer {
         }
     }
 
-    public override void GetBaseDrawing(GameObject parentObject) {
-
-        /*
-        parentObject.AddComponent<VerticalLayoutGroup>();
-        VerticalLayoutGroup layoutGroup = parentObject.GetComponent<VerticalLayoutGroup>();
-        layoutGroup.childControlHeight = true;
-        layoutGroup.childControlWidth = true;
-        layoutGroup.childForceExpandWidth = false;
-        layoutGroup.childForceExpandHeight = false;
-        layoutGroup.childAlignment = TextAnchor.MiddleCenter;
-        layoutGroup.spacing = -110;
-        */
-
-        StartDrawing(parentObject);
-    }
-
     public override void StartDrawing(GameObject parentObject) {
         AppendFood(parentObject, BottomBun);
     }
