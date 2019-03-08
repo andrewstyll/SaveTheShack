@@ -1,8 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
+
+    private static GameManager instance = null;
+
+    private enum States {
+        TitleScene,
+        GameplayScene
+    };
+    private const string TITLE = "TitleScene";
+    private const string GAMEPLAY = "RestaurantScene";
+
+    private States currentState;
+
+    private void Awake() {
+        if(instance == null) {
+            instance = this;
+        } else if(instance != this) {
+            Destroy(this);
+        }
+        DontDestroyOnLoad(this);
+        SetCurrentState();
+        TitleScene.StartGameEvent += StartGameEvent;
+    }
     // Start is called before the first frame update
     void Start() {
         
@@ -11,5 +34,31 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         
+    }
+
+    private void SetCurrentState() {
+        string scene = SceneManager.GetActiveScene().name;
+        switch(scene) {
+            case TITLE:
+                this.currentState = States.TitleScene;
+                Debug.Log("TitleScene");
+                break;
+            case GAMEPLAY:
+                this.currentState = States.TitleScene;
+                break;
+            default:
+                throw new System.Exception("Invalid scene name for current scene");
+        };
+    }
+
+    /**** Events ****/
+    private void StartGameEvent(RestaurantInfo.Types selectedType) { 
+        // load restaurant scene
+        // set type to by the selected type
+    }
+
+    /**** Public API ****/
+    public GameManager GetInstance() {
+        return instance;
     }
 }

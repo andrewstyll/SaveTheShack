@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TitleScene : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class TitleScene : MonoBehaviour {
 
     private RestaurantInfo.Types selectedType;
 
+    private GameObject currentlySelected;
     private Button buttonOne;
     private Button buttonTwo;
     [SerializeField] private GameObject buttonOneObject;
@@ -23,7 +25,9 @@ public class TitleScene : MonoBehaviour {
     private Button startGameButton;
     [SerializeField] private GameObject startGameButtonObj;
 
-    public delegate void StartGameButtonEvent();
+    [SerializeField] private EventSystem eventSystem;
+
+    public delegate void StartGameButtonEvent(RestaurantInfo.Types selectedType);
     public static StartGameButtonEvent StartGameEvent;
 
     private void Awake() {
@@ -46,20 +50,26 @@ public class TitleScene : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+        if(this.eventSystem.currentSelectedGameObject != this.currentlySelected) {
+            this.eventSystem.SetSelectedGameObject(this.currentlySelected);
+        }
     }
 
     /**** Events ****/
     private void RestaurantOneSelect() {
         this.selectedType = REST_ONE_TYPE;
+        this.currentlySelected = buttonOneObject;
     }
 
     private void RestaurantTwoSelect() {
         this.selectedType = REST_TWO_TYPE;
+        this.currentlySelected = buttonTwoObject;
     }
 
     private void StartGameSelect() {
+        // we don't want to select this button, but still want to run the event
+        //this.currentlySelected = startGameButtonObj;
         Debug.Log("StartGameEvent");
-        StartGameEvent();
+        StartGameEvent(selectedType);
     }
 }
