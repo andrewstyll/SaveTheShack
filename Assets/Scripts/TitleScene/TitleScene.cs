@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TitleScene : MonoBehaviour {
 
+    // select starting restaurant type
     private const string SUFFIX = " Shack";
     private const string REST_ONE_STRING = "Burger";
     private const string REST_TWO_STRING = "Taco";
@@ -18,12 +19,21 @@ public class TitleScene : MonoBehaviour {
     [SerializeField] private GameObject buttonOneObject;
     [SerializeField] private GameObject buttonTwoObject;
 
+    // start game
+    private Button startGameButton;
+    [SerializeField] private GameObject startGameButtonObj;
+
+    public delegate void StartGameButtonEvent();
+    public static StartGameButtonEvent StartGameEvent;
+
     private void Awake() {
         buttonOne = buttonOneObject.GetComponent<Button>();
         buttonTwo = buttonTwoObject.GetComponent<Button>();
+        startGameButton = startGameButtonObj.GetComponent<Button>();
 
         buttonOne.onClick.AddListener(RestaurantOneSelect);
         buttonTwo.onClick.AddListener(RestaurantTwoSelect);
+        startGameButton.onClick.AddListener(StartGameSelect);
 
         buttonOneObject.GetComponentInChildren<Text>().text = REST_ONE_STRING;
         buttonTwoObject.GetComponentInChildren<Text>().text = REST_TWO_STRING;
@@ -39,11 +49,17 @@ public class TitleScene : MonoBehaviour {
         
     }
 
+    /**** Events ****/
     private void RestaurantOneSelect() {
         this.selectedType = REST_ONE_TYPE;
     }
 
     private void RestaurantTwoSelect() {
         this.selectedType = REST_TWO_TYPE;
+    }
+
+    private void StartGameSelect() {
+        Debug.Log("StartGameEvent");
+        StartGameEvent();
     }
 }
