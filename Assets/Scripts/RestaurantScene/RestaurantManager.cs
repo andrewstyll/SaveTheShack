@@ -17,7 +17,7 @@ public class RestaurantManager : MonoBehaviour {
     private bool foodUILoaded = false;
 
     // Modal stuff
-    private GameObject modal;
+    private GameObject modal = null;
     [SerializeField] private GameObject modalPrefab;
     [SerializeField] private GameObject backgroundCanvas;
 
@@ -26,7 +26,7 @@ public class RestaurantManager : MonoBehaviour {
     public static event RestaurantManagerNotification LoadUI;
     public static event RestaurantManagerNotification StartGame;
 
-    public delegate void ModalNotification(Modal.ModalState state);
+    public delegate void ModalNotification(Modal.ModalState state, string displayString);
     public static event ModalNotification ModalEvent;
 
     private void Awake() {
@@ -42,9 +42,10 @@ public class RestaurantManager : MonoBehaviour {
         CustomerAreaUI.Loaded += CustomerUILoaded;
         FoodStationUI.Loaded += FoodUILoaded;
         Modal.CountDownComplete += SetupStartGame;
+        StatusBarUI.EndOfDay += EndDayEvent;
 
         // spawn modal to block screen from being touched with loading graphic
-        DisplayModal();
+        DisplayModal(Modal.ModalState.Loading, "");
     }
 
     // Start is called before the first frame update
@@ -62,8 +63,7 @@ public class RestaurantManager : MonoBehaviour {
     private void Update() {
         if(!this.restaurantOpen && UIIsLoaded()) {
             this.restaurantOpen = true;
-            Debug.Log("Loaded UI");
-            ModalEvent(Modal.ModalState.Ready);
+            DisplayModal(Modal.ModalState.CountDown, "");
         }
     }
 
@@ -72,14 +72,18 @@ public class RestaurantManager : MonoBehaviour {
         LoadUI();
     }
 
-    private void DisplayModal() {
-        modal = Instantiate(this.modalPrefab, this.backgroundCanvas.transform, false);
-        modal.transform.SetAsLastSibling();
-        ModalEvent(Modal.ModalState.Loading);
+    private void DisplayModal(Modal.ModalState state, string displayString) {
+        if(modal == null) {
+            modal = Instantiate(this.modalPrefab, this.backgroundCanvas.transform, false);
+            modal.transform.SetAsLastSibling();
+        }
+
+        ModalEvent(state, displayString);
     }
 
     private void HideModal() {
         Destroy(modal);
+        modal = null;
     }
 
     // UI Loading code;
@@ -104,6 +108,10 @@ public class RestaurantManager : MonoBehaviour {
         // destroy modal
         HideModal();
         StartGame();
+    }
+
+    private void EndDayEvent(int score) {
+        DisplayModal(Modal.ModalState.EndGame, score.ToString());
     }
 
     /**** Coroutines ****/

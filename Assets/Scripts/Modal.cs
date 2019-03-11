@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class Modal : MonoBehaviour {
 
-    private const float COUNTDOWN = 3.0f;
+    private const float COUNTDOWN = 4.0f;
     private const string LOADING_TEXT = "Loading...";
     private const string READY_TEXT = "Ready?";
-    private const string TAP_TO_CONTINUE = "Tap to continue...";
+    private const string YOUR_SCORE = "Score: ";
 
     public enum ModalState {
         Loading,
-        Ready,
         CountDown,
         EndGame,
         NoState
@@ -22,7 +21,6 @@ public class Modal : MonoBehaviour {
     private float countDownLeft;
 
     [SerializeField] private GameObject modalTextObj;
-    [SerializeField] private GameObject modalButtonObj;
 
     // Events
     public delegate void ModalNotification();
@@ -31,10 +29,7 @@ public class Modal : MonoBehaviour {
     private void Awake() {
         RestaurantManager.ModalEvent += RecieveModalEvent;
 
-        this.modalTextObj.SetActive(false);
-        this.modalButtonObj.SetActive(false);
-
-        this.SetState(ModalState.Loading);
+        this.SetState(ModalState.Loading, "");
     }
 
     // Start is called before the first frame update
@@ -49,66 +44,59 @@ public class Modal : MonoBehaviour {
         }
     }
 
-    private void Loading() {
-        this.state = ModalState.Loading;
-        this.modalTextObj.SetActive(true);
-        this.modalButtonObj.SetActive(false);
-
-        Text loadingText = this.modalTextObj.GetComponentInChildren<Text>();
-        loadingText.text = LOADING_TEXT;
+    private void Loading(string displayString) { 
+        Text loadingText = this.modalTextObj.GetComponent<Text>();
+        loadingText.text = (displayString != "") ? displayString : LOADING_TEXT;
     }
 
-    private void Ready() {
-        this.state = ModalState.Ready;
-        this.modalTextObj.SetActive(false);
-        this.modalButtonObj.SetActive(true);
+    private void CountDown(string displayString) {
+        this.countDownLeft = COUNTDOWN;
+    }
 
-        this.modalButtonObj.GetComponent<Button>().onClick.AddListener(CountDown);
+    private void EndGame(string displayString) {
+        Text endgameText = this.modalTextObj.GetComponent<Text>();
+        endgameText.text = YOUR_SCORE + displayString;
     }
 
     private void UpdateCountDown() {
         this.countDownLeft -= Time.deltaTime;
 
         if (this.countDownLeft > 0) {
-            Text countdownText = this.modalTextObj.GetComponentInChildren<Text>();
-            countdownText.text = Mathf.Ceil(this.countDownLeft).ToString();
+            Text countdownText = this.modalTextObj.GetComponent<Text>();
+
+            int countDown = (int)Mathf.Ceil(this.countDownLeft);
+
+            if (countDown == 4) {
+                countdownText.text = READY_TEXT;
+            } else {
+                countdownText.text = Mathf.Ceil(this.countDownLeft).ToString();
+            }
         } else {
             this.state = ModalState.NoState;
             CountDownComplete();
         }
     }
 
-    private void CountDown() {
-        this.state = ModalState.CountDown;
-        this.modalTextObj.SetActive(true);
-        this.modalButtonObj.SetActive(false);
-
-        this.countDownLeft = COUNTDOWN;
-    }
-
-    private void EndGame() {
-
-    }
-
-    private void SetState(ModalState state) {
+    // display string only used to pass endgame scores for now, kept because potentially useful in future
+    private void SetState(ModalState state, string displayString) {
         if (this.state != state) {
+            this.state = state;
             switch (state) {
                 case ModalState.Loading:
-                    this.Loading();
-                    break;
-                case ModalState.Ready:
-                    this.Ready();
+                    this.Loading(displayString);
                     break;
                 case ModalState.CountDown:
-                    this.CountDown();
+                    this.CountDown(displayString);
+                    break;
+                case ModalState.EndGame:
+                    this.EndGame(displayString);
                     break;
             };
-            this.state = state;
         }
     }
 
     /**** Events ****/
-    private void RecieveModalEvent(ModalState state) {
-        this.SetState(state);
+    private void RecieveModalEvent(ModalState state, string displayString) {
+        this.SetState(state, displayString);
     }
 }

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
     private States currentState;
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType;
 
+    private int totalScore;
+
     private void Awake() {
         if(instance == null) {
             instance = this;
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour {
         DontDestroyOnLoad(this);
         SetCurrentState();
         TitleScene.StartGameEvent += StartGameEvent;
+        StatusBarUI.EndOfDay += EndOfDayEvent;
     }
     // Start is called before the first frame update
     void Start() {
@@ -63,6 +66,11 @@ public class GameManager : MonoBehaviour {
         // set type to by the selected type
         this.currentRestType = selectedType;
         SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
+    }
+
+    private void EndOfDayEvent(int score) {
+        this.totalScore += score;
+        Debug.Log(totalScore);
     }
 
     /**** Public API ****/
