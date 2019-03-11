@@ -32,6 +32,10 @@ public class PreppedOrderUI : MonoBehaviour {
     [SerializeField] private GameObject drawnFood;
     [SerializeField] private GameObject drawnDrink;
 
+    // Events
+    public delegate void PreppedOrderAreaUINotification();
+    public static event PreppedOrderAreaUINotification Loaded;
+
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
         MainUI.FoodSelected += AddFoodToOrderEvent;
@@ -50,9 +54,7 @@ public class PreppedOrderUI : MonoBehaviour {
     // Start is called before the first frame update
     private void Start() {
         if(this.restaurantBuilder.MealDrawerCreated()) {
-            this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
-            InitializeFoodDrawing();
-            InitializeThemeSprites();
+            InitPreppedOrderArea();
         } else {
             Debug.Log("Should have been able to grab Meal Drawer here, starting wait coroutine");
             StartCoroutine("WaitForMealDrawerCreated");
@@ -78,7 +80,13 @@ public class PreppedOrderUI : MonoBehaviour {
         }
     }
 
-  
+    private void InitPreppedOrderArea() {
+        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
+        InitializeFoodDrawing();
+        InitializeThemeSprites();
+        Loaded();
+    }
+
     private void InitializeThemeSprites() {
         this.topMeImage.sprite = this.restaurantBuilder.GetThemedSprite(TOP_ME_SPRITE);
         HideTopMe();
@@ -187,7 +195,6 @@ public class PreppedOrderUI : MonoBehaviour {
         while (!this.restaurantBuilder.MealDrawerCreated()) {
             yield return null;
         }
-        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
-        InitializeFoodDrawing();
+        InitPreppedOrderArea();
     }
 }

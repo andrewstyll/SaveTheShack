@@ -10,9 +10,13 @@ public class DrinksAreaUI : MonoBehaviour {
     private List<Food> drinks;
     [SerializeField] private GameObject drinkPrefab;
 
+    // Events
+    public delegate void DrinksAreaUINotification();
+    public static event DrinksAreaUINotification Loaded;
+
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        RestaurantManager.MenuCreated += SpawnDrinksEvent;
+        RestaurantManager.LoadUI += SpawnDrinksEvent;
     }
 
     // Start is called before the first frame update
@@ -30,5 +34,6 @@ public class DrinksAreaUI : MonoBehaviour {
                 UIScript.SetDrink(this.drinks[i]);
             }
         }
+        Loaded();
     }
 }

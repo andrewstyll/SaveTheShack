@@ -9,25 +9,28 @@ public class CustomerAreaUI : MonoBehaviour {
     // should be some max number of customers at once
     private int MAX_CUSTOMERS = 5;
 
+    // Customer scheduling
     private bool restaurantOpen = false;
-    private int successfulServes;
+
     private float timeToNextCustomer;
     private float customerWindowSize = 2.0f;
     private float customerWindowMin = 5.0f;
 
-    private RestaurantBuilder restaurantBuilder;
     private GameObject[] customerList;
     private List<int> freeSpawnSlots;
+
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private GameObject dummyPrefab;
 
-    private void Awake() {
-        this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        // maybe attach this to a different event like start game?
-        RestaurantManager.MenuCreated += StartCustomerSpawn;
-        CustomerUI.DestroyMe += DestroyCustomer;
+    // Events
+    public delegate void CustomerAreaUINotification();
+    public static event CustomerAreaUINotification Loaded;
 
-        this.successfulServes = 0;
+    private void Awake() {
+        // maybe attach this to a different event like start game?
+        RestaurantManager.StartGame += StartCustomerSpawn;
+        CustomerUI.DestroyMe += DestroyCustomer;
+        StatusBarUI.EndOfDay += StopCustomerSpawn;
 
         freeSpawnSlots = new List<int>();
         customerList = new GameObject[MAX_CUSTOMERS];
@@ -39,9 +42,8 @@ public class CustomerAreaUI : MonoBehaviour {
         }
     }
 
-    // Start is called before the first frame update
-    void Start() {
-        
+    private void Start() {
+        Loaded();
     }
 
     // Update is called once per frame
@@ -85,5 +87,11 @@ public class CustomerAreaUI : MonoBehaviour {
         customerList[id] = Instantiate(this.dummyPrefab, gameObject.transform, false);
         customerList[id].transform.SetSiblingIndex(id);
         this.freeSpawnSlots.Add(id);
+    }
+
+    // don't need score for this event in the customer area
+    private void StopCustomerSpawn(int score) {
+        // TODO:: TEST THIS, INCOMPLETE
+        this.restaurantOpen = false;
     }
 }

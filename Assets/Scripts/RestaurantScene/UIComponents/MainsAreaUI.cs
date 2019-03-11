@@ -10,9 +10,13 @@ public class MainsAreaUI : MonoBehaviour {
     private Food main;
     [SerializeField] private GameObject mainPrefab;
 
+    // Events
+    public delegate void MainsAreaUINotification();
+    public static event MainsAreaUINotification Loaded;
+
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        RestaurantManager.MenuCreated += SpawnMainsEvent;
+        RestaurantManager.LoadUI += SpawnMainsEvent;
     }
 
     // Start is called before the first frame update
@@ -28,5 +32,6 @@ public class MainsAreaUI : MonoBehaviour {
             MainUI UIScript = Instantiate(this.mainPrefab, gameObject.transform, false).GetComponent<MainUI>();
             UIScript.SetMain(this.main);
         }
+        Loaded();
     }
 }

@@ -11,17 +11,13 @@ public class ToppingAreaUI : MonoBehaviour {
     private List<Food> toppings;
     [SerializeField] private GameObject toppingPrefab;
 
+    // Events
+    public delegate void ToppingsAreaUINotification();
+    public static event ToppingsAreaUINotification Loaded;
+
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        RestaurantManager.MenuCreated += SpawnToppingsEvent;
-    }
-
-    // Start is called before the first frame update
-    private void Start() { }
-
-    // Update is called once per frame
-    private void Update() {
-        
+        RestaurantManager.LoadUI += SpawnToppingsEvent;
     }
 
     private void SpawnToppingsEvent() {
@@ -32,5 +28,6 @@ public class ToppingAreaUI : MonoBehaviour {
                 UIScript.SetTopping(this.toppings[i]);
             }
         }
+        Loaded();
     }
 }

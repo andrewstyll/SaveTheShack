@@ -43,6 +43,8 @@ public class CustomerUI : MonoBehaviour {
     public delegate void CustomerHandlerEvent(int id);
     public static event CustomerHandlerEvent DestroyMe;
 
+    // created this in the event that we want to use time remaining to calcuate score,
+    // right now only the status UI is subscribed to this
     public delegate void OrderSuccessEvent();
     public static event OrderSuccessEvent SuccessfulOrder;
 

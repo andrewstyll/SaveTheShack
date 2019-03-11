@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour {
         TitleScene,
         GameplayScene
     };
+
     private const string TITLE = "TitleScene";
     private const string GAMEPLAY = "RestaurantScene";
 
     private States currentState;
+    private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType;
 
     private void Awake() {
         if(instance == null) {
@@ -45,6 +47,10 @@ public class GameManager : MonoBehaviour {
                 break;
             case GAMEPLAY:
                 this.currentState = States.TitleScene;
+                if(this.currentRestType == RestaurantInfo.Types.NoType) {
+                    // set burger to default;
+                    this.currentRestType = RestaurantInfo.Types.Burger;
+                }
                 break;
             default:
                 throw new System.Exception("Invalid scene name for current scene");
@@ -52,13 +58,19 @@ public class GameManager : MonoBehaviour {
     }
 
     /**** Events ****/
-    private void StartGameEvent(RestaurantInfo.Types selectedType) { 
+    private void StartGameEvent(RestaurantInfo.Types selectedType) {
         // load restaurant scene
         // set type to by the selected type
+        this.currentRestType = selectedType;
+        SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
     }
 
     /**** Public API ****/
-    public GameManager GetInstance() {
+    public static GameManager GetInstance() {
         return instance;
+    }
+
+    public RestaurantInfo.Types GetCurrentRestaurantType() {
+        return this.currentRestType;
     }
 }
