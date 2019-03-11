@@ -61,19 +61,17 @@ public sealed class ConfigSetup {
         return instance;
     }
 
-    public JsonToFood[] GetJsonFood(FoodType.Type foodType) {
+    public JsonFoodContainer GetJsonFood(FoodType.Type foodType) {
         switch(foodType) {
             case FoodType.Type.main:
-                return mainsList.List;
+                return mainsList;
             case FoodType.Type.topping:
-                return toppingsList.List;
+                return toppingsList;
             case FoodType.Type.drink:
-                return drinksList.List;
+                return drinksList;
             default:
-                Debug.LogError("Invalid foodtype config retrieval");
-                break;
+                throw new System.Exception("Invalid foodtype config retrieval");
         }
-        return null;
     }
 
     public JsonToRestaurant GetRestaurantData(RestaurantInfo.Types restaurantType) {

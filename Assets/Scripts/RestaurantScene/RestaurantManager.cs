@@ -26,8 +26,8 @@ public class RestaurantManager : MonoBehaviour {
     public static event RestaurantManagerNotification LoadUI;
     public static event RestaurantManagerNotification StartGame;
 
-    public delegate void ModalNotification();
-    public static event ModalNotification ModalMessage;
+    public delegate void ModalNotification(Modal.ModalState state);
+    public static event ModalNotification ModalEvent;
 
     private void Awake() {
         // grab instances required to manage restaurant
@@ -41,6 +41,7 @@ public class RestaurantManager : MonoBehaviour {
         StatusBarUI.Loaded += StatusUILoaded;
         CustomerAreaUI.Loaded += CustomerUILoaded;
         FoodStationUI.Loaded += FoodUILoaded;
+        Modal.CountDownComplete += SetupStartGame;
 
         // spawn modal to block screen from being touched with loading graphic
         DisplayModal();
@@ -62,7 +63,7 @@ public class RestaurantManager : MonoBehaviour {
         if(!this.restaurantOpen && UIIsLoaded()) {
             this.restaurantOpen = true;
             Debug.Log("Loaded UI");
-            //ModalMessage();
+            ModalEvent(Modal.ModalState.Ready);
         }
     }
 
@@ -74,7 +75,7 @@ public class RestaurantManager : MonoBehaviour {
     private void DisplayModal() {
         modal = Instantiate(this.modalPrefab, this.backgroundCanvas.transform, false);
         modal.transform.SetAsLastSibling();
-        //ModalMessage();
+        ModalEvent(Modal.ModalState.Loading);
     }
 
     private void HideModal() {

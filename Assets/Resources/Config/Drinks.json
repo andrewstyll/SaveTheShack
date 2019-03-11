@@ -20,5 +20,6 @@
       "unPreppedSpriteName": "Orange_Empty_RD",
       "preppedSpriteName": "Orange_Full_RD"
     }
-  ]
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/Food/"
 }

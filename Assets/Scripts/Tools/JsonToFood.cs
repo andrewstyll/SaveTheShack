@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public struct JsonFoodContainer {
     public JsonToFood[] List;
+    public string SpriteLocation;
 }
 
 [System.Serializable]

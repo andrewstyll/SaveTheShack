@@ -10,5 +10,6 @@
       "name": "Taco",
       "preppedSpriteName": "Taco_RD"
     }
-  ]
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/Food/"
 }

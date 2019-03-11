@@ -8,7 +8,6 @@ public sealed class RestaurantBuilder {
     private static readonly RestaurantBuilder instance = new RestaurantBuilder();
 
     private ConfigSetup configData;
-    private readonly string foodSpritePath = "Sprites/Food/";
     private Dictionary<string, Food> foodDictionary;
     private bool setupComplete = false;
 
@@ -41,16 +40,17 @@ public sealed class RestaurantBuilder {
         Food newFood = null;
 
         foreach (FoodType.Type foodType in System.Enum.GetValues(typeof(FoodType.Type))) {
-            JsonToFood[] jsonList = this.configData.GetJsonFood(foodType);
-            if(jsonList != null) {  
-                foreach(JsonToFood jsonFood in jsonList) {
-                    newFood = new Food(jsonFood.name, foodType,
-                                    Resources.Load<Sprite>(foodSpritePath + jsonFood.unPreppedSpriteName),
-                                    Resources.Load<Sprite>(foodSpritePath + jsonFood.preppedSpriteName),
-                                    Resources.Load<Sprite>(foodSpritePath + jsonFood.burntSpriteName));
-                                   
-                    this.foodDictionary.Add(jsonFood.name, newFood);
-                }
+            JsonFoodContainer jsonFoodData = this.configData.GetJsonFood(foodType);
+            JsonToFood[] jsonList = jsonFoodData.List;
+            string foodSpritePath = jsonFoodData.SpriteLocation;
+         
+            foreach(JsonToFood jsonFood in jsonList) {
+                newFood = new Food(jsonFood.name, foodType,
+                                Resources.Load<Sprite>(foodSpritePath + jsonFood.unPreppedSpriteName),
+                                Resources.Load<Sprite>(foodSpritePath + jsonFood.preppedSpriteName),
+                                Resources.Load<Sprite>(foodSpritePath + jsonFood.burntSpriteName));
+                               
+                this.foodDictionary.Add(jsonFood.name, newFood);
             }
         }
     }

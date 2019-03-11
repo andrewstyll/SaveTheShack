@@ -16,5 +16,6 @@
       "name": "Tomato",
       "preppedSpriteName": "Tomato_RD"
     }
-  ]
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/Food/"
 }
