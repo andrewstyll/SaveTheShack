@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class RestaurantManager : MonoBehaviour {
 
+    private enum RestaurantStates {
+        Loading,
+        Open,
+        Closed
+    };
+
     // Restaurant management helpers
     private GameManager gameManager;
 
     private RestaurantBuilder restaurantBuilder;
     private RestaurantInfo.Types currentType = RestaurantInfo.Types.NoType;
 
+    // Current state
+    private RestaurantStates state;
+
     // check Loaded status
-    private bool restaurantOpen = false;
     private bool statusUILoaded = false;
     private bool customerUILoaded = false;
     private bool foodUILoaded = false;
@@ -46,29 +54,29 @@ public class RestaurantManager : MonoBehaviour {
 
         // spawn modal to block screen from being touched with loading graphic
         DisplayModal(Modal.ModalState.Loading, "");
+        this.state = RestaurantStates.Loading;
     }
 
     // Start is called before the first frame update
     private void Start() {
-        this.currentType = this.gameManager.GetCurrentRestaurantType();
-
         if (this.restaurantBuilder.SetupComplete() &&
-            this.currentType != RestaurantInfo.Types.NoType) {
-            this.CreateRestaurant(currentType);
+            this.gameManager.GetCurrentRestaurantType() != RestaurantInfo.Types.NoType) {
+            this.CreateRestaurant();
         } else {
             StartCoroutine("WaitForSetupComplete");
         }
     }
 
     private void Update() {
-        if(!this.restaurantOpen && UIIsLoaded()) {
-            this.restaurantOpen = true;
+        if (this.state == RestaurantStates.Loading && UIIsLoaded()) {
+            this.state = RestaurantStates.Open;
             DisplayModal(Modal.ModalState.CountDown, "");
         }
     }
 
-    private void CreateRestaurant(RestaurantInfo.Types restaurantType) {
-        this.restaurantBuilder.BuildRestaurant(restaurantType);
+    private void CreateRestaurant() {
+        this.currentType = this.gameManager.GetCurrentRestaurantType();
+        this.restaurantBuilder.BuildRestaurant(this.currentType);
         LoadUI();
     }
 
@@ -77,13 +85,12 @@ public class RestaurantManager : MonoBehaviour {
             modal = Instantiate(this.modalPrefab, this.backgroundCanvas.transform, false);
             modal.transform.SetAsLastSibling();
         }
-
+        modal.SetActive(true);
         ModalEvent(state, displayString);
     }
 
     private void HideModal() {
-        Destroy(modal);
-        modal = null;
+        modal.SetActive(false);
     }
 
     // UI Loading code;
@@ -111,16 +118,16 @@ public class RestaurantManager : MonoBehaviour {
     }
 
     private void EndDayEvent(int score) {
+        this.state = RestaurantStates.Closed;
         DisplayModal(Modal.ModalState.EndGame, score.ToString());
     }
 
     /**** Coroutines ****/
     IEnumerator WaitForSetupComplete() {
-        while(!this.restaurantBuilder.SetupComplete() || 
-                this.gameManager.GetCurrentRestaurantType() == RestaurantInfo.Types.NoType) {
+        while(!this.restaurantBuilder.SetupComplete() ||
+            this.gameManager.GetCurrentRestaurantType() == RestaurantInfo.Types.NoType) {
             yield return null;
         }
-        this.currentType = this.gameManager.GetCurrentRestaurantType();
-        this.CreateRestaurant(currentType);
+        this.CreateRestaurant();
     }
 }

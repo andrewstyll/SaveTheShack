@@ -49,33 +49,31 @@ public class CustomerAreaUI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if(this.restaurantOpen) {
-            Debug.Log("Spawning Customer");
+            //Debug.Log("Spawning Customer");
             SpawnCustomer();
         }
     }
 
     private void SpawnCustomer() {
-        if(this.restaurantOpen) {
-            if (this.timeToNextCustomer <= 0.0f && this.freeSpawnSlots.Count > 0) {
-                // only perform this action if there is a spot available or maybe perform it and auto add a customer
-                // when a spot becomes available and the time is up
-                int spawnSpot = this.freeSpawnSlots[Random.Range(0, this.freeSpawnSlots.Count - 1)];
-                this.freeSpawnSlots.Remove(spawnSpot);
+        if (this.timeToNextCustomer <= 0.0f && this.freeSpawnSlots.Count > 0) {
+            // only perform this action if there is a spot available or maybe perform it and auto add a customer
+            // when a spot becomes available and the time is up
+            int spawnSpot = this.freeSpawnSlots[Random.Range(0, this.freeSpawnSlots.Count - 1)];
+            this.freeSpawnSlots.Remove(spawnSpot);
 
-                Destroy(customerList[spawnSpot]);
+            Destroy(customerList[spawnSpot]);
 
-                GameObject newCustomer = Instantiate(this.customerPrefab, gameObject.transform, false);
-                newCustomer.transform.SetSiblingIndex(spawnSpot);
-                newCustomer.GetComponent<CustomerUI>().SetId(spawnSpot);
+            GameObject newCustomer = Instantiate(this.customerPrefab, gameObject.transform, false);
+            newCustomer.transform.SetSiblingIndex(spawnSpot);
+            newCustomer.GetComponent<CustomerUI>().SetId(spawnSpot);
 
-                customerList[spawnSpot] = newCustomer;
+            customerList[spawnSpot] = newCustomer;
 
-                if (this.freeSpawnSlots.Count > 0) {
-                    this.timeToNextCustomer = Random.Range(customerWindowMin, customerWindowMin + customerWindowSize);
-                }
-            } else if (this.timeToNextCustomer > 0.0f) {
-                this.timeToNextCustomer -= Time.deltaTime;
+            if (this.freeSpawnSlots.Count > 0) {
+                this.timeToNextCustomer = Random.Range(customerWindowMin, customerWindowMin + customerWindowSize);
             }
+        } else if (this.timeToNextCustomer > 0.0f) {
+            this.timeToNextCustomer -= Time.deltaTime;
         }
     }
 
@@ -92,9 +90,7 @@ public class CustomerAreaUI : MonoBehaviour {
         this.freeSpawnSlots.Add(id);
     }
 
-    // don't need score for this event in the customer area
     private void StopCustomerSpawn(int score) {
-        Debug.Log("Restaurant Closed");
         this.restaurantOpen = false;
     }
 }

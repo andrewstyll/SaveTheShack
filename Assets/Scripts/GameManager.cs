@@ -70,7 +70,6 @@ public class GameManager : MonoBehaviour {
 
     private void EndOfDayEvent(int score) {
         this.totalScore += score;
-        Debug.Log(totalScore);
     }
 
     /**** Public API ****/
