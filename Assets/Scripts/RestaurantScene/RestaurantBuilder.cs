@@ -7,6 +7,10 @@ public sealed class RestaurantBuilder {
 
     private static readonly RestaurantBuilder instance = new RestaurantBuilder();
 
+    private const int FIVE_TOPPINGS_THRESH = 2;
+    private const int SIX_TOPPINGS_THRESH = 3;
+
+    // config/setup variables
     private ConfigSetup configData;
     private Dictionary<string, Food> foodDictionary;
     private bool setupComplete = false;
@@ -60,9 +64,6 @@ public sealed class RestaurantBuilder {
             case RestaurantInfo.Types.Burger:
                 this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantFoodDisplaySprites.Top,
                                                     restaurantData.RestaurantFoodDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
-
-
-
                 break;
             case RestaurantInfo.Types.Fries:
                 Debug.Log("Fries drawer not available atm");
@@ -83,21 +84,15 @@ public sealed class RestaurantBuilder {
 
     private void FillThemeSpriteDictionary(JsonToRestaurant restaurantData) {
         this.themeSpriteDictionary = new Dictionary<string, Sprite>();
-        switch (this.currentRestaurantType) {
-            case RestaurantInfo.Types.Burger:
-                foreach(JsonSpritesObject spritePair in restaurantData.RestaurantThemeSprites) {
-                    this.themeSpriteDictionary.Add(spritePair.Name, 
-                                                    Resources.Load<Sprite>(this.restaurantSpritePath + spritePair.SpriteName));
-                }
-
-                break;
-            default:
-                throw new System.Exception("Can't Fill theme sprites for invalid type");
+        foreach(JsonSpritesObject spritePair in restaurantData.RestaurantThemeSprites) {
+            this.themeSpriteDictionary.Add(spritePair.Name, 
+                                            Resources.Load<Sprite>(this.restaurantSpritePath + spritePair.SpriteName));
         }
     }
 
-    private void BuildFullMenu() {
-
+    private void BuildNewMenu(int daysPassed) {
+        this.menu = new Menu();
+        int numToppingsToRemove = 0;
         foreach (string item in this.restaurantMenu) {
             // check to see if it exists in dictionary
             if (foodDictionary.ContainsKey(item)) {
@@ -119,12 +114,19 @@ public sealed class RestaurantBuilder {
                 throw new System.Exception("invalid menu item " + item);
             }
         }
-    }
 
-    private void BuildNewMenu() {
-        this.menu = new Menu();
-        BuildFullMenu();
-        // Now need to reduce list by removing elements
+        if(daysPassed >= SIX_TOPPINGS_THRESH && menu.GetToppingsLength() > 6) {
+            numToppingsToRemove = menu.GetToppingsLength() - 6;
+        } else if(daysPassed >= FIVE_TOPPINGS_THRESH && menu.GetToppingsLength() > 5) {
+            numToppingsToRemove = menu.GetToppingsLength() - 5;
+        } else if(menu.GetToppingsLength() > 4) {
+            numToppingsToRemove = menu.GetToppingsLength() - 4;
+        }
+
+        while(numToppingsToRemove > 0) {
+            menu.RemoveToppingAtIndex(Random.Range(0, menu.GetToppingsLength()));
+            numToppingsToRemove--;
+        }
     }
 
     /**** PUBLIC API ****/
@@ -140,7 +142,7 @@ public sealed class RestaurantBuilder {
         return this.mealDrawerCreated;
     }
 
-    public void BuildRestaurant(RestaurantInfo.Types type) {
+    public void BuildRestaurant(RestaurantInfo.Types type, int daysPassed) {
         if(type == RestaurantInfo.Types.NoType) {
             throw new System.Exception("Can't build restaurant of type NoType");
         } else if(type != this.currentRestaurantType) {
@@ -156,7 +158,7 @@ public sealed class RestaurantBuilder {
             this.BuildMealDrawer(restaurantData);
             this.mealDrawerCreated = true;
         }
-        this.BuildNewMenu();
+        this.BuildNewMenu(daysPassed);
     }
 
     public Menu GetMenu() {

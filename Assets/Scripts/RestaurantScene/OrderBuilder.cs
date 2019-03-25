@@ -22,10 +22,8 @@ public sealed class OrderBuilder {
         int foodToAdd = MAX_TOPPINGS;
 
         // determine if main used or no main, 5% chance of no main
-        if (Random.Range(0,100) > ODDS_NO_MAIN) {
-            foodOrder.Add(menu.GetMain().GetName());
-            foodToAdd--;
-        }
+        foodOrder.Add(menu.GetMain().GetName());
+        foodToAdd--;
 
         // determine how many toppings to add
         foodToAdd = Random.Range(0, foodToAdd);

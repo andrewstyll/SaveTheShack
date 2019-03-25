@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour {
     private States currentState;
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType;
 
-    private int totalScore;
+    private int totalScore = 0;
+    private int daysPassed = 0;
 
     private void Awake() {
         if(instance == null) {
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour {
 
     private void EndOfDayEvent(int score) {
         this.totalScore += score;
+        this.daysPassed += 1;
     }
 
     /**** Public API ****/
@@ -79,5 +81,9 @@ public class GameManager : MonoBehaviour {
 
     public RestaurantInfo.Types GetCurrentRestaurantType() {
         return this.currentRestType;
+    }
+
+    public int GetDaysPassed() {
+        return this.daysPassed;
     }
 }

@@ -76,7 +76,7 @@ public class RestaurantManager : MonoBehaviour {
 
     private void CreateRestaurant() {
         this.currentType = this.gameManager.GetCurrentRestaurantType();
-        this.restaurantBuilder.BuildRestaurant(this.currentType);
+        this.restaurantBuilder.BuildRestaurant(this.currentType, this.gameManager.GetDaysPassed());
         LoadUI();
     }
 
