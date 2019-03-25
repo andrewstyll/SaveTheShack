@@ -9,8 +9,7 @@ public class BurgerDrawer : MealDrawer {
 
     private string TopBun = "TopBun";
     private string BottomBun = "BottomBun";
-    private Dictionary<string, Sprite> displaySprites;
-
+ 
     public BurgerDrawer(string spritePath, string top, string bottom, JsonSpritesObject[] displayFood) {
         displaySprites = new Dictionary<string, Sprite>();
         displaySprites.Add(this.TopBun, Resources.Load<Sprite>(spritePath + top));
@@ -39,11 +38,5 @@ public class BurgerDrawer : MealDrawer {
         childObject.transform.localPosition = new Vector3(0, childObject.transform.GetSiblingIndex() * SPACING_CONST);
     }
 
-    public override void ManuallyAddSprite(string foodName, Sprite sprite) {
-        displaySprites.Add(foodName, sprite);
-    }
 
-    public override Sprite ManuallyGetSprite(string foodName) {
-        return displaySprites[foodName];
-    }
 }

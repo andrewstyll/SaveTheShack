@@ -5,6 +5,8 @@
     "Tomato",
     "Cheese",
     "Onion",
+    "Mushroom",
+    "Pepper",
     "GreenSoda",
     "BlueSoda",
     "BrownSoda"
@@ -33,6 +35,14 @@
     {
       "Name": "Cheese",
       "SpriteName": "Cheese_Stack"
+    },
+    {
+      "Name": "Mushroom",
+      "SpriteName": "Mushroom_Stack"
+    },
+    {
+      "Name": "Pepper",
+      "SpriteName": "Pepper_Stack"
     }
   ],
   "RestaurantThemeSprites": [

@@ -6,6 +6,6 @@ public static class RestaurantInfo {
     public enum Types {
         NoType,
         Burger,
-        Taco // unsupported for now, probably will change
+        Fries
     };
 }

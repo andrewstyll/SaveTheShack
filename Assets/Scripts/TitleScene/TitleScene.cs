@@ -9,9 +9,9 @@ public class TitleScene : MonoBehaviour {
     // select starting restaurant type
     private const string SUFFIX = " Shack";
     private const string REST_ONE_STRING = "Burger";
-    private const string REST_TWO_STRING = "Taco";
+    private const string REST_TWO_STRING = "Fries";
     private const RestaurantInfo.Types REST_ONE_TYPE = RestaurantInfo.Types.Burger;
-    private const RestaurantInfo.Types REST_TWO_TYPE = RestaurantInfo.Types.Taco;
+    private const RestaurantInfo.Types REST_TWO_TYPE = RestaurantInfo.Types.Fries;
 
     private RestaurantInfo.Types selectedType;
 

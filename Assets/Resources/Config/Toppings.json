@@ -2,19 +2,27 @@
   "List": [
     {
       "name": "Cheese",
-      "preppedSpriteName": "Cheese_RD"
+      "preppedSpriteName": "Cheese"
     },
     {
       "name": "Lettuce",
-      "preppedSpriteName": "Lettuce_RD"
+      "preppedSpriteName": "Lettuce"
     },
     {
       "name": "Onion",
-      "preppedSpriteName": "Onion_RD"
+      "preppedSpriteName": "Onion"
     },
     {
       "name": "Tomato",
-      "preppedSpriteName": "Tomato_RD"
+      "preppedSpriteName": "Tomato"
+    },
+    {
+      "name": "Mushroom",
+      "preppedSpriteName": "Mushroom"
+    },
+    {
+      "name": "Pepper",
+      "preppedSpriteName": "Pepper"
     }
   ],
   "SpriteLocation": "Sprites/RestaurantScene/Food/"

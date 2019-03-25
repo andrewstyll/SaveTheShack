@@ -61,18 +61,24 @@ public sealed class RestaurantBuilder {
                 this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantFoodDisplaySprites.Top,
                                                     restaurantData.RestaurantFoodDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
 
-                foreach (KeyValuePair<string, Food> entry in this.foodDictionary) {
-                    // do something with entry.Value or entry.Key
-                    if(entry.Value.GetFoodType() == FoodType.Type.drink) {
-                        this.mealDrawer.ManuallyAddSprite(entry.Key, entry.Value.GetPreppedSprite());
-                    }
-                }
 
+
+                break;
+            case RestaurantInfo.Types.Fries:
+                Debug.Log("Fries drawer not available atm");
+                this.mealDrawer = new FriesDrawer();
                 break;
             default:
                 throw new System.Exception("Can't create meal drawer of invalid type");
         }
 
+        // add drinks as they re-use sprites from the menu
+        foreach (KeyValuePair<string, Food> entry in this.foodDictionary) {
+            // do something with entry.Value or entry.Key
+            if (entry.Value.GetFoodType() == FoodType.Type.drink) {
+                this.mealDrawer.ManuallyAddSprite(entry.Key, entry.Value.GetPreppedSprite());
+            }
+        }
     }
 
     private void FillThemeSpriteDictionary(JsonToRestaurant restaurantData) {
