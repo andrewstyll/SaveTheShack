@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BurgerDrawer : MealDrawer {
 
-    private const float SPACING_CONST = 9.0f;
+    private const float SPACING_CONST = 10.0f;
 
     private string TopBun = "TopBun";
     private string BottomBun = "BottomBun";
@@ -33,9 +33,10 @@ public class BurgerDrawer : MealDrawer {
         GameObject childObject = new GameObject(foodName);
         childObject.AddComponent<Image>();
         childObject.GetComponent<Image>().sprite = nextFood;
-        childObject.transform.SetParent(parentObject.transform);
+        childObject.transform.parent = parentObject.transform;
         childObject.transform.SetAsLastSibling();
         childObject.transform.localPosition = new Vector3(0, childObject.transform.GetSiblingIndex() * SPACING_CONST);
     }
+
 
 }

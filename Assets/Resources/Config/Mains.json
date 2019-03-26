@@ -1,0 +1,15 @@
+﻿{
+  "List": [
+    {
+      "name": "Burger",
+      "unPreppedSpriteName": "Burger_Raw_RD",
+      "preppedSpriteName": "Burger_RD",
+      "burntSpriteName": "Burger_Burnt_RD"
+    },
+    {
+      "name": "Taco",
+      "preppedSpriteName": "Taco_RD"
+    }
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/Food/"
+}

@@ -12,47 +12,28 @@ public sealed class ConfigSetup {
 
     private static readonly ConfigSetup instance = new ConfigSetup();
 
-    private Dictionary<RestaurantInfo.Types, JsonFoodContainer> mainsList;
-    private Dictionary<RestaurantInfo.Types, JsonFoodContainer> toppingsList;
+    private JsonFoodContainer mainsList;
+    private JsonFoodContainer toppingsList;
     private JsonFoodContainer drinksList;
 
-    private readonly string basePath = "Assets/Resources/Config/";
-    private readonly string mainsFilePath = "Mains.json";
-    private readonly string toppingsFilePath = "Toppings.json";
-    private readonly string drinksFilePath = "Drinks.json";
+    private readonly string mainsInfoFilePath = "Assets/Resources/Config/Mains.json";
+    private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
+    private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
 
-    private readonly string burgerRestaurantConfigPath = "BurgerRestaurant/";
-    private readonly string burgerFilePath = "BurgerRestaurant.json";
+    private JsonToRestaurant burgerData; 
 
-    private JsonToRestaurant burgerData;
+    private readonly string burgerRestaurantPath = "Assets/Resources/Config/BurgerRestaurant.json";
 
     private bool setupComplete = false;
 
-    private ConfigSetup() {
-        this.mainsList = new Dictionary<RestaurantInfo.Types, JsonFoodContainer>();
-        this.toppingsList = new Dictionary<RestaurantInfo.Types, JsonFoodContainer>();
-    }
+    private ConfigSetup() {}
 
     public void RunConfigSetup() {
-        foreach (RestaurantInfo.Types type in System.Enum.GetValues(typeof(RestaurantInfo.Types))) {
-            string filePath = null;
-            switch (type) {
-                case RestaurantInfo.Types.Burger:
-                    filePath = this.basePath + this.burgerRestaurantConfigPath;
-                    break;
-                case RestaurantInfo.Types.Fries:
-                    break;
-            }
-            if (filePath != null) {
-                this.mainsList.Add(type, GetFoodConfig(filePath + this.mainsFilePath));
-                this.toppingsList.Add(type, GetFoodConfig(filePath + this.toppingsFilePath));
-            }
+        this.mainsList = GetFoodConfig(mainsInfoFilePath);
+        this.toppingsList = GetFoodConfig(toppingsInfoFilePath);
+        this.drinksList = GetFoodConfig(drinksInfoFilePath);
 
-        }
-
-        this.drinksList = GetFoodConfig(this.basePath + this.drinksFilePath);
-
-        this.burgerData = GetRestaurantConfig(this.basePath + this.burgerRestaurantConfigPath + this.burgerFilePath);
+        this.burgerData = GetRestaurantConfig(burgerRestaurantPath);
         this.setupComplete = true;
     }
 
@@ -80,25 +61,12 @@ public sealed class ConfigSetup {
         return instance;
     }
 
-    public bool HasRestaurantType(FoodType.Type foodType, RestaurantInfo.Types restType) {
-        switch (foodType) {
-            case FoodType.Type.main:
-                return mainsList.ContainsKey(restType);
-            case FoodType.Type.topping:
-                return toppingsList.ContainsKey(restType);
-            case FoodType.Type.drink: // no restaurant specific drinks atm so return false
-                return false;
-            default:
-                throw new System.Exception("Invalid foodtype config retrieval");
-        }
-    }
-
-    public JsonFoodContainer GetJsonFood(FoodType.Type foodType, RestaurantInfo.Types restType) {
+    public JsonFoodContainer GetJsonFood(FoodType.Type foodType) {
         switch(foodType) {
             case FoodType.Type.main:
-                return mainsList[restType];
+                return mainsList;
             case FoodType.Type.topping:
-                return toppingsList[restType];
+                return toppingsList;
             case FoodType.Type.drink:
                 return drinksList;
             default:
