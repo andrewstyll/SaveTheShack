@@ -1,12 +1,12 @@
 ﻿{
   "Menu": [
-    "Burger",
-    "Lettuce",
-    "Tomato",
-    "Cheese",
-    "Onion",
-    "Mushroom",
-    "Pepper",
+    "Hamburger",
+    "Sliced_Lettuce",
+    "Sliced_Tomato",
+    "Sliced_Cheese",
+    "Sliced_Onion",
+    "Cooked_Mushroom",
+    "Banana_Pepper",
     "GreenSoda",
     "BlueSoda",
     "BrownSoda"
@@ -17,32 +17,32 @@
   },
   "FoodDisplaySprites": [
     {
-      "Name": "Burger",
-      "SpriteName": "Burger_Stack"
+      "Name": "Hamburger",
+      "SpriteName": "Hamburger_Stack"
     },
     {
-      "Name": "Lettuce",
-      "SpriteName": "Lettuce_Stack"
+      "Name": "Sliced_Lettuce",
+      "SpriteName": "Sliced_Lettuce_Stack"
     },
     {
-      "Name": "Onion",
-      "SpriteName": "Onion_Stack"
+      "Name": "Sliced_Onion",
+      "SpriteName": "Sliced_Onion_Stack"
     },
     {
-      "Name": "Tomato",
-      "SpriteName": "Tomato_Stack"
+      "Name": "Sliced_Tomato",
+      "SpriteName": "Sliced_Tomato_Stack"
     },
     {
-      "Name": "Cheese",
-      "SpriteName": "Cheese_Stack"
+      "Name": "Sliced_Cheese",
+      "SpriteName": "Sliced_Cheese_Stack"
     },
     {
-      "Name": "Mushroom",
-      "SpriteName": "Mushroom_Stack"
+      "Name": "Cooked_Mushroom",
+      "SpriteName": "Cooked_Mushroom_Stack"
     },
     {
-      "Name": "Pepper",
-      "SpriteName": "Pepper_Stack"
+      "Name": "Banana_Pepper",
+      "SpriteName": "Banana_Pepper_Stack"
     }
   ],
   "RestaurantThemeSprites": [

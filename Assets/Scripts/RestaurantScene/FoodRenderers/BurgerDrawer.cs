@@ -33,10 +33,8 @@ public class BurgerDrawer : MealDrawer {
         GameObject childObject = new GameObject(foodName);
         childObject.AddComponent<Image>();
         childObject.GetComponent<Image>().sprite = nextFood;
-        childObject.transform.parent = parentObject.transform;
+        childObject.transform.SetParent(parentObject.transform);
         childObject.transform.SetAsLastSibling();
         childObject.transform.localPosition = new Vector3(0, childObject.transform.GetSiblingIndex() * SPACING_CONST);
     }
-
-
 }

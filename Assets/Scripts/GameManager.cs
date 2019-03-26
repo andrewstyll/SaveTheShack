@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("TitleScene");
                 break;
             case GAMEPLAY:
-                this.currentState = States.TitleScene;
+                this.currentState = States.GameplayScene;
                 if(this.currentRestType == RestaurantInfo.Types.NoType) {
                     // set burger to default;
                     this.currentRestType = RestaurantInfo.Types.Burger;

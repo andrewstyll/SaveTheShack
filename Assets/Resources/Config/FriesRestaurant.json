@@ -1,0 +1,26 @@
+﻿{
+  "Menu": [
+    "Fries",
+    "GreenSoda",
+    "BlueSoda",
+    "BrownSoda",
+    "OrangeSoda"
+  ],
+  "RestaurantFoodDisplaySprites": {
+    "Bottom": "Fries_Container",
+    "Top": "Fork"
+  },
+  "FoodDisplaySprites": [
+    {
+      "Name": "Fries",
+      "SpriteName": "Fries_Stack"
+    }
+  ],
+  "RestaurantThemeSprites": [
+    {
+      "Name": "TopMe",
+      "SpriteName": "Top_Me"
+    }
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/FriesRestaurant/"
+}
