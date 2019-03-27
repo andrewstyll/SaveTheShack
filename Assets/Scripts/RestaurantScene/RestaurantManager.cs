@@ -34,7 +34,7 @@ public class RestaurantManager : MonoBehaviour {
     public static event RestaurantManagerNotification LoadUI;
     public static event RestaurantManagerNotification StartGame;
 
-    public delegate void ModalNotification(Modal.ModalState state, string displayString);
+    public delegate void ModalNotification(ModalUI.ModalState state, string displayString);
     public static event ModalNotification ModalEvent;
 
     private void Awake() {
@@ -49,11 +49,11 @@ public class RestaurantManager : MonoBehaviour {
         StatusBarUI.Loaded += StatusUILoaded;
         CustomerAreaUI.Loaded += CustomerUILoaded;
         FoodStationUI.Loaded += FoodUILoaded;
-        Modal.CountDownComplete += SetupStartGame;
+        ModalUI.CountDownComplete += SetupStartGame;
         StatusBarUI.EndOfDay += EndDayEvent;
 
         // spawn modal to block screen from being touched with loading graphic
-        DisplayModal(Modal.ModalState.Loading, "");
+        DisplayModal(ModalUI.ModalState.Loading, "");
         this.state = RestaurantStates.Loading;
     }
 
@@ -70,7 +70,7 @@ public class RestaurantManager : MonoBehaviour {
     private void Update() {
         if (this.state == RestaurantStates.Loading && UIIsLoaded()) {
             this.state = RestaurantStates.Open;
-            DisplayModal(Modal.ModalState.CountDown, "");
+            DisplayModal(ModalUI.ModalState.CountDown, "");
         }
     }
 
@@ -80,7 +80,7 @@ public class RestaurantManager : MonoBehaviour {
         LoadUI();
     }
 
-    private void DisplayModal(Modal.ModalState state, string displayString) {
+    private void DisplayModal(ModalUI.ModalState state, string displayString) {
         if(modal == null) {
             modal = Instantiate(this.modalPrefab, this.backgroundCanvas.transform, false);
             modal.transform.SetAsLastSibling();
@@ -119,7 +119,7 @@ public class RestaurantManager : MonoBehaviour {
 
     private void EndDayEvent(int score) {
         this.state = RestaurantStates.Closed;
-        DisplayModal(Modal.ModalState.EndGame, score.ToString());
+        DisplayModal(ModalUI.ModalState.EndGame, score.ToString());
     }
 
     /**** Coroutines ****/

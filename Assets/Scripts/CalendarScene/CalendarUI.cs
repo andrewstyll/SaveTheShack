@@ -8,6 +8,8 @@ public class CalendarUI : MonoBehaviour {
 
     private Camera mainCamera;
 
+    private GameObject modal = null;
+
     private GameObject[] days;
     private int daysPassed;
     private int numDays;
@@ -21,15 +23,14 @@ public class CalendarUI : MonoBehaviour {
         this.numDays = gameObject.transform.childCount;
 
         this.days = new GameObject[this.numDays];
-        for(int i = 0; i < days.Length; i++) {
+        for (int i = 0; i < days.Length; i++) {
             this.days[i] = gameObject.transform.GetChild(i).gameObject;
         }
-
     }
 
     // Start is called before the first frame update
     private void Start() {
-        if(daysPassedUser == -1) {
+        if (daysPassedUser == -1) {
             this.daysPassed = gameManager.GetDaysPassed();
         } else {
             this.daysPassed = daysPassedUser;
@@ -37,9 +38,9 @@ public class CalendarUI : MonoBehaviour {
 
         for (int i = 0; i < days.Length; i++) {
             DayUI script = this.days[i].GetComponent<DayUI>();
-            if(i < this.daysPassed) {
+            if (i < this.daysPassed) {
                 script.SetPast();
-            } else if(i == this.daysPassed) {
+            } else if (i == this.daysPassed) {
                 script.SetCurrent();
             } else {
                 script.SetFuture();
@@ -49,6 +50,7 @@ public class CalendarUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+
     }
+
 }

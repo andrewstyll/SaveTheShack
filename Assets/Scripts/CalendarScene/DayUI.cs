@@ -8,15 +8,20 @@ public class DayUI : MonoBehaviour {
     private Button button;
     private Image image;
 
+    private GameObject modal;
+    [SerializeField] private GameObject modalPrefab;
+
     [SerializeField] private Sprite pastSprite;
     [SerializeField] private Sprite currentSprite;
-    [SerializeField] private Text textPromt;
+
+    public delegate void ModalEvent(ModalUI.ModalState state, string displayString);
+    public static ModalEvent SelectDayEvent;
 
     private void Awake() {
         this.button = gameObject.GetComponent<Button>();
         this.image = gameObject.GetComponent<Image>();
 
-        this.button.onClick.AddListener(StartDay);
+        this.button.onClick.AddListener(SelectDay);
     }
 
     // Start is called before the first frame update
@@ -29,9 +34,16 @@ public class DayUI : MonoBehaviour {
         
     }
 
+    private void ShowModal() {
+        if (this.modal == null) {
+            this.modal = Instantiate(this.modalPrefab, this.transform, false);
+        }
+    }
+
     /**** Events ****/
-    private void StartDay() {
-        Debug.Log("Hi");
+    private void SelectDay() {
+        ShowModal();
+        SelectDayEvent(ModalUI.ModalState.DaySelect, "");
     }
 
     /**** Public API ****/

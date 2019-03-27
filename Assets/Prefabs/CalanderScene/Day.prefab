@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5815790b23f4ec8b0211bf9e7447e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modalPrefab: {fileID: 3819939269577606674, guid: 775121ad6a8a740f9a11a170c170ca17,
+    type: 3}
   pastSprite: {fileID: 21300000, guid: 344e1544f7ff54f3f847899b3249e5b2, type: 3}
   currentSprite: {fileID: 21300000, guid: 51ea0177f31fb4d7aa1b67b536731ba2, type: 3}
-  textPromt: {fileID: 0}
