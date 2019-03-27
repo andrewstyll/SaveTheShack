@@ -146,7 +146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32000002, y: 0.1}
   m_AnchorMax: {x: 0.95500004, y: 0.90000004}
-  m_AnchoredPosition: {x: 4.4, y: -0.00002861023}
+  m_AnchoredPosition: {x: 4.3999996, y: -0.00002861023}
   m_SizeDelta: {x: -4.9, y: -0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &182656280
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 380397084}
   - component: {fileID: 380397083}
   - component: {fileID: 380397086}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Trash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,8 +362,8 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.25882354, g: 0.40000004, b: 0.6431373, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -377,10 +377,10 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 18.992838
   orthographic: 1
-  orthographic size: 5
-  m_Depth: -1
+  orthographic size: 121.87906
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -407,7 +407,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542765665
 GameObject:
@@ -601,7 +601,7 @@ PrefabInstance:
     - target: {fileID: 6064519859785973756, guid: b091afd7b283c490d87e6f583a3fe3f6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6064519859785973756, guid: b091afd7b283c490d87e6f583a3fe3f6,
         type: 3}
@@ -664,7 +664,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &656617792 stripped
 GameObject:
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 817511794}
   - component: {fileID: 817511796}
   - component: {fileID: 817511797}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainsArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -958,7 +958,7 @@ GameObject:
   - component: {fileID: 1012044153}
   - component: {fileID: 1012044151}
   - component: {fileID: 1012044152}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TopMeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 1208732016}
   - component: {fileID: 1208732018}
   - component: {fileID: 1208732019}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DrinksArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1240,7 +1240,7 @@ GameObject:
   - component: {fileID: 1400058323}
   - component: {fileID: 1400058322}
   - component: {fileID: 1400058324}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FoodStation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1331,7 +1331,7 @@ GameObject:
   - component: {fileID: 1512063437}
   - component: {fileID: 1512063439}
   - component: {fileID: 1512063438}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CustomerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1408,7 +1408,7 @@ GameObject:
   - component: {fileID: 1534793532}
   - component: {fileID: 1534793531}
   - component: {fileID: 1534793533}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PreppedOrder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1689,7 +1689,7 @@ GameObject:
   - component: {fileID: 1919691363}
   - component: {fileID: 1919691365}
   - component: {fileID: 1919691364}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RestaurantImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1764,7 +1764,7 @@ GameObject:
   - component: {fileID: 1945827528}
   - component: {fileID: 1945827527}
   - component: {fileID: 1945827526}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,8 +1819,8 @@ Canvas:
   m_GameObject: {fileID: 1945827525}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1847,7 +1847,7 @@ RectTransform:
   - {fileID: 1512063437}
   - {fileID: 1400058321}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1867,7 +1867,7 @@ GameObject:
   - component: {fileID: 1987769802}
   - component: {fileID: 1987769804}
   - component: {fileID: 1987769805}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ToppingsArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1980,6 +1980,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoodDisplayUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8790787106651505243, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8790787106651505242, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2038,7 +2043,7 @@ PrefabInstance:
     - target: {fileID: 8790787106651505242, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 36.57497
+      value: 36.574966
       objectReference: {fileID: 0}
     - target: {fileID: 8790787106651505242, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
@@ -2084,6 +2089,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790787107430344099, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790787106475745230, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8790787107430344098, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}

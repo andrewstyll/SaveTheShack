@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour {
 
     private enum States {
         TitleScene,
-        GameplayScene
+        GameplayScene,
+        CalendarScene
     };
 
     private const string TITLE = "TitleScene";
     private const string GAMEPLAY = "RestaurantScene";
+    private const string CALENDAR = "CalendarScene";
 
     private States currentState;
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType;
@@ -47,7 +49,6 @@ public class GameManager : MonoBehaviour {
         switch(scene) {
             case TITLE:
                 this.currentState = States.TitleScene;
-                Debug.Log("TitleScene");
                 break;
             case GAMEPLAY:
                 this.currentState = States.GameplayScene;
@@ -55,6 +56,9 @@ public class GameManager : MonoBehaviour {
                     // set burger to default;
                     this.currentRestType = RestaurantInfo.Types.Burger;
                 }
+                break;
+            case CALENDAR:
+                this.currentState = States.CalendarScene;
                 break;
             default:
                 throw new System.Exception("Invalid scene name for current scene");
@@ -72,6 +76,7 @@ public class GameManager : MonoBehaviour {
     private void EndOfDayEvent(int score) {
         this.totalScore += score;
         this.daysPassed += 1;
+
     }
 
     /**** Public API ****/
