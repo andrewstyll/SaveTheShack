@@ -520,6 +520,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modalTextObj: {fileID: 1900927718238560138}
+  buttonOne: {fileID: 9215402787681298515}
+  buttonTwo: {fileID: 1453913191268878360}
 --- !u!1 &5363130114898147519
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +532,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8534853548562206418}
   - component: {fileID: 6379951316266057141}
-  - component: {fileID: 5212413079021651258}
   m_Layer: 5
   m_Name: ButtonArea
   m_TagString: Untagged
@@ -582,20 +583,6 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
---- !u!114 &5212413079021651258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5363130114898147519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95e1c21f611a42d8b04af36b035eb1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonOne: {fileID: 9215402787681298515}
-  buttonTwo: {fileID: 1453913191268878360}
 --- !u!1 &9215402787681298515
 GameObject:
   m_ObjectHideFlags: 0

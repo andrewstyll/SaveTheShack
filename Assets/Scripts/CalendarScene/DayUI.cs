@@ -38,11 +38,13 @@ public class DayUI : MonoBehaviour {
         if (this.modal == null) {
             this.modal = Instantiate(this.modalPrefab, this.transform, false);
         }
+        modal.SetActive(true);
     }
 
     /**** Events ****/
     private void SelectDay() {
         ShowModal();
+        Debug.Log("day select event");
         SelectDayEvent(ModalUI.ModalState.DaySelect, "");
     }
 
