@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 class FriesDrawer : MealDrawer {
 
-    public FriesDrawer() { }
+    public FriesDrawer() {
+        displaySprites = new Dictionary<string, Sprite>();
+    }
 
     public override void StartDrawing(GameObject parentObject) {
 

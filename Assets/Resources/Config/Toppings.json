@@ -23,6 +23,30 @@
     {
       "name": "Banana_Pepper",
       "preppedSpriteName": "Banana_Pepper"
+    },
+    {
+      "name": "Cheese_Curds",
+      "preppedSpriteName": "Cheese_Curds"
+    },
+    {
+      "name": "Chili",
+      "preppedSpriteName": "Chili"
+    },
+    {
+      "name": "Chives",
+      "preppedSpriteName": "Chives"
+    },
+    {
+      "name": "Gravy",
+      "preppedSpriteName": "Gravy"
+    },
+    {
+      "name": "Bacon_Bits",
+      "preppedSpriteName": "Bacon_Bits"
+    },
+    {
+      "name": "Sour_Cream",
+      "preppedSpriteName": "Sour_Cream"
     }
   ],
   "SpriteLocation": "Sprites/RestaurantScene/Food/"

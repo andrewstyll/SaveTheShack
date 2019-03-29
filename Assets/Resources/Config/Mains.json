@@ -5,6 +5,12 @@
       "unPreppedSpriteName": "Hamburger_Raw",
       "preppedSpriteName": "Hamburger",
       "burntSpriteName": "Hamburger_Burnt"
+    },
+    {
+      "name": "Fries",
+      "unPreppedSpriteName": "Fries_Raw",
+      "preppedSpriteName": "Fries",
+      "burntSpriteName": "Fries_Burnt"
     }
   ],
   "SpriteLocation": "Sprites/RestaurantScene/Food/"

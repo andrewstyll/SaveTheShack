@@ -20,9 +20,11 @@ public sealed class ConfigSetup {
     private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
     private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
 
-    private JsonToRestaurant burgerData; 
+    private JsonToRestaurant burgerData;
+    private JsonToRestaurant friesData;
 
     private readonly string burgerRestaurantPath = "Assets/Resources/Config/BurgerRestaurant.json";
+    private readonly string friesRestaurantPath = "Assets/Resources/Config/FriesRestaurant.json";
 
     private bool setupComplete = false;
 
@@ -34,6 +36,7 @@ public sealed class ConfigSetup {
         this.drinksList = GetFoodConfig(drinksInfoFilePath);
 
         this.burgerData = GetRestaurantConfig(burgerRestaurantPath);
+        this.friesData = GetRestaurantConfig(friesRestaurantPath);
         this.setupComplete = true;
     }
 
@@ -78,6 +81,8 @@ public sealed class ConfigSetup {
         switch (restaurantType) {
             case RestaurantInfo.Types.Burger:
                 return burgerData;
+            case RestaurantInfo.Types.Fries:
+                return friesData;
             default:
                 throw new System.Exception("Unsupported Restaurant Type");
         }

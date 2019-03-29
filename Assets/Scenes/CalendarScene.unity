@@ -475,7 +475,7 @@ MonoBehaviour:
     type: 3}
   monthPrefab: {fileID: 2166569757265965482, guid: 22a4cbdcde0d645c2a404d0f072f577f,
     type: 3}
-  daysPassedUser: 7
+  daysPassedUser: -1
 --- !u!222 &1679718354
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -66,7 +66,6 @@ public sealed class RestaurantBuilder {
                                                     restaurantData.RestaurantFoodDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
                 break;
             case RestaurantInfo.Types.Fries:
-                Debug.Log("Fries drawer not available atm");
                 this.mealDrawer = new FriesDrawer();
                 break;
             default:

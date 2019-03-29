@@ -9,8 +9,8 @@ public class StatusBarUI : MonoBehaviour {
 
     // score and timer interfaces
     private const int SINGLE_CUSTOMER_SCORE = 10;
-    private const float TIME_PER_DAY = 10.0f;
-    //private const float TIME_PER_DAY = 60.0f;
+    //private const float TIME_PER_DAY = 10.0f;
+    private const float TIME_PER_DAY = 60.0f;
 
     private int score;
     private float timeRemaining;
@@ -31,7 +31,7 @@ public class StatusBarUI : MonoBehaviour {
         RestaurantManager.StartGame += StartDay;
         CustomerUI.SuccessfulOrder += AddToScoreEvent;
 
-        this.score = 10;
+        this.score = 0;
         this.timeRemaining = TIME_PER_DAY;
 
         this.timer = timerObject.GetComponent<Slider>();

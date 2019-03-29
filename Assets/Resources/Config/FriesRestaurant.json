@@ -1,6 +1,12 @@
 ﻿{
   "Menu": [
     "Fries",
+    "Sour_Cream",
+    "Cheese_Curds",
+    "Chili",
+    "Chives",
+    "Gravy",
+    "Bacon_Bits",
     "GreenSoda",
     "BlueSoda",
     "BrownSoda",
@@ -14,6 +20,30 @@
     {
       "Name": "Fries",
       "SpriteName": "Fries_Stack"
+    },
+    {
+      "Name": "Cheese_Curds",
+      "SpriteName": "Cheese_Curds_Stack"
+    },
+    {
+      "Name": "Chili",
+      "SpriteName": "Chili_Stack"
+    },
+    {
+      "Name": "Chives",
+      "SpriteName": "Chives_Stack"
+    },
+    {
+      "Name": "Gravy",
+      "SpriteName": "Gravy_Stack"
+    },
+    {
+      "Name": "Bacon_Bits",
+      "SpriteName": "Bacon_Bits_Stack"
+    },
+    {
+      "Name": "Sour_Cream",
+      "SpriteName": "Sour_Cream_Stack"
     }
   ],
   "RestaurantThemeSprites": [
