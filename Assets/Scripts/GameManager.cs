@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
 
     private int totalScore = 0;
     private int daysPassed = 0;
+    private int dailyRent = 0;
 
     private void Awake() {
         if(instance == null) {
@@ -76,6 +77,7 @@ public class GameManager : MonoBehaviour {
                         // set burger to default;
                         this.currentRestType = RestaurantInfo.Types.Burger;
                     }
+                    this.SetRent();
                     SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
                     break;
                 case States.CalendarScene:
@@ -104,8 +106,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void EndOfDayEvent(int score) {
-        this.totalScore += score;
+        this.totalScore = this.totalScore - this.dailyRent + score;
         this.daysPassed += 1;
+        Debug.Log(this.totalScore);
     }
 
     private void HandleModalEvent(ModalUI.ModalState modalState) {
@@ -116,7 +119,19 @@ public class GameManager : MonoBehaviour {
             case ModalUI.ModalState.DaySelect:
                 SetAndLoadNewState(States.GameplayScene);
                 break;
+            case ModalUI.ModalState.GameOver:
+                SetAndLoadNewState(States.TitleScene);
+                break;
         }
+    }
+
+    private void SetRent() {
+        // make this tougher later
+        this.dailyRent = CalculateRent(this.daysPassed);
+    }
+
+    private int CalculateRent(int daysPassed) {
+        return 50;
     }
 
     /**** Public API ****/
@@ -130,5 +145,17 @@ public class GameManager : MonoBehaviour {
 
     public int GetDaysPassed() {
         return this.daysPassed;
+    }
+
+    public int GetTodaysRent() {
+        return this.dailyRent;
+    }
+
+    public int GetRentByDay(int day) {
+        return CalculateRent(day);
+    }
+
+    public int GetTotalScore() {
+        return this.totalScore;
     }
 }

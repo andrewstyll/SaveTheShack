@@ -8,6 +8,8 @@ public class CalendarUI : MonoBehaviour {
 
     private Camera mainCamera;
 
+    private bool canPlayOn = true;
+    private int totalScore = 0;
     private GameObject modal = null;
 
     private GameObject month;
@@ -20,11 +22,9 @@ public class CalendarUI : MonoBehaviour {
     [SerializeField] private int daysPassedUser;
 
     public delegate void ModalEvent(ModalUI.ModalState state, string displayString);
-    public static ModalEvent SelectDayEvent;
+    public static ModalEvent ModalNotification;
 
     private void Awake() {
-        Debug.Log("Awake");
-        if (this == null) Debug.Log("Null this Awake");
         this.gameManager = GameManager.GetInstance();
 
         this.mainCamera = Camera.main;
@@ -36,13 +36,11 @@ public class CalendarUI : MonoBehaviour {
         this.days = new GameObject[this.numDays];
 
         ModalUI.NotifyCaller += ModalCloseEvent;
-        DayUI.NotifyCalendarSelectDay += SpawnDaySelectModal;
+        DayUI.NotifyCalendarSelectDay += DaySelected;
     }
 
     // Start is called before the first frame update
     private void Start() {
-        Debug.Log("Start");
-
         if (this.gameManager != null) {
             InitCalendar();
         } else {
@@ -50,23 +48,37 @@ public class CalendarUI : MonoBehaviour {
         }
     }
 
-    private void OnDestroy() {
-        ModalUI.NotifyCaller -= ModalCloseEvent;
-        DayUI.NotifyCalendarSelectDay -= SpawnDaySelectModal;
+    private void Update() {
+        if(this.totalScore < 0) {
+            // game is over, show game over modal
+            string displayString = "Days Lasted: " + (this.daysPassed + 1).ToString() + " " +
+            "Money Made: " + this.totalScore.ToString();
+            SpawnModal(-1, ModalUI.ModalState.GameOver, displayString);
+        }
     }
 
-    private void SpawnDaySelectModal(int id) {
+    private void OnDestroy() {
+        ModalUI.NotifyCaller -= ModalCloseEvent;
+        DayUI.NotifyCalendarSelectDay -= DaySelected;
+    }
+
+    private void SpawnModal(int id, ModalUI.ModalState state, string displayString) {
         // the calendar has to show the modal to fill screen, so we will send an event along with the ID of the day
+        // id will be used to grab transform from days array
         if (this.modal == null) {
 
             this.modal = Instantiate(this.modalPrefab, this.gameObject.transform, false);
         }
         this.modal.SetActive(true);
-        SelectDayEvent(ModalUI.ModalState.DaySelect, "");
+        ModalNotification(state, displayString);
     }
 
     private void HideModal() {
         this.modal.SetActive(false);
+    }
+
+    private void DaySelected(int id) {
+        SpawnModal(id, ModalUI.ModalState.DaySelect, "");
     }
 
     private void InitCalendar() {
@@ -80,6 +92,7 @@ public class CalendarUI : MonoBehaviour {
             this.days[i] = this.month.transform.GetChild(i).gameObject;
             DayUI script = this.days[i].GetComponent<DayUI>();
             script.SetDay(i);
+            script.SetRent(this.gameManager.GetRentByDay(i));
             if (i < this.daysPassed) {
                 script.SetPast();
             } else if (i == this.daysPassed) {
@@ -88,6 +101,7 @@ public class CalendarUI : MonoBehaviour {
                 script.SetFuture();
             }
         }
+        this.totalScore = this.gameManager.GetTotalScore();
     }
 
     /**** Events ****/

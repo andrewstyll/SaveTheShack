@@ -10,13 +10,15 @@ public class ModalUI : MonoBehaviour {
     private const string READY_TEXT = "Ready?";
     private const string YOUR_SCORE = "Score: ";
     private const string START_DAY = "Start Day?";
+    private const string GAME_OVER = "Game Over";
 
     public enum ModalState {
         NoState,
         Loading,
         CountDown,
         EndGame,
-        DaySelect
+        DaySelect,
+        GameOver
     };
 
     private ModalState state;
@@ -36,7 +38,7 @@ public class ModalUI : MonoBehaviour {
 
     private void Awake() {
         RestaurantManager.ModalEvent += RecieveModalEvent;
-        CalendarUI.SelectDayEvent += RecieveModalEvent;
+        CalendarUI.ModalNotification += RecieveModalEvent;
 
         buttonOne.GetComponent<Button>().onClick.AddListener(ButtonOneListener);
         buttonTwo.GetComponent<Button>().onClick.AddListener(ButtonTwoListener);
@@ -70,17 +72,24 @@ public class ModalUI : MonoBehaviour {
                 case ModalState.DaySelect:
                     this.DaySelect();
                     break;
+                case ModalState.GameOver:
+                    this.GameOver();
+                    break;
             }
         }
 
         if (this.state == ModalState.CountDown) {
-            UpdateCountDown();
+            this.UpdateCountDown();
+        }
+
+        if(this.state == ModalState.GameOver) {
+            this.UpdateGameOver();
         }
     }
 
     private void OnDestroy() {
         RestaurantManager.ModalEvent -= RecieveModalEvent;
-        CalendarUI.SelectDayEvent -= RecieveModalEvent;
+        CalendarUI.ModalNotification -= RecieveModalEvent;
     }
 
     private void NoState() {
@@ -117,6 +126,15 @@ public class ModalUI : MonoBehaviour {
         daySelectText.text = START_DAY + this.displayString;
     }
 
+    private void GameOver() {
+        this.ButtonControl(false, false);
+        this.SetButtonText("Continue?", "");
+        this.modalTextObj.SetActive(true);
+        Text gameOverText = this.modalTextObj.GetComponent<Text>();
+        gameOverText.text = GAME_OVER;
+        this.countDownLeft = COUNTDOWN;
+    }
+
     private void UpdateCountDown() {
         this.countDownLeft -= Time.deltaTime;
 
@@ -135,6 +153,17 @@ public class ModalUI : MonoBehaviour {
             this.state = ModalState.NoState;
             this.NoState();
             CountDownComplete?.Invoke(this.state);
+        }
+    }
+
+    private void UpdateGameOver() {
+        this.countDownLeft -= Time.deltaTime;
+
+        if(this.countDownLeft <= 2.0) {
+            Text gameOverText = this.modalTextObj.GetComponent<Text>();
+            gameOverText.text = this.displayString;
+            gameOverText.fontSize = 20;
+            this.ButtonControl(true, false);
         }
     }
 
@@ -169,7 +198,8 @@ public class ModalUI : MonoBehaviour {
     }
 
     private void ButtonOneListener() {
-        if(this.state == ModalState.EndGame || this.state == ModalState.DaySelect) {
+        if(this.state == ModalState.EndGame || this.state == ModalState.DaySelect
+            || this.state == ModalState.GameOver) {
             NotifyGameManager?.Invoke(this.state);
         }
     }
