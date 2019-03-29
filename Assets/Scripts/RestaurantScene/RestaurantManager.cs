@@ -31,7 +31,7 @@ public class RestaurantManager : MonoBehaviour {
 
     // Events
     public delegate void RestaurantManagerNotification();
-    public static event RestaurantManagerNotification LoadUI;
+    public static event RestaurantManagerNotification LoadFoodUI;
     public static event RestaurantManagerNotification StartGame;
 
     public delegate void ModalNotification(ModalUI.ModalState state, string displayString);
@@ -74,10 +74,18 @@ public class RestaurantManager : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        StatusBarUI.Loaded -= StatusUILoaded;
+        CustomerAreaUI.Loaded -= CustomerUILoaded;
+        FoodStationUI.Loaded -= FoodUILoaded;
+        ModalUI.CountDownComplete -= SetupStartGame;
+        StatusBarUI.EndOfDay -= EndDayEvent;
+    }
+
     private void CreateRestaurant() {
         this.currentType = this.gameManager.GetCurrentRestaurantType();
         this.restaurantBuilder.BuildRestaurant(this.currentType, this.gameManager.GetDaysPassed());
-        LoadUI();
+        LoadFoodUI();
     }
 
     private void DisplayModal(ModalUI.ModalState state, string displayString) {
@@ -111,7 +119,7 @@ public class RestaurantManager : MonoBehaviour {
     }
 
     /**** Events ****/
-    private void SetupStartGame() {
+    private void SetupStartGame(ModalUI.ModalState state) {
         // destroy modal
         HideModal();
         StartGame();

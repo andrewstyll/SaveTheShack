@@ -20,7 +20,7 @@ public sealed class OrderBuilder {
         List<string> foodOrder = new List<string>();
         Menu menu = restaurantBuilder.GetMenu();
         int foodToAdd = MAX_TOPPINGS;
-
+        if (menu == null) Debug.Log("Null menu");
         // determine if main used or no main, 5% chance of no main
         foodOrder.Add(menu.GetMain().GetName());
         foodToAdd--;

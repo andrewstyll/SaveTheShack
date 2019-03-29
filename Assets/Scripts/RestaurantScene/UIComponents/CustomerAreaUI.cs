@@ -54,6 +54,12 @@ public class CustomerAreaUI : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        RestaurantManager.StartGame -= StartCustomerSpawn;
+        CustomerUI.DestroyMe -= DestroyCustomer;
+        StatusBarUI.EndOfDay -= StopCustomerSpawn;
+    }
+
     private void SpawnCustomer() {
         if (this.timeToNextCustomer <= 0.0f && this.freeSpawnSlots.Count > 0) {
             // only perform this action if there is a spot available or maybe perform it and auto add a customer

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     private static GameManager instance = null;
 
     private enum States {
+        NoState,
         TitleScene,
         GameplayScene,
         CalendarScene
@@ -30,21 +31,17 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         }
         DontDestroyOnLoad(this);
-        SetCurrentState();
-        TitleScene.StartGameEvent += StartGameEvent;
+        this.currentState = States.NoState;
+        SetCurrentStateFromScene();
+
+        // Don't need to remove on destroy as game manager can't be destroyed
+        TitleScene.NewGame += NewGameEvent;
         StatusBarUI.EndOfDay += EndOfDayEvent;
-    }
-    // Start is called before the first frame update
-    void Start() {
-        
+        ModalUI.NotifyGameManager += HandleModalEvent;
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
-
-    private void SetCurrentState() {
+    // call this after loading every scene
+    private void SetCurrentStateFromScene() {
         string scene = SceneManager.GetActiveScene().name;
         switch(scene) {
             case TITLE:
@@ -65,18 +62,61 @@ public class GameManager : MonoBehaviour {
         };
     }
 
-    /**** Events ****/
-    private void StartGameEvent(RestaurantInfo.Types selectedType) {
-        // load restaurant scene
-        // set type to by the selected type
+    // acts the same as SetCurrentStateFromScene, but bases state change on input state
+    // rather than readon from scene title. Sets up andloads the new scene
+    private void SetAndLoadNewState(States newState) {
+        if(this.currentState != newState) {
+            this.currentState = newState;
+            switch(currentState) {
+                case States.TitleScene:
+                    SceneManager.LoadSceneAsync(TITLE, LoadSceneMode.Single);
+                    break;
+                case States.GameplayScene:
+                    if (this.currentRestType == RestaurantInfo.Types.NoType) {
+                        // set burger to default;
+                        this.currentRestType = RestaurantInfo.Types.Burger;
+                    }
+                    SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
+                    break;
+                case States.CalendarScene:
+                    SceneManager.LoadSceneAsync(CALENDAR, LoadSceneMode.Single);
+                    break;
+                case States.NoState:
+                    throw new System.Exception("Cannot load NoState state, invalid state action");
+                default:
+                    throw new System.Exception("Invalid scene name for current scene");
+            }
+        }
+    }
+
+    private void StartNewGame(RestaurantInfo.Types selectedType) {
         this.currentRestType = selectedType;
-        SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
+        this.totalScore = 0;
+        this.daysPassed = 0;
+        // pick a month here as well
+        SetAndLoadNewState(States.CalendarScene);
+    }
+
+    /**** Events ****/
+    private void NewGameEvent(RestaurantInfo.Types selectedType) {
+        // set type to by the selected type
+        StartNewGame(selectedType);
     }
 
     private void EndOfDayEvent(int score) {
         this.totalScore += score;
         this.daysPassed += 1;
+    }
 
+    private void HandleModalEvent(ModalUI.ModalState modalState) {
+        switch(modalState) {
+            case ModalUI.ModalState.EndGame:
+                SetAndLoadNewState(States.CalendarScene);
+                break;
+            case ModalUI.ModalState.DaySelect:
+                SetAndLoadNewState(States.GameplayScene);
+                break;
+        }
     }
 
     /**** Public API ****/

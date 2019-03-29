@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3910362153739927873}
   - component: {fileID: 4276101758062221637}
   - component: {fileID: 4414803989443936502}
-  - component: {fileID: 9128386593331480644}
   m_Layer: 0
   m_Name: April
   m_TagString: Untagged
@@ -65,7 +64,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.04736781, y: 0}
   m_AnchorMax: {x: 0.90200007, y: 1}
-  m_AnchoredPosition: {x: -2.644989, y: 0}
+  m_AnchoredPosition: {x: 18.582, y: 0}
   m_SizeDelta: {x: 24.5, y: 14.638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4276101758062221637
@@ -105,20 +104,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &9128386593331480644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2166569757265965482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dd72c8392b6d448281c135039711ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  daysPassed: 0
-  mainCamera: {fileID: 0}
 --- !u!1001 &987026071783412
 PrefabInstance:
   m_ObjectHideFlags: 0

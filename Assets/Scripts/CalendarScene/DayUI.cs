@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DayUI : MonoBehaviour {
 
+    private int id;
     private Button button;
     private Image image;
 
@@ -14,8 +15,8 @@ public class DayUI : MonoBehaviour {
     [SerializeField] private Sprite pastSprite;
     [SerializeField] private Sprite currentSprite;
 
-    public delegate void ModalEvent(ModalUI.ModalState state, string displayString);
-    public static ModalEvent SelectDayEvent;
+    public delegate void SelectDayEvent(int id);
+    public static SelectDayEvent NotifyCalendarSelectDay;
 
     private void Awake() {
         this.button = gameObject.GetComponent<Button>();
@@ -26,26 +27,18 @@ public class DayUI : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        
+
     }
 
     // Update is called once per frame
     void Update() {
-        
-    }
 
-    private void ShowModal() {
-        if (this.modal == null) {
-            this.modal = Instantiate(this.modalPrefab, this.transform, false);
-        }
-        modal.SetActive(true);
     }
 
     /**** Events ****/
     private void SelectDay() {
-        ShowModal();
-        Debug.Log("day select event");
-        SelectDayEvent(ModalUI.ModalState.DaySelect, "");
+        if (this == null) Debug.Log("Null this DayUI");
+        NotifyCalendarSelectDay?.Invoke(this.id);
     }
 
     /**** Public API ****/
@@ -62,5 +55,9 @@ public class DayUI : MonoBehaviour {
     public void SetFuture() {
         this.button.enabled = false;
         this.image.enabled = false;
+    }
+
+    public void SetDay(int id) {
+        this.id = id;
     }
 }

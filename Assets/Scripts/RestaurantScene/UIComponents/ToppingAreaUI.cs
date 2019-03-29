@@ -17,7 +17,11 @@ public class ToppingAreaUI : MonoBehaviour {
 
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        RestaurantManager.LoadUI += SpawnToppingsEvent;
+        RestaurantManager.LoadFoodUI += SpawnToppingsEvent;
+    }
+
+    private void OnDestroy() {
+        RestaurantManager.LoadFoodUI -= SpawnToppingsEvent;
     }
 
     private void SpawnToppingsEvent() {

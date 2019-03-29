@@ -16,7 +16,7 @@ public class MainsAreaUI : MonoBehaviour {
 
     private void Awake() {
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
-        RestaurantManager.LoadUI += SpawnMainsEvent;
+        RestaurantManager.LoadFoodUI += SpawnMainsEvent;
     }
 
     // Start is called before the first frame update
@@ -24,6 +24,10 @@ public class MainsAreaUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() { }
+
+    private void OnDestroy() {
+        RestaurantManager.LoadFoodUI -= SpawnMainsEvent;
+    }
 
     /**** Events ****/
     private void SpawnMainsEvent() {

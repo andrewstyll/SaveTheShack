@@ -29,16 +29,20 @@ public class ModalUI : MonoBehaviour {
     [SerializeField] private GameObject buttonTwo;
 
     // Events
-    public delegate void ModalNotification();
+    public delegate void ModalNotification(ModalState state);
     public static event ModalNotification CountDownComplete;
-
-    public delegate void ButtonEventListener();
+    public static event ModalNotification NotifyCaller;
+    public static event ModalNotification NotifyGameManager;
 
     private void Awake() {
         RestaurantManager.ModalEvent += RecieveModalEvent;
-        DayUI.SelectDayEvent += RecieveModalEvent;
-        state = ModalState.NoState;
-        newState = ModalState.NoState;
+        CalendarUI.SelectDayEvent += RecieveModalEvent;
+
+        buttonOne.GetComponent<Button>().onClick.AddListener(ButtonOneListener);
+        buttonTwo.GetComponent<Button>().onClick.AddListener(ButtonTwoListener);
+
+        this.state = ModalState.NoState;
+        this.newState = ModalState.NoState;
         this.NoState();
     }
 
@@ -72,6 +76,11 @@ public class ModalUI : MonoBehaviour {
         if (this.state == ModalState.CountDown) {
             UpdateCountDown();
         }
+    }
+
+    private void OnDestroy() {
+        RestaurantManager.ModalEvent -= RecieveModalEvent;
+        CalendarUI.SelectDayEvent -= RecieveModalEvent;
     }
 
     private void NoState() {
@@ -122,8 +131,10 @@ public class ModalUI : MonoBehaviour {
                 countdownText.text = Mathf.Ceil(this.countDownLeft).ToString();
             }
         } else {
+            this.newState = ModalState.NoState;
             this.state = ModalState.NoState;
-            CountDownComplete?.Invoke();
+            this.NoState();
+            CountDownComplete?.Invoke(this.state);
         }
     }
 
@@ -147,27 +158,25 @@ public class ModalUI : MonoBehaviour {
         }
     }
 
-    private void SetButtonListeners(ButtonEventListener buttonOne, ButtonEventListener buttonTwo) {
-        if (this.buttonOne.activeSelf) {
-
-        }
-        if (this.buttonTwo.activeSelf) {
-
-        }
-    }
-
     private void SetButtonText(string textOne, string textTwo) {
-        if(this.buttonOne.activeSelf) {
-            this.buttonOne.GetComponentInChildren<Text>().text = textOne;
-        }
-        if (this.buttonTwo.activeSelf) {
-            this.buttonTwo.GetComponentInChildren<Text>().text = textTwo;
-        }
+        this.buttonOne.GetComponentInChildren<Text>().text = textOne;
+        this.buttonTwo.GetComponentInChildren<Text>().text = textTwo;
     }
 
     /**** Events ****/
     private void RecieveModalEvent(ModalState state, string displayString) {
-        //this.SetState(state, displayString);
-        this.SetState(ModalState.EndGame, displayString);
+        this.SetState(state, displayString);
+    }
+
+    private void ButtonOneListener() {
+        if(this.state == ModalState.EndGame || this.state == ModalState.DaySelect) {
+            NotifyGameManager?.Invoke(this.state);
+        }
+    }
+
+    private void ButtonTwoListener() {
+        if(this.state == ModalState.DaySelect) {
+            NotifyCaller?.Invoke(this.state);
+        }
     }
 }

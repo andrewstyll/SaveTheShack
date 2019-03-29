@@ -30,6 +30,14 @@ public class FoodStationUI : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        MainsAreaUI.Loaded -= MainsUILoaded;
+        ToppingAreaUI.Loaded -= ToppingsUILoaded;
+        DrinksAreaUI.Loaded -= DrinksUILoaded;
+        PreppedOrderUI.Loaded -= PreppedUILoaded;
+        TrashUI.Loaded -= TrashUILoaded;
+    }
+
     private void MainsUILoaded() {
         this.mainsUILoaded = true;
     }

@@ -56,7 +56,6 @@ public class PreppedOrderUI : MonoBehaviour {
         if(this.restaurantBuilder.MealDrawerCreated()) {
             InitPreppedOrderArea();
         } else {
-            Debug.Log("Should have been able to grab Meal Drawer here, starting wait coroutine");
             StartCoroutine("WaitForMealDrawerCreated");
         }
     }
@@ -64,7 +63,7 @@ public class PreppedOrderUI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if(EmptyFoodDrawing()) {
+        if (this.mealDrawer != null && EmptyFoodDrawing()) {
             this.mealDrawer.StartDrawing(this.drawnFood);
         }
 
@@ -78,6 +77,14 @@ public class PreppedOrderUI : MonoBehaviour {
             ClearOrder();
             signalClearOrder = false;
         }
+    }
+
+    private void OnDestroy() {
+        MainUI.FoodSelected -= AddFoodToOrderEvent;
+        ToppingUI.FoodSelected -= AddFoodToOrderEvent;
+        DrinkUI.FoodSelected -= AddFoodToOrderEvent;
+        TrashUI.TrashClicked -= SignalClearOrderEvent;
+        CustomerUI.ServeMe -= CheckMatchingOrder;
     }
 
     private void InitPreppedOrderArea() {

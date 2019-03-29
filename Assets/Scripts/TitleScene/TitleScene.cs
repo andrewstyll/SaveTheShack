@@ -27,8 +27,8 @@ public class TitleScene : MonoBehaviour {
 
     [SerializeField] private EventSystem eventSystem;
 
-    public delegate void StartGameButtonEvent(RestaurantInfo.Types selectedType);
-    public static StartGameButtonEvent StartGameEvent;
+    public delegate void TitleScreenButtonEvent(RestaurantInfo.Types selectedType);
+    public static TitleScreenButtonEvent NewGame;
 
     private void Awake() {
         buttonOne = buttonOneObject.GetComponent<Button>();
@@ -68,8 +68,6 @@ public class TitleScene : MonoBehaviour {
 
     private void StartGameSelect() {
         // we don't want to select this button, but still want to run the event
-        //this.currentlySelected = startGameButtonObj;
-        Debug.Log("StartGameEvent");
-        StartGameEvent(selectedType);
+        NewGame(selectedType);
     }
 }

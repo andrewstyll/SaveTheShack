@@ -56,6 +56,11 @@ public class StatusBarUI : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        RestaurantManager.StartGame -= StartDay;
+        CustomerUI.SuccessfulOrder -= AddToScoreEvent;
+    }
+
     private void UpdateSlider() {
         this.timeRemaining -= Time.deltaTime;
         this.timer.value = (TIME_PER_DAY - this.timeRemaining) / TIME_PER_DAY;
