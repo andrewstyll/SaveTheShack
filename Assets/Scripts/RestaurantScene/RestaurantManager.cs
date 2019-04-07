@@ -39,10 +39,6 @@ public class RestaurantManager : MonoBehaviour {
 
     private void Awake() {
         // grab instances required to manage restaurant
-        this.gameManager = GameManager.GetInstance();
-        if(this.gameManager == null) {
-            throw new System.Exception("RestaurantManager failed to grab GameManager");
-        }
         this.restaurantBuilder = RestaurantBuilder.GetInstance();
 
         // event subscriptions
@@ -59,7 +55,13 @@ public class RestaurantManager : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        if (this.restaurantBuilder.SetupComplete() &&
+
+        this.gameManager = GameManager.GetInstance();
+        if (this.gameManager == null) {
+            Debug.Log("Will have to wait for gameManager O_o");
+        }
+
+        if (this.restaurantBuilder.SetupComplete() && 
             this.gameManager.GetCurrentRestaurantType() != RestaurantInfo.Types.NoType) {
             this.CreateRestaurant();
         } else {

@@ -12,19 +12,22 @@ public sealed class ConfigSetup {
 
     private static readonly ConfigSetup instance = new ConfigSetup();
 
+    private const string RESOURCE_LOCATION = "Assets/Resources/";
+    private const string JSON_FILE = ".json";
+
     private JsonFoodContainer mainsList;
     private JsonFoodContainer toppingsList;
     private JsonFoodContainer drinksList;
 
-    private readonly string mainsInfoFilePath = "Assets/Resources/Config/Mains.json";
-    private readonly string toppingsInfoFilePath = "Assets/Resources/Config/Toppings.json";
-    private readonly string drinksInfoFilePath = "Assets/Resources/Config/Drinks.json";
+    private readonly string mainsInfoFilePath = "Config/Mains";
+    private readonly string toppingsInfoFilePath = "Config/Toppings";
+    private readonly string drinksInfoFilePath = "Config/Drinks";
 
     private JsonToRestaurant burgerData;
     private JsonToRestaurant friesData;
 
-    private readonly string burgerRestaurantPath = "Assets/Resources/Config/BurgerRestaurant.json";
-    private readonly string friesRestaurantPath = "Assets/Resources/Config/FriesRestaurant.json";
+    private readonly string burgerRestaurantPath = "Config/BurgerRestaurant";
+    private readonly string friesRestaurantPath = "Config/FriesRestaurant";
 
     private bool setupComplete = false;
 
@@ -41,21 +44,22 @@ public sealed class ConfigSetup {
     }
 
     private JsonFoodContainer GetFoodConfig(string jsonString) {
-
-        if (File.Exists(jsonString)) {
-            string jsonFile = File.ReadAllText(jsonString);
-            return JsonUtility.FromJson<JsonFoodContainer>(jsonFile);
-        } else {
-            throw new System.Exception("Config File Not Found: " + jsonString);
-        }
+            TextAsset jsonFileAsset = Resources.Load<TextAsset>(jsonString);
+            if(jsonFileAsset != null) { 
+                string jsonFile = jsonFileAsset.text;
+                return JsonUtility.FromJson<JsonFoodContainer>(jsonFile);
+            } else {
+                throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + jsonString + JSON_FILE);
+            }
     }
 
     private JsonToRestaurant GetRestaurantConfig(string jsonString) {
-        if (File.Exists(jsonString)) {
-            string jsonFile = File.ReadAllText(jsonString);
+        TextAsset jsonFileAsset = (TextAsset)Resources.Load(jsonString);
+        if (jsonFileAsset != null) {
+            string jsonFile = jsonFileAsset.text;
             return JsonUtility.FromJson<JsonToRestaurant>(jsonFile);
         } else {
-            throw new System.Exception("Config File Not Found: " + jsonString);
+            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + jsonString + JSON_FILE);
         }
     }
 
