@@ -11,11 +11,15 @@
     "BlueSoda",
     "BrownSoda"
   ],
-  "RestaurantFoodDisplaySprites": {
-    "Bottom": "Bun_Bottom",
-    "Top": "Bun_Top"
-  },
   "FoodDisplaySprites": [
+    {
+      "Name": "Bottom",
+      "SpriteName": "Bun_Bottom"
+    },
+    {
+      "Name": "Top",
+      "SpriteName": "Bun_Top"
+    },
     {
       "Name": "Hamburger",
       "SpriteName": "Hamburger_Stack"

@@ -17,7 +17,6 @@ public struct JsonSpritesObject {
 [System.Serializable]
 public class JsonToRestaurant {
     public string[] Menu;
-    public JsonServingSpritePath RestaurantFoodDisplaySprites;
     public JsonSpritesObject[] FoodDisplaySprites;
     public JsonSpritesObject[] RestaurantThemeSprites;
     public string SpriteLocation;

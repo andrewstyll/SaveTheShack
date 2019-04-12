@@ -64,7 +64,7 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void Start() {
-        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
+        //this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
         this.myOrder = orderBuilder.BuildOrder();
         this.DisplayOrder();
     }
@@ -93,13 +93,13 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void DisplayOrder() {
-        mealDrawer.StartDrawing(foodDisplay);
+        //mealDrawer.StartDrawing(foodDisplay);
 
         List<string> myFood = this.myOrder.GetFood();
         foreach(string food in myFood) {
-            mealDrawer.AppendFood(foodDisplay, food);
+            //mealDrawer.AppendFood(foodDisplay, food);
         }
-        mealDrawer.FinishDrawing(foodDisplay);
+        //mealDrawer.FinishDrawing(foodDisplay);
         if(this.myOrder.GetDrink() != null) {
             drinkDisplay.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
         } else {

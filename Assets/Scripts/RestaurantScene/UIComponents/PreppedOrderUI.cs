@@ -29,7 +29,9 @@ public class PreppedOrderUI : MonoBehaviour {
     private const float ALPHA_HIDDEN = 0.0f;
     private const float ALPHA_FULL = 1.0f;
     Color alphaControl = Color.white;
-    [SerializeField] private GameObject drawnFood;
+
+    private FoodDisplayUI foodDisplayScript;
+    [SerializeField] private GameObject foodDisplayUI;
     [SerializeField] private GameObject drawnDrink;
 
     // Events
@@ -53,7 +55,8 @@ public class PreppedOrderUI : MonoBehaviour {
 
     // Start is called before the first frame update
     private void Start() {
-        if(this.restaurantBuilder.MealDrawerCreated()) {
+        this.foodDisplayScript = foodDisplayUI.GetComponent<FoodDisplayUI>();
+        if(this.restaurantBuilder.MealDrawerSetupComplete()) {
             InitPreppedOrderArea();
         } else {
             StartCoroutine("WaitForMealDrawerCreated");
@@ -62,10 +65,6 @@ public class PreppedOrderUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        if (this.mealDrawer != null && EmptyFoodDrawing()) {
-            this.mealDrawer.StartDrawing(this.drawnFood);
-        }
 
         if (this.topMeState == TopMeButtonState.Hidden && CanTop()) {
             ShowTopMe();
@@ -87,9 +86,10 @@ public class PreppedOrderUI : MonoBehaviour {
         CustomerUI.ServeMe -= CheckMatchingOrder;
     }
 
+    // will soon be not needed
     private void InitPreppedOrderArea() {
-        this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
-        InitializeFoodDrawing();
+        // food is done on own for now. Will update later to do drinks on own too
+        InitializeDrinkDrawing();
         InitializeThemeSprites();
         Loaded();
     }
@@ -111,11 +111,9 @@ public class PreppedOrderUI : MonoBehaviour {
         this.topMeState = TopMeButtonState.Hidden;
     }
 
-    private void InitializeFoodDrawing() {
+    private void InitializeDrinkDrawing() {
         alphaControl.a = ALPHA_HIDDEN;
         drawnDrink.GetComponent<Image>().color = alphaControl;
-
-        mealDrawer.StartDrawing(drawnFood);
     }
 
     private bool HasDrink() {
@@ -126,20 +124,8 @@ public class PreppedOrderUI : MonoBehaviour {
         return (!this.isTopped && this.preppedFood.Count > 0);
     }
 
-    private bool EmptyFoodDrawing() {
-        return this.drawnFood.transform.childCount == 0;
-    }
-
     private void ClearFoodDrawing() { 
-        foreach(Transform child in this.drawnFood.transform) {
-            Destroy(child.gameObject);
-        }
-    }
-
-    private void AddFood(Food food) {
-        // add on to topmost food entry
-        this.preppedFood.Add(food.GetName());
-        mealDrawer.AppendFood(drawnFood, food.GetName());
+        this.foodDisplayScript.ClearDrawing();
     }
 
     public void ClearOrder() {
@@ -169,7 +155,8 @@ public class PreppedOrderUI : MonoBehaviour {
             }
         } else if(!this.isTopped) {
             // food adding is more complex
-            this.AddFood(food);
+            this.preppedFood.Add(food.GetName());
+            this.foodDisplayScript.AddFood(food.GetName());
             return true;
         }
         return false;
@@ -178,7 +165,7 @@ public class PreppedOrderUI : MonoBehaviour {
     private void FinishFoodOrder() {
         if (this.CanTop()) {
             this.isTopped = true;
-            mealDrawer.FinishDrawing(drawnFood);
+            this.foodDisplayScript.FinishDrawing();
         }
     }
 
@@ -199,7 +186,7 @@ public class PreppedOrderUI : MonoBehaviour {
     IEnumerator WaitForMealDrawerCreated() {
         // the meal drawer should 100% be finished before people can even click an order
         // this is just hear in case to avoid grabbing a null reference
-        while (!this.restaurantBuilder.MealDrawerCreated()) {
+        while (!this.restaurantBuilder.MealDrawerSetupComplete()) {
             yield return null;
         }
         InitPreppedOrderArea();

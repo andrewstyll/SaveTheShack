@@ -24,9 +24,10 @@ public sealed class RestaurantBuilder {
     private string restaurantSpritePath;
 
     // Meal Drawer
-    private MealDrawer mealDrawer;
+    private bool mealDrawerSetupComplete = false;
+    private Dictionary<string, Sprite> mealDrawerData;
     private Menu menu;
-    private bool mealDrawerCreated = false;
+
 
     private RestaurantBuilder() {
         this.configData = ConfigSetup.GetInstance();
@@ -59,24 +60,16 @@ public sealed class RestaurantBuilder {
         }
     }
 
-    private void BuildMealDrawer(JsonToRestaurant restaurantData) {
-        switch(this.currentRestaurantType) {
-            case RestaurantInfo.Types.Burger:
-                this.mealDrawer = new BurgerDrawer(this.restaurantSpritePath, restaurantData.RestaurantFoodDisplaySprites.Top,
-                                                    restaurantData.RestaurantFoodDisplaySprites.Bottom, restaurantData.FoodDisplaySprites);
-                break;
-            case RestaurantInfo.Types.Fries:
-                this.mealDrawer = new FriesDrawer();
-                break;
-            default:
-                throw new System.Exception("Can't create meal drawer of invalid type");
+    private void MealDrawerSetup(JsonToRestaurant restaurantData) {
+        this.mealDrawerData = new Dictionary<string, Sprite>();
+        foreach (JsonSpritesObject displayObj in restaurantData.FoodDisplaySprites) {
+            this.mealDrawerData.Add(displayObj.Name, Resources.Load<Sprite>(this.restaurantSpritePath + displayObj.SpriteName));
         }
-
         // add drinks as they re-use sprites from the menu
         foreach (KeyValuePair<string, Food> entry in this.foodDictionary) {
             // do something with entry.Value or entry.Key
             if (entry.Value.GetFoodType() == FoodType.Type.drink) {
-                this.mealDrawer.ManuallyAddSprite(entry.Key, entry.Value.GetPreppedSprite());
+                this.mealDrawerData.Add(entry.Key, entry.Value.GetPreppedSprite());
             }
         }
     }
@@ -133,12 +126,17 @@ public sealed class RestaurantBuilder {
         return instance;
     }
 
+    // Denotes the the menu database has been filled
     public bool SetupComplete() {
         return this.setupComplete;
     }
 
-    public bool MealDrawerCreated() {
-        return this.mealDrawerCreated;
+    public bool MealDrawerSetupComplete() {
+        return this.mealDrawerSetupComplete;
+    }
+
+    public RestaurantInfo.Types GetCurrentRestaurantType() {
+        return this.currentRestaurantType;
     }
 
     public void BuildRestaurant(RestaurantInfo.Types type, int daysPassed) {
@@ -153,9 +151,9 @@ public sealed class RestaurantBuilder {
 
             this.FillThemeSpriteDictionary(restaurantData);
 
-            this.mealDrawerCreated = false;
-            this.BuildMealDrawer(restaurantData);
-            this.mealDrawerCreated = true;
+            this.mealDrawerSetupComplete = false;
+            this.MealDrawerSetup(restaurantData);
+            this.mealDrawerSetupComplete = true;
         }
         this.BuildNewMenu(daysPassed);
     }
@@ -164,10 +162,10 @@ public sealed class RestaurantBuilder {
         return this.menu;
     }
 
-    public MealDrawer GetMealDrawer() {
-        return this.mealDrawer;
+    public Dictionary<string, Sprite> GetMealDrawerData() {
+        return this.mealDrawerData;
     }
-
+    
     public Sprite GetThemedSprite(string name) {
         return this.themeSpriteDictionary[name];
     }

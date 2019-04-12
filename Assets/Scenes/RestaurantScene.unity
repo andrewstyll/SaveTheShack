@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topMeButtonObj: {fileID: 1012044149}
-  drawnFood: {fileID: 656617792}
+  foodDisplayUI: {fileID: 1929347894}
   drawnDrink: {fileID: 1825114925}
 --- !u!1 &1650881102
 GameObject:
@@ -1752,6 +1752,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919691362}
   m_CullTransparentMesh: 0
+--- !u!1 &1929347894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8790787106651505243, guid: 104b771dd42b14020aed4052cc852d07,
+    type: 3}
+  m_PrefabInstance: {fileID: 8790787106941900003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1945827525
 GameObject:
   m_ObjectHideFlags: 0
@@ -2113,12 +2119,12 @@ PrefabInstance:
     - target: {fileID: 8790787107430344098, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -0.8
+      value: -0.049995
       objectReference: {fileID: 0}
     - target: {fileID: 8790787107430344098, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.34999847
+      value: 0.024963379
       objectReference: {fileID: 0}
     - target: {fileID: 8790787106475745229, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
@@ -2159,6 +2165,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: -25.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913455104330327466, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: drawnFood
+      value: 
+      objectReference: {fileID: 656617792}
+    - target: {fileID: 6015628603182425101, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.040000916
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015628603182425101, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0024909973
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348906998167509551, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 104b771dd42b14020aed4052cc852d07, type: 3}
