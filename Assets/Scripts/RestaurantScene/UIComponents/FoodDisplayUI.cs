@@ -9,8 +9,10 @@ public class FoodDisplayUI : MonoBehaviour {
 
     MealDrawer mealDrawer = null;
 
-    [SerializeField] private GameObject parentDisplay;
-    [SerializeField] private GameObject modelObjPrefab;
+    private bool setupComplete = false;
+    [SerializeField] private GameObject parentFoodDisplay;
+    [SerializeField] private GameObject modelFoodObj;
+    [SerializeField] private GameObject drinkDisplay;
 
     private void Awake() {
     }
@@ -41,7 +43,9 @@ public class FoodDisplayUI : MonoBehaviour {
                 this.mealDrawer.InitDrawer(this.restaurantBuilder.GetMealDrawerData());
                 break;
         }
-        this.mealDrawer.StartDrawing(parentDisplay, modelObjPrefab);
+        this.mealDrawer.StartDrawing(parentFoodDisplay, modelFoodObj);
+        this.mealDrawer.HideDrink(drinkDisplay);
+        this.setupComplete = true;
     }
 
     /**** Coroutines ****/
@@ -54,18 +58,27 @@ public class FoodDisplayUI : MonoBehaviour {
     }
 
     /**** PUBLIC API ****/
+    public void AddDrink(string drinkName) {
+        this.mealDrawer.AddDrink(drinkDisplay, drinkName);
+    }
+
     public void AddFood(string foodName) {
-        this.mealDrawer.AppendFood(parentDisplay, modelObjPrefab, foodName);
+        this.mealDrawer.AppendFood(parentFoodDisplay, modelFoodObj, foodName);
     }
 
     public void FinishDrawing() {
-        this.mealDrawer.FinishDrawing(parentDisplay, modelObjPrefab);
+        this.mealDrawer.FinishDrawing(parentFoodDisplay, modelFoodObj);
     }
 
     public void ClearDrawing() {
-        for(int i = 1; i < this.parentDisplay.transform.childCount; i++) {
-            Transform child = this.parentDisplay.transform.GetChild(i);
+        for(int i = 2; i < this.parentFoodDisplay.transform.childCount; i++) {
+            Transform child = this.parentFoodDisplay.transform.GetChild(i);
             Destroy(child.gameObject);
         }
+        this.mealDrawer.HideDrink(drinkDisplay);
+    }
+
+    public bool SetUpComplete() {
+        return this.setupComplete;
     }
 }

@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.63913244, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.275, y: 0.0000076294}
+  m_AnchoredPosition: {x: 1.2750015, y: 0.0000076293945}
   m_SizeDelta: {x: -2.55, y: -21.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8790787106475745235
@@ -124,8 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3c75243680849ada0453e4ac668cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentDisplay: {fileID: 8790787107430344099}
-  modelObjPrefab: {fileID: 2348906998167509551}
+  parentFoodDisplay: {fileID: 8790787107430344099}
+  modelFoodObj: {fileID: 2348906998167509551}
+  drinkDisplay: {fileID: 8790787106475745230}
 --- !u!1 &8790787107430344099
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,12 +233,12 @@ PrefabInstance:
     - target: {fileID: 7404830755369178579, guid: c0aec9147adb449ab8b600931a3a282c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.5077
+      value: 3.507698
       objectReference: {fileID: 0}
     - target: {fileID: 7404830755369178579, guid: c0aec9147adb449ab8b600931a3a282c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0024929
+      value: -0.0024909973
       objectReference: {fileID: 0}
     - target: {fileID: 7404830755369178579, guid: c0aec9147adb449ab8b600931a3a282c,
         type: 3}

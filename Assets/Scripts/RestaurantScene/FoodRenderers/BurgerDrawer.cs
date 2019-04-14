@@ -28,6 +28,6 @@ public class BurgerDrawer : MealDrawer {
         childObject.GetComponent<Image>().color = alphaControl;
         childObject.transform.SetParent(parentObject.transform);
         childObject.transform.SetAsLastSibling();
-        childObject.transform.localPosition = new Vector3(0, childObject.transform.GetSiblingIndex() * SPACING_CONST);
+        childObject.transform.localPosition = new Vector3(0, (childObject.transform.GetSiblingIndex()-1) * SPACING_CONST);
     }
 }

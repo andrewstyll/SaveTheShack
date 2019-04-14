@@ -358,8 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderDisplayObject: {fileID: 3397916603971975028}
   orderWarningObject: {fileID: 990599403643634266}
-  foodDisplay: {fileID: 8136752444051199941}
-  drinkDisplay: {fileID: 8136752442879290792}
+  foodDisplayUI: {fileID: 8136752444815355965}
 --- !u!1001 &654336346597274214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,23 +526,27 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0.060000002
       objectReference: {fileID: 0}
+    - target: {fileID: 6015628603182425101, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.5077019
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015628603182425101, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.002494812
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 104b771dd42b14020aed4052cc852d07, type: 3}
+--- !u!1 &8136752444815355965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8790787106651505243, guid: 104b771dd42b14020aed4052cc852d07,
+    type: 3}
+  m_PrefabInstance: {fileID: 654336346597274214}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8136752444815355964 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8790787106651505242, guid: 104b771dd42b14020aed4052cc852d07,
-    type: 3}
-  m_PrefabInstance: {fileID: 654336346597274214}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8136752444051199941 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8790787107430344099, guid: 104b771dd42b14020aed4052cc852d07,
-    type: 3}
-  m_PrefabInstance: {fileID: 654336346597274214}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8136752442879290792 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8790787106475745230, guid: 104b771dd42b14020aed4052cc852d07,
     type: 3}
   m_PrefabInstance: {fileID: 654336346597274214}
   m_PrefabAsset: {fileID: 0}

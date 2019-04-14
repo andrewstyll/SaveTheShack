@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &167445114 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2348906998167509551, guid: 104b771dd42b14020aed4052cc852d07,
+    type: 3}
+  m_PrefabInstance: {fileID: 8790787106941900003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &182656278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2177,21 @@ PrefabInstance:
       propertyPath: drawnFood
       value: 
       objectReference: {fileID: 656617792}
+    - target: {fileID: 1913455104330327466, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: parentFoodDisplay
+      value: 
+      objectReference: {fileID: 656617792}
+    - target: {fileID: 1913455104330327466, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: modelFoodObj
+      value: 
+      objectReference: {fileID: 167445114}
+    - target: {fileID: 1913455104330327466, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: drinkDisplay
+      value: 
+      objectReference: {fileID: 1825114925}
     - target: {fileID: 6015628603182425101, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2184,7 +2205,7 @@ PrefabInstance:
     - target: {fileID: 2348906998167509551, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 104b771dd42b14020aed4052cc852d07, type: 3}

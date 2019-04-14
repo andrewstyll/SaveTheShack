@@ -32,9 +32,10 @@ public class CustomerUI : MonoBehaviour {
     [SerializeField] private GameObject orderDisplayObject;
     [SerializeField] private GameObject orderWarningObject;
 
-    private MealDrawer mealDrawer;
-    [SerializeField] private GameObject foodDisplay;
-    [SerializeField] private GameObject drinkDisplay;
+    // Food Display Logic
+    private bool orderDisplayed = false;
+    private FoodDisplayUI foodDisplayScript;
+    [SerializeField] private GameObject foodDisplayUI;
 
     // Events
     public delegate bool CustomerEvent(Order order);
@@ -64,14 +65,18 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void Start() {
-        //this.mealDrawer = this.restaurantBuilder.GetMealDrawer();
+        this.foodDisplayScript = foodDisplayUI.GetComponent<FoodDisplayUI>();
         this.myOrder = orderBuilder.BuildOrder();
-        this.DisplayOrder();
     }
 
     // Update is called once per frame
     private void Update() {
-        if(this.patience > 0) {
+        if(!this.orderDisplayed && this.foodDisplayScript.SetUpComplete()) {
+            this.DisplayOrder();
+            this.orderDisplayed = true;
+        }
+
+        if (this.patience > 0) {
             this.patience -= Time.deltaTime;
             UpdateOrderDisplay();
         } else {
@@ -93,18 +98,14 @@ public class CustomerUI : MonoBehaviour {
     }
 
     private void DisplayOrder() {
-        //mealDrawer.StartDrawing(foodDisplay);
-
         List<string> myFood = this.myOrder.GetFood();
         foreach(string food in myFood) {
-            //mealDrawer.AppendFood(foodDisplay, food);
+            this.foodDisplayScript.AddFood(food);
         }
-        //mealDrawer.FinishDrawing(foodDisplay);
-        if(this.myOrder.GetDrink() != null) {
-            drinkDisplay.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.myOrder.GetDrink());
-        } else {
-            alphaControl.a = ALPHA_HIDDEN;
-            drinkDisplay.GetComponent<Image>().color = alphaControl;
+        this.foodDisplayScript.FinishDrawing();
+
+        if (this.myOrder.GetDrink() != null) { 
+            this.foodDisplayScript.AddDrink(this.myOrder.GetDrink());
         }
     }
 

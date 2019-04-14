@@ -32,7 +32,6 @@ public class PreppedOrderUI : MonoBehaviour {
 
     private FoodDisplayUI foodDisplayScript;
     [SerializeField] private GameObject foodDisplayUI;
-    [SerializeField] private GameObject drawnDrink;
 
     // Events
     public delegate void PreppedOrderAreaUINotification();
@@ -89,7 +88,6 @@ public class PreppedOrderUI : MonoBehaviour {
     // will soon be not needed
     private void InitPreppedOrderArea() {
         // food is done on own for now. Will update later to do drinks on own too
-        InitializeDrinkDrawing();
         InitializeThemeSprites();
         Loaded();
     }
@@ -111,11 +109,6 @@ public class PreppedOrderUI : MonoBehaviour {
         this.topMeState = TopMeButtonState.Hidden;
     }
 
-    private void InitializeDrinkDrawing() {
-        alphaControl.a = ALPHA_HIDDEN;
-        drawnDrink.GetComponent<Image>().color = alphaControl;
-    }
-
     private bool HasDrink() {
         return this.preppedDrink != null;
     }
@@ -134,10 +127,6 @@ public class PreppedOrderUI : MonoBehaviour {
         this.isTopped = false;
 
         ClearFoodDrawing();
-
-        alphaControl.a = ALPHA_HIDDEN;
-        drawnDrink.GetComponent<Image>().color = alphaControl;
-        drawnDrink.GetComponent<Image>().sprite = null;
     }
 
     /**** Events ****/
@@ -146,11 +135,7 @@ public class PreppedOrderUI : MonoBehaviour {
             if(!this.HasDrink()) {
 
                 this.preppedDrink = food.GetName();
-
-                alphaControl.a = ALPHA_FULL;
-                drawnDrink.GetComponent<Image>().color = alphaControl;
-                drawnDrink.GetComponent<Image>().sprite = mealDrawer.ManuallyGetSprite(this.preppedDrink);
-
+                this.foodDisplayScript.AddDrink(food.GetName());
                 return true;
             }
         } else if(!this.isTopped) {
