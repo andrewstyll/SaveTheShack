@@ -12,11 +12,15 @@
     "BrownSoda",
     "OrangeSoda"
   ],
-  "RestaurantFoodDisplaySprites": {
-    "Bottom": "Fries_Container",
-    "Top": "Fork"
-  },
   "FoodDisplaySprites": [
+    {
+      "Name": "Bottom",
+      "SpriteName": "Fries_Tray"
+    },
+    {
+      "Name": "Top",
+      "SpriteName": "Fork"
+    },
     {
       "Name": "Fries",
       "SpriteName": "Fries_Stack"

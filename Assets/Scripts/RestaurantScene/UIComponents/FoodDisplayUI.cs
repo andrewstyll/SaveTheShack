@@ -35,11 +35,18 @@ public class FoodDisplayUI : MonoBehaviour {
 
     private void SetMealDrawer() {
         this.restaurantType = this.restaurantBuilder.GetCurrentRestaurantType();
+        GameObject tmp;
         switch (this.restaurantType) {
             case RestaurantInfo.Types.Burger:
-                GameObject tmp = new GameObject();
+                tmp = new GameObject();
                 tmp.AddComponent<BurgerDrawer>();
                 this.mealDrawer = tmp.GetComponent<BurgerDrawer>();
+                this.mealDrawer.InitDrawer(this.restaurantBuilder.GetMealDrawerData());
+                break;
+            case RestaurantInfo.Types.Fries:
+                tmp = new GameObject();
+                tmp.AddComponent<FriesDrawer>();
+                this.mealDrawer = tmp.GetComponent<FriesDrawer>();
                 this.mealDrawer.InitDrawer(this.restaurantBuilder.GetMealDrawerData());
                 break;
         }
