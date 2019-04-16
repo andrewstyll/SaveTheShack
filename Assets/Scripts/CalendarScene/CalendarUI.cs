@@ -13,13 +13,10 @@ public class CalendarUI : MonoBehaviour {
     private GameObject modal = null;
 
     private GameObject month;
-    private GameObject[] days;
     private int daysPassed;
-    private int numDays;
 
     [SerializeField] private GameObject modalPrefab;
     [SerializeField] private GameObject monthPrefab;
-    [SerializeField] private int daysPassedUser;
 
     public delegate void ModalEvent(ModalUI.ModalState state, string displayString);
     public static ModalEvent ModalNotification;
@@ -32,8 +29,6 @@ public class CalendarUI : MonoBehaviour {
         this.modal = null;
 
         this.month = Instantiate(this.monthPrefab, this.gameObject.transform, false);
-        this.numDays = month.transform.childCount;
-        this.days = new GameObject[this.numDays];
 
         ModalUI.NotifyCaller += ModalCloseEvent;
         DayUI.NotifyCalendarSelectDay += DaySelected;
@@ -42,7 +37,7 @@ public class CalendarUI : MonoBehaviour {
     // Start is called before the first frame update
     private void Start() {
         if (this.gameManager != null) {
-            InitCalendar();
+            InitBackground();
         } else {
             StartCoroutine("WaitForGameManager");
         }
@@ -81,34 +76,9 @@ public class CalendarUI : MonoBehaviour {
         SpawnModal(id, ModalUI.ModalState.DaySelect, "");
     }
 
-    private void InitCalendar() {
-        if (daysPassedUser == -1 ) {
-            this.daysPassed = this.gameManager.GetDaysPassed();
-        } else {
-            this.daysPassed = daysPassedUser;
-        }
-
-        for (int i = 0; i < days.Length; i++) {
-            this.days[i] = this.month.transform.GetChild(i).gameObject;
-            DayUI script = this.days[i].GetComponent<DayUI>();
-            script.SetDay(i);
-            script.SetRent(this.gameManager.GetRentByDay(i));
-            if (i < this.daysPassed) {
-                script.SetPast();
-            } else if (i == this.daysPassed) {
-                script.SetCurrent();
-            } else {
-                script.SetFuture();
-            }
-        }
+    private void InitBackground() {
         this.totalScore = this.gameManager.GetTotalScore();
-    }
-
-    /**** Events ****/
-    private void ModalCloseEvent(ModalUI.ModalState modalState) {
-        if(modalState == ModalUI.ModalState.DaySelect) {
-            HideModal();
-        }
+        this.daysPassed = this.gameManager.GetDaysPassed();
     }
 
     /**** Coroutine ****/
@@ -117,6 +87,13 @@ public class CalendarUI : MonoBehaviour {
             this.gameManager = GameManager.GetInstance();
             yield return null;
         }
-        InitCalendar();
+        InitBackground();
+    }
+
+    /**** Events ****/
+    private void ModalCloseEvent(ModalUI.ModalState modalState) {
+        if(modalState == ModalUI.ModalState.DaySelect) {
+            HideModal();
+        }
     }
 }
