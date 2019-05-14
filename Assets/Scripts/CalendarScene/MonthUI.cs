@@ -9,6 +9,9 @@ public class MonthUI : MonoBehaviour {
     private int daysPassed = -1;
     private int numDays;
 
+    public delegate void MonthStartUpEvent(Transform currentDay);
+    public static MonthStartUpEvent NotifyCurrentDay;
+
     private void Awake() {
         this.gameManager = GameManager.GetInstance();
 
@@ -42,6 +45,7 @@ public class MonthUI : MonoBehaviour {
             if (i < this.daysPassed) {
                 script.SetPast();
             } else if (i == this.daysPassed) {
+                NotifyCurrentDay?.Invoke(day.transform);
                 script.SetCurrent();
             } else {
                 script.SetFuture();

@@ -24,7 +24,7 @@ public class DayUI : MonoBehaviour {
 
     [SerializeField] private Button button;
 
-    public delegate void SelectDayEvent(int id);
+    public delegate void SelectDayEvent();
     public static SelectDayEvent NotifyCalendarSelectDay;
 
     private void Awake() {
@@ -81,7 +81,7 @@ public class DayUI : MonoBehaviour {
     /**** Events ****/
     private void SelectDay() {
         if (this == null) Debug.Log("Null this DayUI");
-        NotifyCalendarSelectDay?.Invoke(this.id);
+        NotifyCalendarSelectDay?.Invoke();
     }
 
     /**** Public API ****/
