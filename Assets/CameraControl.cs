@@ -11,13 +11,18 @@ public class CameraControl : MonoBehaviour {
     private const float DAMP_TIME = 0.2f; // time to perform zoom transitons
     private const float EPSILON = 0.1f; // floating point error
 
-    private float zoomSpeed;
-    private Vector3 moveVelocity;
-
-
-    private float moveTimeBuffer = 1.0f;
+    // SnapZoom variables
     private Vector3 snapPosition;
     private bool SNAP_FLAG = false;
+    private float zoomSpeed; // snapZoom zoom speed
+    private Vector3 moveVelocity; // snapZoom scroll speed
+
+    // DragMove variables
+    private Vector3 dragStartPosition;
+    private Vector3 dragVelocity;
+    private float dragSpeed = 10.0f;
+
+    private float moveTimeBuffer = 1.0f;
 
     private void Awake() {
         this.mainCamera = GetComponentInChildren<Camera>();
@@ -45,6 +50,7 @@ public class CameraControl : MonoBehaviour {
                 }
             } else {
                 PinchZoom();
+                DragMove();
             }
         }
     }
@@ -52,6 +58,22 @@ public class CameraControl : MonoBehaviour {
     private void OnDestroy() {
         DayUI.NotifyCalendarSelectDay -= SetSnapFlag;
         MonthUI.NotifyCurrentDay -= SetSnapPosition;
+    }
+
+    private void DragMove() {
+        // on mouse drag, move the camera so that it follows the velocity of the mouse/finger
+
+        Vector3 mousePosition = Input.mousePosition;
+        if (Input.GetMouseButtonDown(0)) {
+            dragStartPosition = mousePosition;
+        } else if(Input.GetMouseButton(0)) {
+            Vector3 offset = mainCamera.ScreenToViewportPoint(dragStartPosition - mousePosition);
+            Vector3 move = new Vector3(offset.x * dragSpeed, offset.y * dragSpeed);
+
+            mainCamera.transform.Translate(move, Space.World);
+            dragStartPosition = mousePosition;
+        }
+
     }
 
     // zooms camera to focus on the gameobject argument
