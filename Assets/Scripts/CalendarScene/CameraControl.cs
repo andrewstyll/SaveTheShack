@@ -34,12 +34,14 @@ public class CameraControl : MonoBehaviour {
     private float dragSpeed = 5.0f; // speed that the screen will follow the dragged finger/mouse
 
     private float moveTimeBuffer = 1.0f; // time delay before a user is allowed to interact with the calendar
+    private bool blockInput = false;
 
     private void Awake() {
         this.mainCamera = GetComponentInChildren<Camera>();
 
         DayUI.NotifyCalendarSelectDay += SetSnapFlag;
         MonthUI.NotifyCurrentDay += SetSnapPosition;
+        CalendarUI.BlockInput += BlockInput;
     }
 
     // Start is called before the first frame update
@@ -60,7 +62,7 @@ public class CameraControl : MonoBehaviour {
                     System.Math.Abs(mainCamera.orthographicSize - zoomMinSize) < EPSILON) {
                     SNAP_FLAG = false;
                 }
-            } else {
+            } else if(!blockInput) {
                 if(Input.touchCount != 2) {
                     ACTIVE_PINCH_ZOOM = false;
                 }
@@ -74,6 +76,7 @@ public class CameraControl : MonoBehaviour {
     private void OnDestroy() {
         DayUI.NotifyCalendarSelectDay -= SetSnapFlag;
         MonthUI.NotifyCurrentDay -= SetSnapPosition;
+        CalendarUI.BlockInput -= BlockInput;
     }
 
     private void DragMove() {
@@ -173,5 +176,9 @@ public class CameraControl : MonoBehaviour {
 
     private void SetSnapFlag() {
         SNAP_FLAG = true;
+    }
+
+    private void BlockInput(bool blockInput) {
+        this.blockInput = blockInput;
     }
 }

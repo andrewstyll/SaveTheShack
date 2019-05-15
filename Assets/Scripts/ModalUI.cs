@@ -13,6 +13,7 @@ public class ModalUI : MonoBehaviour {
     private const string GAME_OVER = "Game Over";
 
     public enum ModalState {
+        HideModal,
         NoState,
         Loading,
         CountDown,
