@@ -41,11 +41,8 @@ public class TitleScene : MonoBehaviour {
 
         buttonOneObject.GetComponentInChildren<Text>().text = REST_ONE_STRING;
         buttonTwoObject.GetComponentInChildren<Text>().text = REST_TWO_STRING;
-    }
 
-    // Start is called before the first frame update
-    void Start() {
-        
+        RestaurantOneSelect();
     }
 
     // Update is called once per frame

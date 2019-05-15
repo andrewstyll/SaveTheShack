@@ -142,6 +142,7 @@ public class CameraControl : MonoBehaviour {
         }
     }
 
+    // ensure that the camera doesn't exit the boundaries set by the background
     private void MaintainBounds() {
         float height = 2f * this.mainCamera.orthographicSize;
         float width = height * this.mainCamera.aspect;

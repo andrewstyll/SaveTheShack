@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CalendarUI : MonoBehaviour {
 
@@ -12,6 +13,10 @@ public class CalendarUI : MonoBehaviour {
 
     // used to center and snap focus around the current day
     private Transform currentDayTransform; // the transform of the current day
+
+    // UI status bar display
+    [SerializeField] private Text totalScoreText;
+    [SerializeField] private GameObject totalScoreDisplay;
 
     // modal display and removal variables
     private ModalUI.ModalState modalState;
@@ -38,6 +43,8 @@ public class CalendarUI : MonoBehaviour {
 
         this.month = Instantiate(this.monthPrefab, this.gameObject.transform, false);
 
+        totalScoreDisplay.transform.SetAsLastSibling();
+
         ModalUI.NotifyCaller += ModalCloseEvent;
         DayUI.NotifyCalendarSelectDay += DaySelected;
         MonthUI.NotifyCurrentDay += SetCurrentDayTransform;
@@ -54,7 +61,7 @@ public class CalendarUI : MonoBehaviour {
 
     private void Update() {
         string displayString = "";
-        if (this.totalScore < 0) {
+        if (this.totalScore < 0 || this.gameManager.GetDaysPassed() == 21) { // TODO::arbitrary endgame, come back later
             // game is over, show game over modal
             displayString = "Days Lasted: " + (this.gameManager.GetDaysPassed() + 1).ToString() + " " +
             "Money Made: " + this.totalScore.ToString();
@@ -79,9 +86,9 @@ public class CalendarUI : MonoBehaviour {
     // set up the total score for display in the UI
     private void InitBackground() {
         this.totalScore = this.gameManager.GetTotalScore();
+        this.totalScoreText.text = totalScore.ToString();
         this.orthoCameraScale = this.mainCamera.orthographicSize;
         this.baseModalScale = this.modal.transform.localScale;
-        Debug.Log(baseModalScale);
     }
 
     // spawn a modal that will allow an action based on the modal state
@@ -97,6 +104,7 @@ public class CalendarUI : MonoBehaviour {
         this.modal.SetActive(false);
     }
 
+    // resize/reposition the modal based on the camera's current position and orthographic view
     private void AdjustModalPositionScale() {
         this.modal.transform.position = new Vector3(this.mainCamera.transform.position.x,
                                                     this.mainCamera.transform.position.y,
