@@ -6,6 +6,12 @@ public class CameraControl : MonoBehaviour {
 
     // camera control
     private Camera mainCamera;
+
+    // Boundaries and sizing variables
+    private Vector3 minBounds;
+    private Vector3 maxBounds;
+
+    // blah blah blah
     private const float MAX_SIZE = 5.0f; // max size of orthographic view
     private float MIN_SIZE = 2.0f; // min size of orthographic view
     private const float DAMP_TIME = 0.2f; // time to perform zoom transitons
@@ -33,7 +39,8 @@ public class CameraControl : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
+        this.maxBounds = this.mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+        this.minBounds = this.mainCamera.ScreenToWorldPoint(new Vector3(0, 0));
     }
 
     // Update is called once per frame
@@ -51,6 +58,7 @@ public class CameraControl : MonoBehaviour {
             } else {
                 PinchZoom();
                 DragMove();
+                MaintainBounds();
             }
         }
     }
@@ -71,6 +79,7 @@ public class CameraControl : MonoBehaviour {
             Vector3 move = new Vector3(offset.x * dragSpeed, offset.y * dragSpeed);
 
             mainCamera.transform.Translate(move, Space.World);
+
             dragStartPosition = mousePosition;
         }
 
@@ -79,14 +88,24 @@ public class CameraControl : MonoBehaviour {
     // zooms camera to focus on the gameobject argument
     private void PinchZoom() {
         // use scroll wheel or two touch detection to modify orthographic size
-        float zoomDelta = (-1)*Input.mouseScrollDelta.y*0.5f;
-        if(mainCamera.orthographicSize + zoomDelta > MAX_SIZE) {
+        float zoomDelta = (-1) * Input.mouseScrollDelta.y * 0.5f;
+        if (mainCamera.orthographicSize + zoomDelta > MAX_SIZE) {
             mainCamera.orthographicSize = MAX_SIZE;
-        } else if(mainCamera.orthographicSize + zoomDelta < MIN_SIZE) {
+        } else if (mainCamera.orthographicSize + zoomDelta < MIN_SIZE) {
             mainCamera.orthographicSize = MIN_SIZE;
         } else {
             mainCamera.orthographicSize += zoomDelta;
         }
+    }
+
+    private void MaintainBounds() {
+        float height = 2f * this.mainCamera.orthographicSize;
+        float width = height * this.mainCamera.aspect;
+
+        Vector3 pos = mainCamera.transform.position;
+        pos.x = Mathf.Clamp(mainCamera.transform.position.x, minBounds.x + (width / 2), maxBounds.x - (width / 2));
+        pos.y = Mathf.Clamp(mainCamera.transform.position.y, minBounds.y + (height / 2), maxBounds.y - (height / 2));
+        mainCamera.transform.position = pos;
     }
 
     private void GetRequiredSize() {
