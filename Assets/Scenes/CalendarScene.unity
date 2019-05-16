@@ -669,6 +669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd72c8392b6d448281c135039711ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalScoreText: {fileID: 178967695}
+  totalScoreDisplay: {fileID: 1948186066}
   mainCamera: {fileID: 1411987403}
   modalPrefab: {fileID: 3819939269577606674, guid: 775121ad6a8a740f9a11a170c170ca17,
     type: 3}

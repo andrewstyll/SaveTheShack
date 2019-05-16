@@ -153,6 +153,7 @@ public class CameraControl : MonoBehaviour {
         mainCamera.transform.position = pos;
     }
    
+    // snap to the current day, scaling the camera position and orthographic size
     private void SnapZoom() {
         mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoomMinSize, ref zoomSpeed, DAMP_TIME);
         mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, snapPosition, ref moveVelocity, DAMP_TIME);

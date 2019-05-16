@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CalendarUI : MonoBehaviour {
 
     private GameManager gameManager;
+    private MonthBuilder monthBuilder;
 
     // game data to provide to the UI
     private int totalScore = 0; // the total score of the current game
@@ -26,7 +27,6 @@ public class CalendarUI : MonoBehaviour {
     [SerializeField] private Camera mainCamera; // main camera, will be used to center modal on it
 
     [SerializeField] private GameObject modalPrefab;
-    [SerializeField] private GameObject monthPrefab;
 
     // event system
     public delegate void ModalEvent(ModalUI.ModalState state, string displayString);
@@ -36,12 +36,11 @@ public class CalendarUI : MonoBehaviour {
 
     private void Awake() {
         this.gameManager = GameManager.GetInstance();
+        this.monthBuilder = MonthBuilder.GetInstance();
 
         this.modal = Instantiate(this.modalPrefab, this.gameObject.transform, false);
         this.modalState = ModalUI.ModalState.NoState;
         this.modal.SetActive(false);
-
-        this.month = Instantiate(this.monthPrefab, this.gameObject.transform, false);
 
         totalScoreDisplay.transform.SetAsLastSibling();
 
@@ -85,11 +84,16 @@ public class CalendarUI : MonoBehaviour {
 
     // set up the total score for display in the UI
     private void InitBackground() {
+        // build month dictionary
+        GameObject monthPrefab = monthBuilder.GetMonthPrefab(this.gameManager.GetMonth());
+        this.month = Instantiate(monthPrefab, this.gameObject.transform, false);
         this.totalScore = this.gameManager.GetTotalScore();
         this.totalScoreText.text = totalScore.ToString();
         this.orthoCameraScale = this.mainCamera.orthographicSize;
         this.baseModalScale = this.modal.transform.localScale;
     }
+
+
 
     // spawn a modal that will allow an action based on the modal state
     private void SpawnModal(ModalUI.ModalState state, string displayString) {

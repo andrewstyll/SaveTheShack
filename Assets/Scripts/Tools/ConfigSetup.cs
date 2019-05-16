@@ -29,18 +29,20 @@ public sealed class ConfigSetup {
     private readonly string burgerRestaurantPath = "Config/BurgerRestaurant";
     private readonly string friesRestaurantPath = "Config/FriesRestaurant";
 
-    private bool setupComplete = false;
+    private bool foodSetupComplete = false;
+
+    private readonly string monthsPath = "Config/Months";
 
     private ConfigSetup() {}
 
-    public void RunConfigSetup() {
+    public void RunFoodConfigSetup() {
         this.mainsList = GetFoodConfig(mainsInfoFilePath);
         this.toppingsList = GetFoodConfig(toppingsInfoFilePath);
         this.drinksList = GetFoodConfig(drinksInfoFilePath);
 
         this.burgerData = GetRestaurantConfig(burgerRestaurantPath);
         this.friesData = GetRestaurantConfig(friesRestaurantPath);
-        this.setupComplete = true;
+        this.foodSetupComplete = true;
     }
 
     private JsonFoodContainer GetFoodConfig(string jsonString) {
@@ -92,7 +94,17 @@ public sealed class ConfigSetup {
         }
     }
 
-    public bool ConfigSetupComplete() {
-        return setupComplete;
+    public bool FoodConfigSetupComplete() {
+        return foodSetupComplete;
+    }
+
+    public JsonMonthContainer GetMonthData() {
+        TextAsset jsonFileAsset = (TextAsset)Resources.Load(monthsPath);
+        if (jsonFileAsset != null) {
+            string jsonFile = jsonFileAsset.text;
+            return JsonUtility.FromJson<JsonMonthContainer>(jsonFile);
+        } else {
+            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + monthsPath);
+        }
     }
 }

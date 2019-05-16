@@ -31,7 +31,7 @@ public sealed class RestaurantBuilder {
 
     private RestaurantBuilder() {
         this.configData = ConfigSetup.GetInstance();
-        this.configData.RunConfigSetup();
+        this.configData.RunFoodConfigSetup();
         this.InitMenuBuilder();
         this.setupComplete = true;
     }
