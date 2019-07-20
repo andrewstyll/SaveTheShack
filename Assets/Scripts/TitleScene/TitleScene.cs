@@ -27,7 +27,7 @@ public class TitleScene : MonoBehaviour {
 
     [SerializeField] private EventSystem eventSystem;
 
-    public delegate void TitleScreenButtonEvent(RestaurantInfo.Types selectedType);
+    public delegate void TitleScreenButtonEvent(RestaurantInfo.Types selectedType, bool isNewGame);
     public static TitleScreenButtonEvent NewGame;
 
     private void Awake() {
@@ -43,6 +43,10 @@ public class TitleScene : MonoBehaviour {
         buttonTwoObject.GetComponentInChildren<Text>().text = REST_TWO_STRING;
 
         RestaurantOneSelect();
+    }
+
+    private void Start() {
+
     }
 
     // Update is called once per frame
@@ -65,6 +69,6 @@ public class TitleScene : MonoBehaviour {
 
     private void StartGameSelect() {
         // we don't want to select this button, but still want to run the event
-        NewGame(selectedType);
+        NewGame(selectedType, false);
     }
 }

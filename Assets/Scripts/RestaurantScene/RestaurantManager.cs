@@ -129,7 +129,7 @@ public class RestaurantManager : MonoBehaviour {
 
     private void EndDayEvent(int score) {
         this.state = RestaurantStates.Closed;
-        DisplayModal(ModalUI.ModalState.EndGame, score.ToString());
+        DisplayModal(ModalUI.ModalState.EndDay, score.ToString());
     }
 
     /**** Coroutines ****/

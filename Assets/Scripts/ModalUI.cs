@@ -17,7 +17,7 @@ public class ModalUI : MonoBehaviour {
         NoState,
         Loading,
         CountDown,
-        EndGame,
+        EndDay,
         DaySelect,
         GameOver
     };
@@ -67,7 +67,7 @@ public class ModalUI : MonoBehaviour {
                 case ModalState.CountDown:
                     this.CountDown();
                     break;
-                case ModalState.EndGame:
+                case ModalState.EndDay:
                     this.EndGame();
                     break;
                 case ModalState.DaySelect:
@@ -199,7 +199,7 @@ public class ModalUI : MonoBehaviour {
     }
 
     private void ButtonOneListener() {
-        if(this.state == ModalState.EndGame || this.state == ModalState.DaySelect
+        if(this.state == ModalState.EndDay || this.state == ModalState.DaySelect
             || this.state == ModalState.GameOver) {
             NotifyGameManager?.Invoke(this.state);
         }

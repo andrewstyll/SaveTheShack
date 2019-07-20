@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -16,6 +20,9 @@ public class GameManager : MonoBehaviour {
         CalendarScene
     };
 
+    // Player save data path
+    private string SAVE_PATH;
+
     // names for the scenes to allow for loading them
     private const string TITLE = "TitleScene";
     private const string GAMEPLAY = "RestaurantScene";
@@ -25,9 +32,9 @@ public class GameManager : MonoBehaviour {
 
     // data that will be saved on gamesave
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType; // currently selected restaurant type  
+    private MonthInfo.Months month = MonthInfo.Months.NONE; // the currently selected month
     private int totalScore = 0; // players total score 
     private int daysPassed = 0; // days passed in the current month
-    private MonthInfo.Months month = MonthInfo.Months.NONE; // the currently selected month
 
     private int dailyRent = 0; // can be quickly calculated, but is stored to eliminated potentially lengthy computation on function call
 
@@ -37,19 +44,21 @@ public class GameManager : MonoBehaviour {
         } else if(instance != this) {
             Destroy(this);
         }
+
         DontDestroyOnLoad(this);
         this.currentState = States.NoState;
-        SetCurrentStateFromScene();
+        SAVE_PATH = Application.persistentDataPath + "/player.save";
+        LoadSceneFromAwake();
 
         // Don't need to remove on destroy as game manager can't be destroyed
-        TitleScene.NewGame += NewGameEvent;
+        TitleScene.NewGame += StartGameEvent;
         StatusBarUI.EndOfDay += EndOfDayEvent;
         ModalUI.NotifyGameManager += HandleModalEvent;
     }
 
     // set up gamemanager state based on no prior input other than the scene name. use case would be
     // launching a scene out of order from regular gameplay for testing
-    private void SetCurrentStateFromScene() {
+    private void LoadSceneFromAwake() {
         string scene = SceneManager.GetActiveScene().name;
         switch(scene) {
             case TITLE:
@@ -73,11 +82,17 @@ public class GameManager : MonoBehaviour {
         };
     }
 
-    // Used for scene transitions during gameplay. very similar to SetCurrentStateFromScene()
+    // Used for scene transitions during gameplay. very similar to LoadSceneFromAwake()
     private void SetAndLoadNewState(States newState) {
         if(this.currentState != newState) {
-            this.currentState = newState;
-            switch(currentState) {
+            if(this.currentState == States.GameplayScene) {
+                SaveGame();
+                Debug.Log(SaveFileExists());
+                DeleteOldGame();
+                Debug.Log(SaveFileExists());
+            }
+
+            switch (newState) {
                 case States.TitleScene:
                     SceneManager.LoadSceneAsync(TITLE, LoadSceneMode.Single);
                     break;
@@ -100,15 +115,39 @@ public class GameManager : MonoBehaviour {
                 default:
                     throw new System.Exception("Invalid scene name for current scene");
             }
+            this.currentState = newState;
         }
     }
 
-    private void StartNewGame(RestaurantInfo.Types selectedType) {
-        this.currentRestType = selectedType;
-        this.totalScore = 0;
-        this.daysPassed = 0;
-        // pick a month here as well
-        SetAndLoadNewState(States.CalendarScene);
+    private void DeleteOldGame() { 
+        if(SaveFileExists()) {
+            File.Delete(SAVE_PATH);
+        }
+    }
+
+    private void SaveGame() {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream stream = new FileStream(SAVE_PATH, FileMode.Create);
+
+        GameData data = new GameData(this.currentRestType, this.month, this.totalScore, this.daysPassed);
+        binaryFormatter.Serialize(stream, data);
+        stream.Close();
+    }
+
+    private void LoadGame() { 
+        if(SaveFileExists()) {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream stream = new FileStream(SAVE_PATH, FileMode.Open);
+            GameData gameData = (GameData)binaryFormatter.Deserialize(stream);
+
+            this.currentRestType = (RestaurantInfo.Types)gameData.restaurantType;
+            this.month = (MonthInfo.Months)gameData.month;
+            this.totalScore = gameData.totalScore;
+            this.daysPassed = gameData.daysPassed;
+
+        } else {
+            throw new System.Exception("Save file not found at " + SAVE_PATH);
+        }
     }
 
     private void SetRent() {
@@ -117,7 +156,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private int CalculateRent(int daysPassed) {
-        return 50;
+        return 0;
     }
 
     private void PickMonth() {
@@ -127,9 +166,20 @@ public class GameManager : MonoBehaviour {
     }
 
     /**** Events ****/
-    private void NewGameEvent(RestaurantInfo.Types selectedType) {
-        // set type to by the selected type
-        StartNewGame(selectedType);
+    private void StartGameEvent(RestaurantInfo.Types selectedType, bool isNewGame) {
+
+        if(isNewGame) {
+            // delete old save file if it exists
+            DeleteOldGame();
+            PickMonth();
+            this.currentRestType = selectedType;
+            this.totalScore = 0;
+            this.daysPassed = 0;
+        } else {
+            LoadGame();
+        }
+
+        SetAndLoadNewState(States.CalendarScene);
     }
 
     private void EndOfDayEvent(int score) {
@@ -139,13 +189,14 @@ public class GameManager : MonoBehaviour {
 
     private void HandleModalEvent(ModalUI.ModalState modalState) {
         switch(modalState) {
-            case ModalUI.ModalState.EndGame:
+            case ModalUI.ModalState.EndDay:
                 SetAndLoadNewState(States.CalendarScene);
                 break;
             case ModalUI.ModalState.DaySelect:
                 SetAndLoadNewState(States.GameplayScene);
                 break;
             case ModalUI.ModalState.GameOver:
+                DeleteOldGame();
                 SetAndLoadNewState(States.TitleScene);
                 break;
         }
@@ -182,5 +233,9 @@ public class GameManager : MonoBehaviour {
 
     public void SetMonth(MonthInfo.Months month) {
         this.month = month;
+    }
+
+    public bool SaveFileExists() {
+        return File.Exists(SAVE_PATH);
     }
 }

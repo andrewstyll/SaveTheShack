@@ -8,6 +8,7 @@ public class FoodDisplayUI : MonoBehaviour {
     RestaurantInfo.Types restaurantType = RestaurantInfo.Types.NoType;
 
     MealDrawer mealDrawer = null;
+    GameObject mealDrawerObject = null;
 
     private bool setupComplete = false;
     [SerializeField] private GameObject parentFoodDisplay;
@@ -28,25 +29,28 @@ public class FoodDisplayUI : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
+    }
+
+    private void OnDestroy() {
+        Destroy(this.mealDrawerObject);    
     }
 
     private void SetMealDrawer() {
         this.restaurantType = this.restaurantBuilder.GetCurrentRestaurantType();
-        GameObject tmp;
+
         switch (this.restaurantType) {
             case RestaurantInfo.Types.Burger:
-                tmp = new GameObject();
-                tmp.AddComponent<BurgerDrawer>();
-                this.mealDrawer = tmp.GetComponent<BurgerDrawer>();
+                mealDrawerObject = new GameObject("BurgerDrawer");
+                mealDrawerObject.AddComponent<BurgerDrawer>();
+                this.mealDrawer = mealDrawerObject.GetComponent<BurgerDrawer>();
                 this.mealDrawer.InitDrawer(this.restaurantBuilder.GetMealDrawerData());
                 break;
             case RestaurantInfo.Types.Fries:
-                tmp = new GameObject();
-                tmp.AddComponent<FriesDrawer>();
-                this.mealDrawer = tmp.GetComponent<FriesDrawer>();
+                mealDrawerObject = new GameObject("FriesDrawer");
+                mealDrawerObject.AddComponent<FriesDrawer>();
+                this.mealDrawer = mealDrawerObject.GetComponent<FriesDrawer>();
                 this.mealDrawer.InitDrawer(this.restaurantBuilder.GetMealDrawerData());
                 break;
         }

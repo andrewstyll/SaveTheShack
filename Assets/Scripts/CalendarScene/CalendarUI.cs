@@ -84,16 +84,14 @@ public class CalendarUI : MonoBehaviour {
 
     // set up the total score for display in the UI
     private void InitBackground() {
-        // build month dictionary
         GameObject monthPrefab = monthBuilder.GetMonthPrefab(this.gameManager.GetMonth());
         this.month = Instantiate(monthPrefab, this.gameObject.transform, false);
+
         this.totalScore = this.gameManager.GetTotalScore();
         this.totalScoreText.text = totalScore.ToString();
         this.orthoCameraScale = this.mainCamera.orthographicSize;
         this.baseModalScale = this.modal.transform.localScale;
     }
-
-
 
     // spawn a modal that will allow an action based on the modal state
     private void SpawnModal(ModalUI.ModalState state, string displayString) {
