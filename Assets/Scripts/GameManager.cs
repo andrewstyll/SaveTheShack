@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private int CalculateRent(int daysPassed) {
-        return 0;
+        return (50*(daysPassed+1)) - (daysPassed*3);
     }
 
     private void PickMonth() {
