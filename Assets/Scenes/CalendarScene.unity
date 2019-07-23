@@ -171,7 +171,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 32a2a8838d57b44c0adb4dce4cc81c87, type: 3}
-    m_FontSize: 70
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -673,8 +673,6 @@ MonoBehaviour:
   totalScoreDisplay: {fileID: 1948186066}
   mainCamera: {fileID: 1411987403}
   modalPrefab: {fileID: 3819939269577606674, guid: 775121ad6a8a740f9a11a170c170ca17,
-    type: 3}
-  monthPrefab: {fileID: 2166569757265965482, guid: 5fb4a52deefbd45b99396c2432845b63,
     type: 3}
 --- !u!222 &1679718354
 CanvasRenderer:

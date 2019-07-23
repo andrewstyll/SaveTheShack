@@ -42,8 +42,6 @@ public class CalendarUI : MonoBehaviour {
         this.modalState = ModalUI.ModalState.NoState;
         this.modal.SetActive(false);
 
-        totalScoreDisplay.transform.SetAsLastSibling();
-
         ModalUI.NotifyCaller += ModalCloseEvent;
         DayUI.NotifyCalendarSelectDay += DaySelected;
         MonthUI.NotifyCurrentDay += SetCurrentDayTransform;
@@ -60,7 +58,8 @@ public class CalendarUI : MonoBehaviour {
 
     private void Update() {
         string displayString = "";
-        if (this.totalScore < 0 || this.gameManager.GetDaysPassed() == 21) { // TODO::arbitrary endgame, come back later
+        // arbitrary end date, will modify when months become objects, not just prefabs
+        if (this.totalScore < 0 || this.gameManager.GetDaysPassed() == 26) { 
             // game is over, show game over modal
             displayString = "Days Lasted: " + (this.gameManager.GetDaysPassed() + 1).ToString() + " " +
             "Money Made: " + this.totalScore.ToString();
@@ -91,6 +90,9 @@ public class CalendarUI : MonoBehaviour {
         this.totalScoreText.text = totalScore.ToString();
         this.orthoCameraScale = this.mainCamera.orthographicSize;
         this.baseModalScale = this.modal.transform.localScale;
+
+        // move the total score display to be in front of the calendar image
+        totalScoreDisplay.transform.SetAsLastSibling();
     }
 
     // spawn a modal that will allow an action based on the modal state

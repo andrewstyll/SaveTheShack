@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType; // currently selected restaurant type  
     private MonthInfo.Months month = MonthInfo.Months.NONE; // the currently selected month
     private int totalScore = 0; // players total score 
-    private int daysPassed = 0; // days passed in the current month
+    private int daysPassed = 27; // days passed in the current month
 
     private int dailyRent = 0; // can be quickly calculated, but is stored to eliminated potentially lengthy computation on function call
 
@@ -87,9 +87,6 @@ public class GameManager : MonoBehaviour {
         if(this.currentState != newState) {
             if(this.currentState == States.GameplayScene) {
                 SaveGame();
-                Debug.Log(SaveFileExists());
-                DeleteOldGame();
-                Debug.Log(SaveFileExists());
             }
 
             switch (newState) {
@@ -175,6 +172,7 @@ public class GameManager : MonoBehaviour {
             this.currentRestType = selectedType;
             this.totalScore = 0;
             this.daysPassed = 0;
+            SaveGame();
         } else {
             LoadGame();
         }

@@ -16,9 +16,9 @@ public class CameraControl : MonoBehaviour {
     private const float EPSILON = 0.1f; // floating point error
 
     // SnapZoom variables
-    private const float DAMP_TIME = 0.2f; // time to perform SnapZoom transitons
+    private const float DAMP_TIME = 0.4f; // time to perform SnapZoom transitons
     private bool SNAP_FLAG = false; // flag to signal if regular controls or snapzoom is happening
-    private float zoomSpeed; // snapZoom zoom speed
+    private float zoomSpeed = 0.0f; // snapZoom zoom speed
     private Vector3 snapPosition; // position of the current day transform
     private Vector3 moveVelocity; // snapZoom scroll speed
 
@@ -59,7 +59,7 @@ public class CameraControl : MonoBehaviour {
             if (SNAP_FLAG) {
                 SnapZoom();
                 if (mainCamera.transform.position == snapPosition && 
-                    System.Math.Abs(mainCamera.orthographicSize - zoomMinSize) < EPSILON) {
+                    System.Math.Abs(mainCamera.orthographicSize - zoomMinSize) < EPSILON ) {
                     SNAP_FLAG = false;
                 }
             } else if(!blockInput) {
@@ -160,7 +160,8 @@ public class CameraControl : MonoBehaviour {
     }
 
     private void SetMinMaxZoomSize(Transform currentDay) {
-        this.zoomMinSize = currentDay.position.y / 2f;
+        // y position may have negative values and zoomMinSize can only be positive
+        this.zoomMinSize = System.Math.Abs(currentDay.position.y / 2.0f); 
         this.zoomMaxSize = this.maxBounds.y;
     }
 
