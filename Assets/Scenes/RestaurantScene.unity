@@ -1290,14 +1290,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  m_Color: {r: 0.9339623, g: 0.89740187, b: 0.8502581, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 75af7b3f9a4f4419a8e2ca6ade768601, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1493,7 +1493,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topMeButtonObj: {fileID: 1012044149}
   foodDisplayUI: {fileID: 1929347894}
-  drawnDrink: {fileID: 1825114925}
 --- !u!1 &1650881102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,14 +1733,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23696156, g: 0.6494664, b: 0.6698113, a: 1}
+  m_Color: {r: 0.89444643, g: 0.9433962, b: 0.9340251, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ea2cf95d8aaa74d348060e83b88576e2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1776,6 +1775,7 @@ GameObject:
   - component: {fileID: 1945827528}
   - component: {fileID: 1945827527}
   - component: {fileID: 1945827526}
+  - component: {fileID: 1945827530}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -1866,6 +1866,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1945827530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945827525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4289bb5f637674fe5abce5bf27be2195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundWindow: {fileID: 1919691364}
+  foodStation: {fileID: 0}
+  mainsArea: {fileID: 0}
+  toppingsArea: {fileID: 0}
+  drinksArea: {fileID: 0}
+  preppedOrderArea: {fileID: 0}
 --- !u!1 &1987769800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,6 +2014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348906998167509551, guid: 104b771dd42b14020aed4052cc852d07,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8790787106651505242, guid: 104b771dd42b14020aed4052cc852d07,
         type: 3}
@@ -2201,11 +2224,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.0024909973
-      objectReference: {fileID: 0}
-    - target: {fileID: 2348906998167509551, guid: 104b771dd42b14020aed4052cc852d07,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 104b771dd42b14020aed4052cc852d07, type: 3}

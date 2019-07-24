@@ -1,0 +1,20 @@
+﻿{
+    "Sprites": [
+        {
+            "SpriteName": "Window_Plain"
+        },
+        {
+            "SpriteName": "Window_Fall"
+        },
+        {
+            "SpriteName": "Window_Spring"
+        },
+        {
+            "SpriteName": "Window_Summer"
+        },
+        {
+            "SpriteName": "Window_Winter"
+        }
+    ],
+    "SpriteLocation": "Sprites/RestaurantScene/Background/"
+}

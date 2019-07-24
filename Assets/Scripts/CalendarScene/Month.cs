@@ -21,7 +21,7 @@ public class Month {
         return this.name;
     }
 
-    public MonthInfo.Seasons GetSeasons() {
+    public MonthInfo.Seasons GetSeason() {
         return this.season;
     }
 

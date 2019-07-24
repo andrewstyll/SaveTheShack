@@ -33,6 +33,8 @@ public sealed class ConfigSetup {
 
     private readonly string monthsPath = "Config/Months";
 
+    private readonly string restSpritesPath = "Config/RestSprites";
+
     private ConfigSetup() {}
 
     public void RunFoodConfigSetup() {
@@ -103,6 +105,16 @@ public sealed class ConfigSetup {
         if (jsonFileAsset != null) {
             string jsonFile = jsonFileAsset.text;
             return JsonUtility.FromJson<JsonMonthContainer>(jsonFile);
+        } else {
+            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + monthsPath);
+        }
+    }
+
+    public JsonToRestSpriteContainer GetRestaurantSpriteData() {
+        TextAsset jsonFileAsset = (TextAsset)Resources.Load(restSpritesPath);
+        if (jsonFileAsset != null) {
+            string jsonFile = jsonFileAsset.text;
+            return JsonUtility.FromJson<JsonToRestSpriteContainer>(jsonFile);
         } else {
             throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + monthsPath);
         }

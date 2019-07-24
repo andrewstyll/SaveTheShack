@@ -93,4 +93,8 @@ public sealed class MonthBuilder {
     public GameObject GetMonthPrefab(MonthInfo.Months month) {
         return monthPrefabs[month].GetPrefab();
     }
+
+    public MonthInfo.Seasons GetMonthSeason(MonthInfo.Months month) {
+        return monthPrefabs[month].GetSeason();
+    }
 }
