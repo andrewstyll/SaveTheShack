@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType; // currently selected restaurant type  
     private MonthInfo.Months month = MonthInfo.Months.NONE; // the currently selected month
     private int totalScore = 0; // players total score 
-    private int daysPassed = 27; // days passed in the current month
+    private int daysPassed = 0; // days passed in the current month
 
     private int dailyRent = 0; // can be quickly calculated, but is stored to eliminated potentially lengthy computation on function call
 
@@ -73,9 +73,6 @@ public class GameManager : MonoBehaviour {
                 break;
             case CALENDAR:
                 this.currentState = States.CalendarScene;
-                if(this.month == MonthInfo.Months.NONE) {
-                    PickMonth();
-                }
                 break;
             default:
                 throw new System.Exception("Invalid scene name for current scene");
@@ -102,9 +99,6 @@ public class GameManager : MonoBehaviour {
                     SceneManager.LoadSceneAsync(GAMEPLAY, LoadSceneMode.Single);
                     break;
                 case States.CalendarScene:
-                    if (this.month == MonthInfo.Months.NONE) {
-                        PickMonth();
-                    }
                     SceneManager.LoadSceneAsync(CALENDAR, LoadSceneMode.Single);
                     break;
                 case States.NoState:
@@ -226,6 +220,9 @@ public class GameManager : MonoBehaviour {
     }
 
     public MonthInfo.Months GetMonth() {
+        if (this.month == MonthInfo.Months.NONE) {
+            PickMonth();
+        }
         return this.month;
     }
 

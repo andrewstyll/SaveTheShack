@@ -83,6 +83,8 @@ public class TitleScene : MonoBehaviour {
         buttonOne.onClick.AddListener(RestaurantOneSelect);
         buttonTwo.onClick.AddListener(RestaurantTwoSelect);
 
+        buttonTwoObject.SetActive(false); // fries isn't ready, hide this for release
+
         startGameButton.onClick.AddListener(StartGameSelect);
         startGameText.SetActive(true);
 
@@ -105,6 +107,8 @@ public class TitleScene : MonoBehaviour {
         buttonTwo.onClick.RemoveListener(RestaurantTwoSelect);
         startGameButton.onClick.RemoveListener(StartGameSelect);
         startGameText.SetActive(false);
+
+        buttonTwoObject.SetActive(true);
 
         buttonBack.onClick.RemoveListener(BackSelect);
         buttonBackObject.SetActive(false);

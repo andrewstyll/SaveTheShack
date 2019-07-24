@@ -7,7 +7,7 @@ public sealed class MonthBuilder {
     private ConfigSetup config;
 
     private JsonMonthContainer monthData;
-    private Dictionary<MonthInfo.Months, GameObject> monthPrefabs;
+    private Dictionary<MonthInfo.Months, Month> monthPrefabs;
 
     MonthBuilder() {
         this.config = ConfigSetup.GetInstance();
@@ -16,12 +16,15 @@ public sealed class MonthBuilder {
     }
 
     private void GetMonthPrefabs() {
-        monthPrefabs = new Dictionary<MonthInfo.Months, GameObject>();
+        monthPrefabs = new Dictionary<MonthInfo.Months, Month>();
         string monthPrefabPath = this.monthData.PrefabLocation;
 
         foreach(JsonToMonth month in this.monthData.Months) {
             MonthInfo.Months monthShortcut;
+            MonthInfo.Seasons seasonShortcut;
+
             GameObject monthPrefab = (GameObject)Resources.Load(monthPrefabPath + month.Name);
+
             switch(month.Name) {
                 case "January":
                     monthShortcut = MonthInfo.Months.JAN;
@@ -62,7 +65,23 @@ public sealed class MonthBuilder {
                 default:
                     throw new System.Exception("Invalid month name passed");
             }
-            monthPrefabs.Add(monthShortcut, monthPrefab);
+
+            if(monthShortcut == MonthInfo.Months.DEC || monthShortcut == MonthInfo.Months.JAN 
+                || monthShortcut == MonthInfo.Months.FEB ) {
+                seasonShortcut = MonthInfo.Seasons.WINTER;
+            } else if (monthShortcut == MonthInfo.Months.MAR || monthShortcut == MonthInfo.Months.APR
+                || monthShortcut == MonthInfo.Months.MAY) {
+                seasonShortcut = MonthInfo.Seasons.SPRING;
+            } else if (monthShortcut == MonthInfo.Months.JUN || monthShortcut == MonthInfo.Months.JUL
+                || monthShortcut == MonthInfo.Months.AUG) {
+                seasonShortcut = MonthInfo.Seasons.SUMMER;
+            } else if (monthShortcut == MonthInfo.Months.SEPT || monthShortcut == MonthInfo.Months.OCT
+                || monthShortcut == MonthInfo.Months.NOV) {
+                seasonShortcut = MonthInfo.Seasons.FALL;
+            } else {
+                seasonShortcut = MonthInfo.Seasons.NONE;
+            }
+            monthPrefabs.Add(monthShortcut, new Month(monthShortcut, seasonShortcut, monthPrefab));
         }
     }
 
@@ -72,6 +91,6 @@ public sealed class MonthBuilder {
     }
 
     public GameObject GetMonthPrefab(MonthInfo.Months month) {
-        return monthPrefabs[month];
+        return monthPrefabs[month].GetPrefab();
     }
 }

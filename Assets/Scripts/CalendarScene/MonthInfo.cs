@@ -16,4 +16,12 @@ public static class MonthInfo {
         NOV,
         DEC
     };
+
+    public enum Seasons {
+        NONE,
+        SPRING,
+        SUMMER,
+        FALL,
+        WINTER
+    };
 }

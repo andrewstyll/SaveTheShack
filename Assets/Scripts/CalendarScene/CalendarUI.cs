@@ -59,7 +59,7 @@ public class CalendarUI : MonoBehaviour {
     private void Update() {
         string displayString = "";
         // arbitrary end date, will modify when months become objects, not just prefabs
-        if (this.totalScore < 0 || this.gameManager.GetDaysPassed() == 26) { 
+        if (this.totalScore < 0 || this.gameManager.GetDaysPassed() >= 26) { 
             // game is over, show game over modal
             displayString = "Days Lasted: " + (this.gameManager.GetDaysPassed() + 1).ToString() + " " +
             "Money Made: " + this.totalScore.ToString();
