@@ -61,7 +61,6 @@ public class FoodDisplayUI : MonoBehaviour {
 
     /**** Coroutines ****/
     IEnumerator WaitForSetupComplete() {
-        Debug.Log("Waiting for meal Drawer Setup");
         while (!this.restaurantBuilder.MealDrawerSetupComplete()) {
             yield return null;
         }
