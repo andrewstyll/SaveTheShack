@@ -36,7 +36,7 @@ public sealed class OrderBuilder {
         string lastFoodAdded = null;
         string newFoodSelected = null;
         for(int i = 0; i < foodToAdd; i++) {
-            newFoodSelected = toppingList[Random.Range(0, toppingList.Count - 1)];
+            newFoodSelected = toppingList[Random.Range(0, toppingList.Count)];
             foodOrder.Add(newFoodSelected);
 
             if (lastFoodAdded != null) {
@@ -54,7 +54,7 @@ public sealed class OrderBuilder {
         Menu menu = restaurantBuilder.GetMenu();
 
         if (Random.Range(0, 100) > ODDS_NO_DRINK) {
-            drinkOrder = menu.GetDrinks()[Random.Range(0, menu.GetDrinksLength() - 1)].GetName();
+            drinkOrder = menu.GetDrinks()[Random.Range(0, menu.GetDrinksLength())].GetName();
         }
         return drinkOrder;
     }

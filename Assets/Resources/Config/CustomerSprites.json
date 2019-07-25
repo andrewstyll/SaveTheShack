@@ -1,0 +1,29 @@
+﻿{
+  "Sprites": [
+    {
+      "SpriteName": "Customer_1"
+    },
+    {
+      "SpriteName": "Customer_2"
+    },
+    {
+      "SpriteName": "Customer_3"
+    },
+    {
+      "SpriteName": "Customer_4"
+    },
+    {
+      "SpriteName": "Customer_5"
+    },
+    {
+      "SpriteName": "Customer_6"
+    },
+    {
+      "SpriteName": "Customer_7"
+    },
+    {
+      "SpriteName": "Customer_8"
+    }
+  ],
+  "SpriteLocation": "Sprites/RestaurantScene/Customer/"
+}

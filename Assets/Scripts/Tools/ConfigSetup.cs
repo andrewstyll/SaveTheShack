@@ -34,6 +34,7 @@ public sealed class ConfigSetup {
     private readonly string monthsPath = "Config/Months";
 
     private readonly string restSpritesPath = "Config/RestSprites";
+    private readonly string customerSpritesPath = "Config/CustomerSprites";
 
     private ConfigSetup() {}
 
@@ -116,7 +117,17 @@ public sealed class ConfigSetup {
             string jsonFile = jsonFileAsset.text;
             return JsonUtility.FromJson<JsonToRestSpriteContainer>(jsonFile);
         } else {
-            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + monthsPath);
+            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + restSpritesPath);
+        }
+    }
+
+    public JsonToCustomerSpriteContainer GetCustomerSpriteData() {
+        TextAsset jsonFileAsset = (TextAsset)Resources.Load(customerSpritesPath);
+        if (jsonFileAsset != null) {
+            string jsonFile = jsonFileAsset.text;
+            return JsonUtility.FromJson<JsonToCustomerSpriteContainer>(jsonFile);
+        } else {
+            throw new System.Exception("Config File Not Found: " + RESOURCE_LOCATION + customerSpritesPath);
         }
     }
 }

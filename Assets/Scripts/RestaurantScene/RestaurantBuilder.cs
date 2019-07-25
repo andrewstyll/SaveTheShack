@@ -116,9 +116,14 @@ public sealed class RestaurantBuilder {
         }
 
         while(numToppingsToRemove > 0) {
-            menu.RemoveToppingAtIndex(Random.Range(0, menu.GetToppingsLength()));
+            menu.RemoveToppingAtIndex(Random.Range(0, menu.GetToppingsLength()-1));
             numToppingsToRemove--;
         }
+
+        while(menu.GetDrinksLength() > 2) {
+            menu.RemoveDrinkAtIndex(Random.Range(0, menu.GetDrinksLength()-1));
+        }
+
     }
 
     /**** PUBLIC API ****/
