@@ -2,7 +2,7 @@
 
 [System.Serializable]
 public struct JsonToCustomerSpriteContainer {
-    public JsonToRestSprite[] Sprites;
+    public JsonToCustomerSprite[] Sprites;
     public string SpriteLocation;
 }
 
