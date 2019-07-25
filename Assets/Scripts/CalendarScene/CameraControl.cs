@@ -58,6 +58,7 @@ public class CameraControl : MonoBehaviour {
 
             if (SNAP_FLAG) {
                 SnapZoom();
+                MaintainBounds();
                 if (mainCamera.transform.position == snapPosition && 
                     System.Math.Abs(mainCamera.orthographicSize - zoomMinSize) < EPSILON ) {
                     SNAP_FLAG = false;
@@ -173,7 +174,7 @@ public class CameraControl : MonoBehaviour {
         this.snapPosition = new Vector3(currentDay.position.x,
                                         currentDay.position.y,
                                         this.mainCamera.transform.position.z);
-        SetMinMaxZoomSize(currentDay);
+        //SetMinMaxZoomSize(currentDay);
         SNAP_FLAG = true;
     }
 

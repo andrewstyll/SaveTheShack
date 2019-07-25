@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     private RestaurantInfo.Types currentRestType = RestaurantInfo.Types.NoType; // currently selected restaurant type  
     private MonthInfo.Months month = MonthInfo.Months.NONE; // the currently selected month
     private int totalScore = 0; // players total score 
-    private int daysPassed = 0; // days passed in the current month
+    private int daysPassed = 15; // days passed in the current month
 
     private int dailyRent = 0; // can be quickly calculated, but is stored to eliminated potentially lengthy computation on function call
 
