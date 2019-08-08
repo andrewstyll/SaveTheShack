@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Component used to control the UI behaviour of a single day on the calendar. Includes
+ * day crossed out, daily money goal.
+ */
 public class DayUI : MonoBehaviour {
 
+    // used to control opacity of the daily money goals and potentially other UI components
     private const float ALPHA_HALF = 0.5f;
     private const float ALPHA_FULL = 1.0f;
 
-    private int id;
+    private int id; 
     int rent = 0;
 
     private GameObject modal;

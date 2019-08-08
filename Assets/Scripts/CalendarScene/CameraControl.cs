@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* dictates the camera behaviour based on user interaction. Handles pinch zooming,
+ * swipe movement and snap zooming on a target
+ */
 public class CameraControl : MonoBehaviour {
 
     // camera control
@@ -17,10 +20,10 @@ public class CameraControl : MonoBehaviour {
 
     // SnapZoom variables
     private const float DAMP_TIME = 0.4f; // time to perform SnapZoom transitons
-    private bool SNAP_FLAG = false; // flag to signal if regular controls or snapzoom is happening
-    private float zoomSpeed = 0.0f; // snapZoom zoom speed
+    private bool SNAP_FLAG = false; // flag to signal if regular controls or SnapZoom is happening
+    private float zoomSpeed = 0.0f; // SnapZoom zoom speed
     private Vector3 snapPosition; // position of the current day transform
-    private Vector3 moveVelocity; // snapZoom scroll speed
+    private Vector3 moveVelocity; // SnapZoom scroll speed
 
     // PinchZoom variables
     private bool ACTIVE_PINCH_ZOOM; // is there currently a pinch zoom being performed?
@@ -33,7 +36,10 @@ public class CameraControl : MonoBehaviour {
     private Vector3 dragStartPosition; // starting position of the touch/mouseclick before the drag
     private float dragSpeed = 5.0f; // speed that the screen will follow the dragged finger/mouse
 
-    private float moveTimeBuffer = 1.0f; // time delay before a user is allowed to interact with the calendar
+    // time delay before a user is allowed to interact with the calendar/before SnapZoom occurs
+    private float moveTimeBuffer = 1.0f; 
+
+    // block user input
     private bool blockInput = false;
 
     private void Awake() {
@@ -46,11 +52,13 @@ public class CameraControl : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        // set screen boundaries
         this.maxBounds = this.mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
         this.minBounds = this.mainCamera.ScreenToWorldPoint(new Vector3(0, 0));
     }
 
-    // Update is called once per frame
+    // Update is called once per frame, fixed update for undelayed update time since timing is important
+    // for smooth camera zoom
     private void FixedUpdate() {
         if(moveTimeBuffer > 0) {
             moveTimeBuffer -= Time.deltaTime;
@@ -59,11 +67,13 @@ public class CameraControl : MonoBehaviour {
             if (SNAP_FLAG) {
                 SnapZoom();
                 MaintainBounds();
+                // once we are close enough to the zoom target, stop the snap zoom
                 if (mainCamera.transform.position == snapPosition && 
                     System.Math.Abs(mainCamera.orthographicSize - zoomMinSize) < EPSILON ) {
                     SNAP_FLAG = false;
                 }
             } else if(!blockInput) {
+                // require 2 fingers for pinch zoom to occur
                 if(Input.touchCount != 2) {
                     ACTIVE_PINCH_ZOOM = false;
                 }
@@ -74,6 +84,7 @@ public class CameraControl : MonoBehaviour {
         }
     }
 
+    // remove event listeners to avoid listeners attached to null objects
     private void OnDestroy() {
         DayUI.NotifyCalendarSelectDay -= SetSnapFlag;
         MonthUI.NotifyCurrentDay -= SetSnapPosition;
@@ -81,8 +92,9 @@ public class CameraControl : MonoBehaviour {
     }
 
     private void DragMove() {
-        // on mouse drag, move the camera so that it follows the velocity of the mouse/finger
         if (Application.platform == RuntimePlatform.Android) {
+            // use TouchPhase class to determine the state of the current touch (touchDrag, touch has just started etc...)
+            // use that to determine a start and finish point for the camera.
             if(Input.touchCount == 1) {
                 Touch touch = Input.GetTouch(0);
                 if(touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary) {
@@ -94,6 +106,7 @@ public class CameraControl : MonoBehaviour {
                 }
             }
         } else {
+            // on mouse drag, move the camera so that it follows the velocity of the mouse
             if (Input.GetMouseButtonDown(0)) {
                 dragStartPosition = Input.mousePosition;
             } else if (Input.GetMouseButton(0)) {
@@ -102,19 +115,25 @@ public class CameraControl : MonoBehaviour {
         }
     }
 
+    // determine the differenct between the start position of the drag and the new position. 
+    // use the offset*drag speed per frame to determine how much to move by (this method is called on update/fixedupdate)
     private void DragMoveLogic(Vector3 inputPosition) {
         Vector3 offset = mainCamera.ScreenToViewportPoint(dragStartPosition - inputPosition);
         Vector3 move = new Vector3(offset.x * dragSpeed, offset.y * dragSpeed);
 
         mainCamera.transform.Translate(move, Space.World);
 
+        // update dragstartposition as the input position to move the starting point (useful for drags that change direction)
         dragStartPosition = inputPosition;
     }
 
-    // zooms camera to focus on the gameobject argument
+    // zooms camera on center of screen
     private void PinchZoom() {
         // use scroll wheel or two touch detection to modify orthographic size
         if (Application.platform == RuntimePlatform.Android) {
+            // on two touch, store touch position. if two fingers are still down, get the difference of those positions and 
+            // calculate the distance to zoom based on the pinch zoom speed and the distance the fingers have moved. 
+            // zoom is in units relative to orthographic camerasize
             if(Input.touchCount == 2) {
                 Vector2[] newTouches = { Input.GetTouch(0).position, Input.GetTouch(1).position };
                 if(!ACTIVE_PINCH_ZOOM) {
@@ -128,11 +147,13 @@ public class CameraControl : MonoBehaviour {
                 }
             }
         } else {
+            // scrolling with mousewheel uses an input property so no need for calculation
             float zoomDelta = Input.mouseScrollDelta.y;
             PinchZoomLogic(zoomDelta * speedMousePinchZoom);
         }
     }
 
+    // zoom within the min and max allowable camera sizes
     private void PinchZoomLogic(float zoomDelta) {
         if (mainCamera.orthographicSize + zoomDelta > zoomMaxSize) {
             mainCamera.orthographicSize = zoomMaxSize;
@@ -145,7 +166,7 @@ public class CameraControl : MonoBehaviour {
 
     // ensure that the camera doesn't exit the boundaries set by the background
     private void MaintainBounds() {
-        float height = 2f * this.mainCamera.orthographicSize;
+        float height = 2f * this.mainCamera.orthographicSize; // this math is constant for orthoSize use
         float width = height * this.mainCamera.aspect;
 
         Vector3 pos = mainCamera.transform.position;
@@ -156,6 +177,7 @@ public class CameraControl : MonoBehaviour {
    
     // snap to the current day, scaling the camera position and orthographic size
     private void SnapZoom() {
+        // smoothdamp allows for a smooth transition from the first argument to the second
         mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoomMinSize, ref zoomSpeed, DAMP_TIME);
         mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, snapPosition, ref moveVelocity, DAMP_TIME);
     }
@@ -182,6 +204,7 @@ public class CameraControl : MonoBehaviour {
         SNAP_FLAG = true;
     }
 
+    // blocks user input
     private void BlockInput(bool blockInput) {
         this.blockInput = blockInput;
     }
